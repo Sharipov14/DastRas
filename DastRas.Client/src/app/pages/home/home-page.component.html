@@ -1,0 +1,52 @@
+<!-- Transparent Glass Header -->
+    <ion-header class="ion-no-border absolute top-0 left-0 z-50">
+      <div class="px-5 pt-[calc(var(--ion-safe-area-top)+8px)] pb-3 flex items-center justify-between gap-4 bg-white/80 dark:bg-black/80 backdrop-blur-xl border-b border-white/20 dark:border-white/10">
+        
+        <!-- Address Selection -->
+        <button (click)="goToAddresses()" class="flex flex-col items-start active:opacity-70 transition-opacity">
+          <span class="text-[11px] text-gray-500 dark:text-gray-400 font-bold tracking-wide uppercase mb-0.5">Доставка</span>
+          <div class="flex items-center gap-1.5">
+             <span class="text-base font-extrabold text-gray-900 dark:text-white truncate max-w-[200px] leading-none">
+               {{ currentAddress }}
+             </span>
+             <ion-icon name="chevron-down" class="text-xs text-[#ff6b35]"></ion-icon>
+          </div>
+        </button>
+
+        <!-- Notification Button -->
+        <button (click)="openNotifications()" class="w-10 h-10 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-gray-900 dark:text-white active:scale-95 transition-transform backdrop-blur-sm relative">
+           <ion-icon name="notifications" class="text-xl"></ion-icon>
+           @if (notificationUnreadCount > 0) {
+             <span class="absolute top-2.5 right-2.5 w-2 h-2 bg-red-500 rounded-full border border-white dark:border-black animate-pulse"></span>
+           }
+        </button>
+
+      </div>
+    </ion-header>
+
+    <ion-content [fullscreen]="true" class="bg-gray-50 dark:bg-black">
+      
+      <!-- Spacer for Header + Tabs Padding -->
+      <div class="pt-[calc(var(--ion-safe-area-top)+70px)] pb-24">
+        
+        <!-- Categories -->
+        <div class="overflow-x-auto whitespace-nowrap px-5 py-2 no-scrollbar flex gap-3 mb-2">
+          @for (cat of categories; track cat.id) {
+            <button 
+              class="px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 shadow-sm flex items-center gap-2"
+              [ngClass]="selectedCategory === cat.id ? 'bg-[#ff6b35] text-white shadow-orange-500/30' : 'bg-white text-gray-600 dark:bg-[#1c1c1e] dark:text-gray-300'"
+              (click)="selectCategory(cat.id)">
+              <span class="text-lg leading-none"></span> {{ cat.name }}
+            </button>
+          }
+        </div>
+
+        <!-- Product Grid -->
+        <app-products-grid></app-products-grid>
+
+        <!-- Infinite Scroll Placeholder -->
+        <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+          <ion-infinite-scroll-content loading-spinner="crescent"></ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+      </div>
+    </ion-content>

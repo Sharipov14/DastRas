@@ -5,22 +5,25 @@ import { InfiniteScrollCustomEvent, IonIcon, IonInfiniteScroll, IonInfiniteScrol
 import { IonContent, IonHeader } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { add, chevronDown, notifications, remove, star, trashOutline } from 'ionicons/icons';
+import { ProductsGridComponent } from "../../shared/components/products/products-grid.component";
 
 
 @Component({
   selector: 'app-home',
+  standalone: true,
   imports: [
     NgClass,
     IonContent,
     IonHeader,
     IonIcon,
     IonInfiniteScroll,
-    IonInfiniteScrollContent
+    IonInfiniteScrollContent,
+    ProductsGridComponent
 ],
-  templateUrl: './home.html',
-  styleUrl: './home.css',
+  templateUrl: './home-page.component.html',
+  styleUrl: './home-page.component.scss',
 })
-export class HomePage {
+export class HomePageComponent {
     protected currentAddress = 'Select address';
     protected notificationUnreadCount = 0;
     protected selectedCategory: number | null  = null;
@@ -43,17 +46,6 @@ export class HomePage {
         { id: 8, name: 'Хлеб' }
     ];
 
-    protected products: { 
-        id: number, 
-        rating: number, 
-        imageUrl: string, 
-        nameRu: string, 
-        unit: string,
-        price: number,
-        categoryId: number,
-        quantity: number
-    }[] = [];
-
     constructor() {
         addIcons({ chevronDown, notifications, star, add, remove, trashOutline });
     }
@@ -62,10 +54,7 @@ export class HomePage {
         this.selectedCategory = id;
     }
 
-    protected filteredProducts() {
-        return this.products.filter(p => p.id === this.selectedCategory || !this.selectedCategory)
-            .sort((a, b) => a.id - b.id);
-    }
+    
 
     protected goToAddresses() {
         this.#router.navigate(['/addresses']);
@@ -80,19 +69,6 @@ export class HomePage {
         //   handle: true
         // });
         // await modal.present();
-    }
-
-    protected goToProduct(id: number) {
-        this.#router.navigate(['/product', id]);
-    }
-
-    protected addToCart(product: any) {
-        console.log('added product',product);
-    }
-
-    protected updateQuantity(product: any, value: number) {
-        product.quantity += value;
-        console.log('updated quantity',product);
     }
 
     protected onIonInfinite(ev: any) {

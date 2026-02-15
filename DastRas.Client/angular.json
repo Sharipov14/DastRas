@@ -32,7 +32,7 @@
               }
             ],
             "styles": [
-              "src/styles.css",
+              "src/styles.scss",
               {
                 "input": "node_modules/@ionic/angular/css/core.css"
               },
@@ -130,7 +130,7 @@
               }
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.scss"
             ],
             "scripts": []
           }
