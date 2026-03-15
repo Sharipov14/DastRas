@@ -1,0 +1,31 @@
+.skeleton-block {
+  margin: 0;
+  --border-radius: 999px;
+  --background: rgba(148, 163, 184, 0.22);
+}
+
+.skeleton-image {
+  width: 100%;
+  height: 100%;
+  --border-radius: 1.2rem;
+}
+
+.skeleton-title {
+  width: 85%;
+  height: 18px;
+}
+
+.skeleton-subtitle {
+  width: 45%;
+  height: 12px;
+}
+
+.skeleton-price {
+  width: 40%;
+  height: 20px;
+}
+
+.skeleton-action {
+  width: 36px;
+  height: 36px;
+}
