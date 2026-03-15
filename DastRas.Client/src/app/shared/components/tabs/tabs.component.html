@@ -1,0 +1,53 @@
+<ion-tabs>
+  <!-- Sticky Mini Cart Block (Floating above tabs) -->
+  @if (cartService.totalItems() > 0) {
+    <div class="absolute bottom-[60px] left-0 w-full px-4 pb-3 z-50 animate-fade-in-up pointer-events-none">
+      <div class="pointer-events-auto bg-white/60 dark:bg-[#1c1c1e]/60 backdrop-blur-xl rounded-[1.2rem] p-1 shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-white/40 dark:border-white/10 flex items-center justify-between h-12">
+        
+        <!-- Delivery Time Selection -->
+        <button
+          class="flex items-center gap-2 pl-1 pr-2 h-full rounded-xl active:bg-black/5 dark:active:bg-white/5 transition-colors">
+          <div class="w-8 h-8 rounded-full bg-[#ff6b35]/10 flex items-center justify-center text-[#ff6b35]">
+             <ion-icon name="time" class="text-lg"></ion-icon>
+          </div>
+          <div class="flex flex-col items-start">
+             <span class="text-[9px] text-gray-500 font-bold uppercase tracking-wider leading-none mb-0.5">Доставка</span>
+             <span class="text-xs font-bold text-gray-900 dark:text-white leading-none flex items-center gap-0.5">
+               {{ cartService.deliveryDay() }}, {{ cartService.deliveryTime() }}
+               <ion-icon name="chevron-down" class="text-[10px] text-[#ff6b35]"></ion-icon>
+             </span>
+          </div>
+        </button>
+
+        <!-- Cart Button -->
+        <button routerLink="/cart" class="bg-[#ff6b35] text-white rounded-xl px-4 flex items-center gap-2 shadow-lg shadow-orange-500/30 active:scale-95 transition-transform h-9 mr-0.5">
+           <ion-icon name="cart" class="text-lg"></ion-icon>
+           <span class="font-bold text-sm whitespace-nowrap">{{ cartService.totalPrice() }} с.</span>
+        </button>
+      
+      </div>
+    </div>
+  }
+
+  <ion-tab-bar slot="bottom" class="bg-white/80 dark:bg-black/80 backdrop-blur-xl border-t border-white/20 dark:border-white/10 h-[60px] pb-safe shadow-[0_-5px_20px_rgba(0,0,0,0.02)]">
+    <ion-tab-button tab="home">
+      <ion-icon name="home"></ion-icon>
+      <ion-label>Главная</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="categories">
+      <ion-icon name="grid"></ion-icon>
+      <ion-label>Каталог</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="orders">
+      <ion-icon name="receipt"></ion-icon>
+      <ion-label>Заказы</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="profile">
+      <ion-icon name="person"></ion-icon>
+      <ion-label>Профиль</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>

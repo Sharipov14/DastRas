@@ -47,7 +47,7 @@
                         {{ product.price }} <span class="text-[#ff6b35] text-sm">c.</span>
                     </span>
 
-                    @if (getQuantityForProduct(product.id) === 0) {
+                    @if (getQuantity(product.id) === 0) {
                         <button
                             class="w-9 h-9 rounded-full bg-gray-900 dark:bg-white text-white dark:text-black flex items-center justify-center active:scale-90 transition-transform shadow-lg shadow-gray-900/20"
                             (click)="$event.stopPropagation(); addToCart(product)">
@@ -57,16 +57,16 @@
                         <div class="flex items-center bg-[#ff6b35] rounded-full h-9 px-1 shadow-lg shadow-orange-500/30"
                             (click)="$event.stopPropagation()">
                             <button class="w-8 h-full flex items-center justify-center text-white active:opacity-70"
-                                (click)="updateQuantity(product, -1)">
-                                <ion-icon [name]="this.getQuantityForProduct(product.id) === 1 ? 'trash-outline' : 'remove'"
+                                (click)="updateQuantity(product.id, -1)">
+                                <ion-icon [name]="this.getQuantity(product.id) === 1 ? 'trash-outline' : 'remove'"
                                     class="text-lg">
                                 </ion-icon>
                             </button>
                             <span class="text-sm font-bold mx-0.5 min-w-[14px] text-center text-white">{{
-                                this.getQuantityForProduct(product.id) }}
+                                this.getQuantity(product.id) }}
                             </span>
                             <button class="w-8 h-full flex items-center justify-center text-white active:opacity-70"
-                                (click)="updateQuantity(product, 1)">
+                                (click)="updateQuantity(product.id, 1)">
                                 <ion-icon name="add" class="text-lg"></ion-icon>
                             </button>
                         </div>

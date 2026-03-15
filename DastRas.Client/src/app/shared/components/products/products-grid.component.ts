@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, Component, inject, Input, input } from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject, Input, input } from '@angular/core';
 import { addIcons } from 'ionicons';
-import { IonIcon, IonCard, IonCardHeader, IonCardContent, IonCardSubtitle, IonCardTitle, IonContent } from "@ionic/angular/standalone";
-import { ProductService } from "../../../core/services/product.service";
-import { Router } from "@angular/router";
-import { Product } from "../../../core/models/product.model";
+import { IonIcon, IonCard, IonCardHeader, IonCardContent, IonCardSubtitle, IonCardTitle, IonContent } from '@ionic/angular/standalone';
+import { ProductService } from '../../../core/services/product.service';
+import { CartService } from '../../../core/services/cart.service';
+import { Router } from '@angular/router';
+import { Product } from '../../../core/models/product.model';
 
 @Component({
     selector: 'app-products-grid',
@@ -22,6 +23,7 @@ export class ProductsGridComponent {
 
     #router = inject(Router);
     #productService = inject(ProductService);
+    #cartService = inject(CartService);
     
     #selectedCategory = this.#productService.selectedCategory;
     protected productt: Product | undefined;
@@ -41,21 +43,18 @@ export class ProductsGridComponent {
         this.#router.navigate(['/product', id]);
     }
 
-    protected getQuantityForProduct(Id: number): number {
-        return this.card.find(x => x.product.id === Id)?.quantity || 0;
+    protected getQuantity(productId: number): number {
+        const item = this.#cartService.items().find(i => i.product.id === productId);
+        return item ? item.quantity : 0;
     }
 
     protected addToCart(product: Product) {
-        this.card.push({ product, quantity: 1 });
+        this.#cartService.addToCart(product);
     }
 
-    protected updateQuantity(product: Product, value: number) {
-        const index = this.card.findIndex(x => x.product.id === product.id);
-        if (index !== -1) {
-            this.card[index].quantity += value;
-            if (this.card[index].quantity === 0) {
-                this.card.splice(index, 1);
-            }
-        }
+    protected updateQuantity(productId: number, change: number) {
+        const currentQty = this.getQuantity(productId);
+        const newQty = currentQty + change;
+        this.#cartService.updateQuantity(productId, newQty);
     }
 }
