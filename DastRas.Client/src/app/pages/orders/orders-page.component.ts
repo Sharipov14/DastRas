@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-orders-page',
@@ -6,10 +6,16 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './orders-page.component.html',
   styleUrls: ['./orders-page.component.scss'],
 })
-export class OrdersPageComponent  implements OnInit {
+export class OrdersPageComponent  implements OnInit, OnDestroy {
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit(): void {
+    console.log('order init');
+  }
+
+  ngOnDestroy(): void {
+    console.log('order destroy');
+  }
 
 }

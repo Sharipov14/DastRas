@@ -3,11 +3,14 @@ ion-tab-bar {
   --border: none;
 
   padding-top: 5px;
+  padding-bottom: var(--app-safe-bottom);
+  height: calc(60px + var(--app-safe-bottom));
 }
 
 ion-tab-button {
-//   --color: #9ca3af;
-//   --color-selected: #ff6b35;
+  min-height: 60px;
+  height: 60px;
+
   ion-icon {
     font-size: 24px;
     transition: transform 0.2s;
@@ -25,4 +28,8 @@ ion-tab-button {
   .dark ion-tab-button {
     --color: #6b7280;
   }
+}
+
+.mini-cart-floating {
+  bottom: calc(60px + var(--app-safe-bottom));
 }

@@ -1,0 +1,13 @@
+.home-header-safe {
+  padding-top: calc(var(--app-safe-top) + 8px);
+}
+
+.home-content-safe {
+  padding-top: calc(var(--app-safe-top) + 70px);
+}
+
+ion-content::part(scroll) {
+  padding-bottom: calc(var(--app-safe-bottom) + 16px);
+  padding-left: max(env(safe-area-inset-left, 0px), 0px);
+  padding-right: max(env(safe-area-inset-right, 0px), 0px);
+}

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-profile-page',
@@ -6,10 +6,16 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './profile-page.component.html',
   styleUrls: ['./profile-page.component.scss'],
 })
-export class ProfilePageComponent  implements OnInit {
+export class ProfilePageComponent  implements OnInit, OnDestroy {
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit(): void {
+    console.log('profile init');
+  }
+
+  ngOnDestroy(): void {
+    console.log('profile destroy');
+  }
 
 }

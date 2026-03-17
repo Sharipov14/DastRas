@@ -1,11 +1,11 @@
 <ion-tabs>
   <!-- Sticky Mini Cart Block (Floating above tabs) -->
   @if (cartService.totalItems() > 0) {
-    <div class="absolute bottom-[60px] left-0 w-full px-4 pb-2 z-50 animate-fade-in-up pointer-events-none">
+    <div class="mini-cart-floating absolute left-0 w-full px-4 pb-2 z-50 animate-fade-in-up pointer-events-none">
       <div class="pointer-events-auto bg-white/60 dark:bg-[#1c1c1e]/60 backdrop-blur-xl rounded-[1.2rem] p-1 shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-white/40 dark:border-white/10 flex items-center justify-between h-12">
         
         <!-- Delivery Time Selection -->
-        <button
+        <button (click)="openModal()"
           class="flex items-center gap-2 pl-1 pr-2 h-full rounded-xl active:bg-black/5 dark:active:bg-white/5 transition-colors">
           <div class="w-8 h-8 rounded-full bg-[#ff6b35]/10 flex items-center justify-center text-[#ff6b35]">
              <ion-icon name="time" class="text-lg"></ion-icon>
@@ -29,7 +29,7 @@
     </div>
   }
 
-  <ion-tab-bar slot="bottom" class="bg-white/80 dark:bg-black/80 backdrop-blur-xl border-t border-white/20 dark:border-white/10 h-[60px] pb-safe shadow-[0_-5px_20px_rgba(0,0,0,0.02)]">
+  <ion-tab-bar slot="bottom" class="tabs-safe bg-white/80 dark:bg-black/80 backdrop-blur-xl border-t border-white/20 dark:border-white/10 shadow-[0_-5px_20px_rgba(0,0,0,0.02)]">
     <ion-tab-button tab="home">
       <ion-icon name="home"></ion-icon>
       <ion-label>Главная</ion-label>

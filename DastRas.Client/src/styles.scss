@@ -10,6 +10,19 @@
         --ion-color-primary-contrast-rgb: 255, 255, 255;
         --ion-color-primary-shade: #e05e2f;
         --ion-color-primary-tint: #ff7a49;
+        --app-safe-top: max(var(--ion-safe-area-top, 0px), env(safe-area-inset-top, 0px));
+        --app-safe-bottom: max(var(--ion-safe-area-bottom, 0px), env(safe-area-inset-bottom, 0px));
+      }
+
+      /* Keep Ionic primary color orange in both light and dark palettes */
+      html:root,
+      html.ion-palette-dark {
+        --ion-color-primary: #ff6b35;
+        --ion-color-primary-rgb: 255, 107, 53;
+        --ion-color-primary-contrast: #ffffff;
+        --ion-color-primary-contrast-rgb: 255, 255, 255;
+        --ion-color-primary-shade: #e05e2f;
+        --ion-color-primary-tint: #ff7a49;
       }
 
       /* Ionic Dark Theme */

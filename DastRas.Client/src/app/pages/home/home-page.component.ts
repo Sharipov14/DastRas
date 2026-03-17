@@ -1,17 +1,18 @@
 import { NgClass } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { InfiniteScrollCustomEvent, IonIcon, IonInfiniteScroll, IonInfiniteScrollContent } from '@ionic/angular/standalone';
+import { InfiniteScrollCustomEvent, IonIcon, IonInfiniteScroll, IonInfiniteScrollContent, IonToolbar } from '@ionic/angular/standalone';
 import { IonContent, IonHeader } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { add, chevronDown, notifications, remove, star, trashOutline } from 'ionicons/icons';
 import { ProductsGridComponent } from "../../shared/components/products/products-grid.component";
+import { ThemeService } from '../../shared/services/theme.service';
 
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [
+  imports: [IonToolbar, 
     NgClass,
     IonContent,
     IonHeader,
@@ -23,17 +24,13 @@ import { ProductsGridComponent } from "../../shared/components/products/products
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss',
 })
-export class HomePageComponent {
+export class HomePageComponent implements OnInit, OnDestroy {
     protected currentAddress = 'Select address';
     protected notificationUnreadCount = 0;
     protected selectedCategory: number | null  = null;
 
-//     productService = inject(ProductService);
-//     cartService = inject(CartService);
-//     addressService = inject(AddressService);
-//   notificationService = inject(NotificationService);
     #router = inject(Router);
-//   modalCtrl = inject(ModalController);
+    #themeService = inject(ThemeService);
 
     protected categories: { id: number, name: string }[] = [
         { id: 1, name: 'Все' },
@@ -50,25 +47,24 @@ export class HomePageComponent {
         addIcons({ chevronDown, notifications, star, add, remove, trashOutline });
     }
 
+    ngOnInit(): void {
+        console.log('home init');
+    }
+
+    ngOnDestroy(): void {
+        console.log('home destroy');
+    }
+
     protected selectCategory(id: number | null) {
         this.selectedCategory = id;
     }
-
-    
 
     protected goToAddresses() {
         this.#router.navigate(['/addresses']);
     }
 
     protected async openNotifications() {
-        // const modal = await this.modalCtrl.create({
-        //   component: NotificationsModalComponent,
-        //   breakpoints: [0, 0.85, 1],
-        //   initialBreakpoint: 0.85,
-        //   cssClass: 'custom-modal',
-        //   handle: true
-        // });
-        // await modal.present();
+        this.#themeService.toggleTheme(!this.#themeService.isDark());
     }
 
     protected onIonInfinite(ev: any) {
