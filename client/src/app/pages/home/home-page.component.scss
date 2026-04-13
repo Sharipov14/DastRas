@@ -2,9 +2,9 @@
   padding-top: calc(var(--app-safe-top) + 8px);
 }
 
-.home-content-safe {
-  padding-top: calc(var(--app-safe-top) + 70px);
-}
+// .home-content-safe {
+//   padding-top: calc(var(--app-safe-top) + 70px);
+// }
 
 ion-content::part(scroll) {
   padding-bottom: calc(var(--app-safe-bottom) + 16px);

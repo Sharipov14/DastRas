@@ -1,14 +1,12 @@
 <!-- Transparent Glass Header -->
 
-<ion-header [translucent]="true" collapse="fade">
+<!-- <ion-header [translucent]="true">
   <ion-toolbar></ion-toolbar>
-</ion-header>
+</ion-header> -->
 
-<ion-content [fullscreen]="true" class="bg-gray-50">
-      <ion-header collapse="condense" class="ion-no-border z-50">
-        <ion-toolbar>
+<ion-content [fullscreen]="true" class="ion-padding bg-gray-50">
+      <div class="z-50">
         <div class="home-header-safe px-5 pb-3 flex items-center justify-between gap-4 bg-white/80 dark:bg-black/80 backdrop-blur-xl border-b border-white/20 dark:border-white/10">
-          
           <!-- Address Selection -->
           <button (click)="goToAddresses()" class="flex flex-col items-start active:opacity-70 transition-opacity">
             <span class="text-[11px] text-gray-500 dark:text-gray-400 font-bold tracking-wide uppercase mb-0.5">Доставка</span>
@@ -29,8 +27,7 @@
           </button>
       
         </div>
-        </ion-toolbar>
-      </ion-header>
+      </div>
       
       <!-- Spacer for Header + Tabs Padding -->
       <div class="home-content-safe pb-24">
