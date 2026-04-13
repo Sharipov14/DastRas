@@ -12,7 +12,7 @@ export const routes: Routes = [
         children: [
             {
                 path: '',
-                redirectTo: 'tabs/home',
+                redirectTo: 'home',
                 pathMatch: 'full'
             },
             {
@@ -22,6 +22,10 @@ export const routes: Routes = [
             {
                 path: 'categories',
                 loadComponent: () => import('./pages/categories/categories-page.component').then(m => m.CategoriesPageComponent)
+            },
+            {
+                path: 'category/:id',
+                loadComponent: () => import('./pages/category-products/category-products-page.component').then(m => m.CategoryProductsPageComponent)
             },
             {
                 path: 'orders',

@@ -1,0 +1,58 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="px-2">
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-back" class="text-gray-900 dark:text-white text-xl"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="font-extrabold text-xl">
+      {{ category()?.emoji }} {{ category()?.name }}
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button class="relative">
+        <ion-icon name="cart" class="text-gray-900 dark:text-white text-xl"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <!-- Sticky Subcategories List -->
+  <div class="bg-white/80 dark:bg-black/80 backdrop-blur-md border-b border-gray-100 dark:border-white/5 overflow-x-auto whitespace-nowrap px-5 py-3 no-scrollbar flex gap-2">
+    @for (sub of subCategories(); track sub.id) {
+      <button 
+        (click)="scrollToSubCategory(sub.id)"
+        class="px-4 py-2 rounded-xl text-xs font-bold transition-all bg-gray-100 text-gray-600 dark:bg-white/5 dark:text-gray-400 active:bg-[#ff6b35] active:text-white">
+        {{ sub.name }}
+      </button>
+    }
+  </div>
+</ion-header>
+
+<ion-content #scrollContent [scrollEvents]="true" class="bg-gray-50 dark:bg-black ion-padding">
+  <div class="px-2 pb-20">
+    
+    @for (group of productsGrouped(); track group.subCategory?.id) {
+      <div [id]="'sub-' + group.subCategory?.id" class="mb-8 scroll-mt-16">
+        <!-- Subcategory Title -->
+        <h3 class="text-lg font-extrabold text-gray-900 dark:text-white mb-4 px-1">
+          {{ group.subCategory ? group.subCategory.name : 'Прочее' }}
+        </h3>
+
+        <!-- Products Grid -->
+        <div class="grid grid-cols-2 gap-4">
+            @for (product of group.products; track product.id) {
+              <app-product-card [product]="product"></app-product-card>
+            }
+        </div>
+      </div>
+    }
+    
+    @if (productsGrouped().length === 0) {
+      <div class="flex flex-col items-center justify-center py-20 text-center">
+        <span class="text-6xl mb-4">🔍</span>
+        <h3 class="text-lg font-bold text-gray-900 dark:text-white">Товары не найдены</h3>
+        <p class="text-gray-500 text-sm">В этой категории пока нет товаров</p>
+      </div>
+    }
+
+  </div>
+</ion-content>

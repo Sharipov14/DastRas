@@ -1,18 +1,25 @@
+export interface Category {
+  id: number;
+  name: string;
+  emoji: string;
+}
+
+export interface SubCategory {
+  id: number;
+  categoryId: number;
+  name: string;
+}
+
 export interface Product {
   id: number;
+  categoryId: number;
+  subCategoryId: number; // Новое поле
   nameRu: string;
   nameTj: string;
   nameEn: string;
   price: number;
   unit: string;
-  imageUrl: string;
   rating: number;
-  categoryId: number;
-  description?: string;
-}
-
-export interface Category {
-  id: number;
-  name: string;
-  emoji: string;
+  imageUrl: string;
+  description: string;
 }

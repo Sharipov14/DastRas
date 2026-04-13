@@ -1,68 +1,61 @@
-<!-- <ion-header [translucent]="true">
+<ion-header [translucent]="true" class="ion-no-border">
   <ion-toolbar>
-    <ion-title>Header</ion-title>
+    <ion-title class="font-extrabold text-xl">Каталог</ion-title>
   </ion-toolbar>
-</ion-header> -->
+</ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Header</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-button id="open-modal" expand="block">Open Sheet Modal</ion-button>
-  <ion-list>
-        <ion-item>Item 1</ion-item>
-        <ion-item>Item 2</ion-item>
-        <ion-item>Item 3</ion-item>
-        <ion-item>Item 4</ion-item>
-        <ion-item>Item 5</ion-item>
-        <ion-item>Item 6</ion-item>
-        <ion-item>Item 7</ion-item>
-        <ion-item>Item 8</ion-item>
-        <ion-item>Item 9</ion-item>
-        <ion-item>Item 10</ion-item>
-        <ion-item>Item 11</ion-item>
-        <ion-item>Item 12</ion-item>
-        <ion-item>Item 13</ion-item>
-        <ion-item>Item 14</ion-item>
-        <ion-item>Item 15</ion-item>
-        <ion-item>Item 16</ion-item>
-        <ion-item>Item 17</ion-item>
-        <ion-item>Item 18</ion-item>
-        <ion-item>Item 19</ion-item>
-        <ion-item>Item 20</ion-item>
-        <ion-item>Item 21</ion-item>
-        <ion-item>Item 22</ion-item>
-        <ion-item>Item 23</ion-item>
-        <ion-item>Item 24</ion-item>
-        <ion-item>Item 25</ion-item>
-        <ion-item>Item 26</ion-item>
-        <ion-item>Item 27</ion-item>
-        <ion-item>Item 28</ion-item>
-        <ion-item>Item 29</ion-item>
-        <ion-item>Item 30</ion-item>
-    </ion-list>
-  <ion-modal
-    trigger="open-modal"
-    [initialBreakpoint]="0.25"
-    [breakpoints]="[0, 0.25, 0.5, 0.75, 1]"
-  >
-    <ng-template>
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Modal</ion-title>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content>
-        <ion-list>
-          <ion-item>Item 1</ion-item>
-          <ion-item>Item 2</ion-item>
-          <ion-item>Item 3</ion-item>
-          <ion-item>Item 4</ion-item>
-          <ion-item>Item 5</ion-item>
-        </ion-list>
-      </ion-content>
-    </ng-template>
-  </ion-modal>
+<ion-content [fullscreen]="true" class="ion-padding bg-gray-50 dark:bg-black">
+  <div class="px-2">
+    <!-- Header with transition for condensed mode -->
+    <ion-header collapse="condense" class="ion-no-border mb-4">
+      <ion-toolbar>
+        <ion-title size="large" class="font-extrabold p-0">Каталог</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <!-- Search Placeholder: Opens the Modal -->
+    <div class="mb-6 active:scale-[0.98] transition-transform" (click)="openSearch()">
+      <div class="bg-white dark:bg-[#1c1c1e] p-3 rounded-2xl flex items-center gap-3 text-gray-400 shadow-sm border border-gray-100 dark:border-white/5">
+        <ion-icon name="search" class="text-xl ml-2"></ion-icon>
+        <span class="text-sm font-semibold">Поиск продуктов...</span>
+      </div>
+    </div>
+
+    <!-- Info text -->
+    <div class="mb-4 px-1">
+      <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-1">Категории</h2>
+      <p class="text-xs text-gray-500">Выберите интересующий вас раздел</p>
+    </div>
+
+    <!-- Categories Grid -->
+    <ion-grid fixed class="p-0">
+      <ion-row>
+        @for (cat of categories(); track cat.id) {
+          <ion-col size="6" size-sm="4">
+            <ion-card 
+              (click)="selectCategory(cat.id)"
+              class="m-0 mb-4 h-36 flex flex-col items-center justify-center transition-all duration-300 active:scale-95 shadow-sm rounded-2xl bg-white dark:bg-[#1c1c1e] border-none">
+              <ion-card-content class="text-center p-0 flex flex-col items-center gap-2">
+                <span class="text-4xl leading-none drop-shadow-md">{{ cat.emoji }}</span>
+                <ion-text class="text-gray-900 dark:text-white font-bold text-sm">
+                  {{ cat.name }}
+                </ion-text>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        }
+      </ion-row>
+    </ion-grid>
+
+    <!-- All Products card -->
+    <div 
+      (click)="selectCategory(0)"
+      class="mt-2 p-5 rounded-2xl bg-gradient-to-r from-[#ff6b35] to-[#ff9e7d] text-white shadow-lg active:scale-[0.98] transition-all flex items-center justify-between">
+      <div>
+        <h3 class="text-lg font-bold">Все продукты</h3>
+        <p class="text-white/80 text-sm">Весь ассортимент магазина</p>
+      </div>
+      <span class="text-4xl">🛒</span>
+    </div>
+  </div>
 </ion-content>
