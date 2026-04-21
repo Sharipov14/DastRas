@@ -1,32 +1,104 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { IonHeader, IonContent, IonToolbar, IonTitle, IonList, IonItem, IonButtons, IonBackButton, IonIcon, IonButton, ModalController } from "@ionic/angular/standalone";
+import { ChangeDetectionStrategy, Component, inject, signal, computed } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { 
+  IonHeader, 
+  IonContent, 
+  IonToolbar, 
+  IonTitle, 
+  IonButtons, 
+  IonIcon, 
+  IonButton, 
+  IonFooter,
+  IonSegment,
+  IonSegmentButton,
+  IonLabel,
+  IonList,
+  IonItem,
+  IonRadioGroup,
+  IonRadio
+} from "@ionic/angular/standalone";
 import { addIcons } from 'ionicons';
-import { close } from 'ionicons/icons';
+import { close, timeOutline, checkmarkCircle } from 'ionicons/icons';
+import { CartService } from '../../../core/services/cart.service';
+import { ModalController } from '@ionic/angular/standalone';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-delivery-modal',
   standalone: true,
   templateUrl: './delivery-modal.component.html',
   styleUrls: ['./delivery-modal.component.scss'],
-  imports: [IonButton, IonIcon, IonButtons, IonItem, IonList, IonTitle, IonToolbar, IonHeader, IonContent],
+  imports: [
+    CommonModule,
+    IonButton, 
+    IonIcon, 
+    IonButtons, 
+    IonTitle, 
+    IonToolbar, 
+    IonHeader, 
+    IonContent,
+    IonFooter,
+    IonSegment,
+    IonSegmentButton,
+    IonLabel,
+    IonList,
+    IonItem,
+    IonRadioGroup,
+    IonRadio
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DeliveryModalComponent  implements OnInit, OnDestroy {
-
+export class DeliveryModalComponent {
   #modalController = inject(ModalController);
-  
+  #cartService = inject(CartService);
+  #themeService = inject(ThemeService);
+
+  protected isDark = this.#themeService.isDark;
+
+  protected days = [
+    { value: 'Сегодня', label: 'Сегодня' },
+    { value: 'Завтра', label: 'Завтра' }
+  ];
+
+  protected timeSlots = [
+    'Прямо сейчас',
+    '10:00 - 11:00',
+    '11:00 - 12:00',
+    '12:00 - 13:00',
+    '13:00 - 14:00',
+    '14:00 - 15:00',
+    '15:00 - 16:00',
+    '16:00 - 17:00',
+    '17:00 - 18:00',
+    '18:00 - 19:00',
+    '19:00 - 20:00',
+    '20:00 - 21:00'
+  ];
+
+  protected selectedDay = signal<string>(this.#cartService.deliveryDay());
+  protected selectedTime = signal<string>(this.#cartService.deliveryTime());
+
   constructor() {
-    addIcons({close});
-   }
-
-  ngOnInit() {
-    console.log('delivery modal init');
+    addIcons({ close, timeOutline, checkmarkCircle });
   }
 
-  ngOnDestroy(): void {
-    console.log('delivery modal destroy');
+  protected onDayChange(event: any) {
+    this.selectedDay.set(event.detail.value);
   }
 
-  protected async closeModal(): Promise<boolean> {
-    return await this.#modalController.dismiss();
+  protected onTimeChange(event: any) {
+    this.selectedTime.set(event.detail.value);
+  }
+
+  protected async confirm() {
+    this.#cartService.setDeliveryInfo(this.selectedTime(), this.selectedDay());
+    await this.#modalController.dismiss({
+      day: this.selectedDay(),
+      time: this.selectedTime()
+    });
+  }
+
+  protected async closeModal() {
+    await this.#modalController.dismiss();
   }
 }

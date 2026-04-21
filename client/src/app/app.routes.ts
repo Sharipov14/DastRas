@@ -24,10 +24,6 @@ export const routes: Routes = [
                 loadComponent: () => import('./pages/categories/categories-page.component').then(m => m.CategoriesPageComponent)
             },
             {
-                path: 'category/:id',
-                loadComponent: () => import('./pages/category-products/category-products-page.component').then(m => m.CategoryProductsPageComponent)
-            },
-            {
                 path: 'orders',
                 loadComponent: () => import('./pages/orders/orders-page.component').then(m => m.OrdersPageComponent)
             },
@@ -37,4 +33,16 @@ export const routes: Routes = [
             }
         ]
     },
+    {
+        path: 'product/:id',
+        loadComponent: () => import('./pages/product-details/product-details-page.component').then(m => m.ProductDetailsPageComponent)
+    },
+    {
+        path: 'search',
+        loadComponent: () => import('./pages/search/search-page.component').then(m => m.SearchPageComponent)
+    },
+    {
+        path: 'category/:id',
+        loadComponent: () => import('./pages/category-products/category-products-page.component').then(m => m.CategoryProductsPageComponent)
+    }
 ];

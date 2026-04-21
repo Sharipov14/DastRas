@@ -37,7 +37,7 @@
           <!-- All Category -->
           <button 
             class="px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 shadow-sm flex items-center gap-2"
-            [ngClass]="selectedCategory() === null ? 'bg-[#ff6b35] text-white shadow-orange-500/30' : 'bg-white text-gray-600 dark:bg-[#1c1c1e] dark:text-gray-300'"
+            [ngClass]="selectedCategoryId() === null ? 'bg-[#ff6b35] text-white shadow-orange-500/30' : 'bg-white text-gray-600 dark:bg-[#1c1c1e] dark:text-gray-300'"
             (click)="selectCategory(null)">
             Все
           </button>
@@ -45,15 +45,15 @@
           @for (cat of categories(); track cat.id) {
             <button 
               class="px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 shadow-sm flex items-center gap-2"
-              [ngClass]="selectedCategory() === cat.id ? 'bg-[#ff6b35] text-white shadow-orange-500/30' : 'bg-white text-gray-600 dark:bg-[#1c1c1e] dark:text-gray-300'"
+              [ngClass]="selectedCategoryId() === cat.id ? 'bg-[#ff6b35] text-white shadow-orange-500/30' : 'bg-white text-gray-600 dark:bg-[#1c1c1e] dark:text-gray-300'"
               (click)="selectCategory(cat.id)">
               <span class="text-lg leading-none">{{ cat.emoji }}</span> {{ cat.name }}
             </button>
           }
         </div>
 
-        <!-- Product Grid -->
-        <app-products-grid></app-products-grid>
+        <!-- Product Grid with Filter -->
+        <app-products-grid [categoryId]="selectedCategoryId()"></app-products-grid>
 
         <!-- Infinite Scroll Placeholder -->
         <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">

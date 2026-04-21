@@ -1,0 +1,45 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+ion-footer.floating-footer {
+  --background: transparent;
+  background: transparent;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  pointer-events: none; // Footer itself is transparent to clicks
+  
+  &::before {
+    display: none; // Removes the default top border/shadow in iOS mode
+  }
+
+  .mini-cart-wrapper {
+    pointer-events: auto; // Mini-cart inside footer handles clicks
+  }
+}
+
+.custom-search {
+  --background: #f3f4f6;
+  --border-radius: 14px;
+  --placeholder-font-weight: 500;
+  --placeholder-color: #9ca3af;
+  --icon-color: #9ca3af;
+  padding: 0;
+
+  .dark & {
+    --background: #1c1c1e;
+  }
+}
+
+ion-content {
+  --background: #ffffff;
+  
+  .dark & {
+    --background: #000000;
+  }
+}

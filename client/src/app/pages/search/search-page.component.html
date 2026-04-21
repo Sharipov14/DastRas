@@ -1,14 +1,15 @@
-<ion-header class="ion-no-border">
+<ion-header class="ion-no-border pt-safe">
   <!-- Top bar with Back and Title -->
   <ion-toolbar class="px-2">
     <ion-buttons slot="start">
-      <ion-button (click)="dismiss()">
-        <ion-icon name="arrow-back" class="text-gray-900 dark:text-white text-xl"></ion-icon>
-      </ion-button>
+      <ion-back-button defaultHref="/tabs/home" 
+        class="text-gray-900 dark:text-white"
+        text="" icon="arrow-back">
+      </ion-back-button>
     </ion-buttons>
     <ion-title class="font-extrabold text-xl">Поиск</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="dismiss()" class="text-sm font-bold text-[#ff6b35]">
+      <ion-button (click)="cancelSearch()" class="text-sm font-bold text-[#ff6b35]">
         Отмена
       </ion-button>
     </ion-buttons>
@@ -30,7 +31,7 @@
 </ion-header>
 
 <ion-content class="bg-white dark:bg-black ion-padding">
-  <div class="animate-fade-in-up">
+  <div class="animate-in fade-in slide-in-from-bottom-4 duration-300">
     <!-- Recommendations: Shown only when query is empty -->
     @if (!searchQuery()) {
       <div class="mt-4 mb-8">
@@ -64,8 +65,14 @@
         </h3>
       }
 
-      <!-- Reusing the Products Grid -->
-      <app-products-grid></app-products-grid>
+      <!-- Reusing the Products Grid with local search query -->
+      <app-products-grid [searchQuery]="searchQuery()"></app-products-grid>
     </div>
   </div>
 </ion-content>
+
+<ion-footer class="ion-no-border p-4 pb-safe floating-footer">
+  <div class="mini-cart-wrapper">
+    <app-mini-cart></app-mini-cart>
+  </div>
+</ion-footer>

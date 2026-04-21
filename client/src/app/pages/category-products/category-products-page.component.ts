@@ -1,12 +1,13 @@
-import { ChangeDetectionStrategy, Component, OnInit, inject, signal, computed, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, signal, computed, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IonHeader, IonContent, IonToolbar, IonTitle, IonButtons, IonBackButton, IonIcon, IonText, IonGrid, IonRow, IonCol, IonButton } from "@ionic/angular/standalone";
+import { IonHeader, IonContent, IonToolbar, IonTitle, IonButtons, IonBackButton, IonIcon, IonText, IonGrid, IonRow, IonCol, IonButton, IonFooter } from "@ionic/angular/standalone";
 import { ProductService } from '../../core/services/product.service';
 import { Category, Product, SubCategory } from '../../core/models/product.model';
 import { addIcons } from 'ionicons';
 import { arrowBack, cart } from 'ionicons/icons';
 import { CommonModule } from '@angular/common';
 import { ProductCardComponent } from '../../shared/components/products/product-card.component';
+import { MiniCartComponent } from '../../shared/components/mini-cart/mini-cart.component';
 
 @Component({
   selector: 'app-category-products-page',
@@ -14,19 +15,22 @@ import { ProductCardComponent } from '../../shared/components/products/product-c
   templateUrl: './category-products-page.component.html',
   imports: [IonButton, 
     CommonModule,
-    IonCol, IonRow, IonGrid, IonText, IonIcon, IonBackButton, IonButtons, IonToolbar, IonTitle, IonHeader, IonContent,
-    ProductCardComponent
+    IonCol, IonRow, IonFooter, IonGrid, IonText, IonIcon, IonBackButton, IonButtons, IonToolbar, IonTitle, IonHeader, IonContent,
+    ProductCardComponent,
+    MiniCartComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CategoryProductsPageComponent implements OnInit {
   @ViewChild('scrollContent', { static: false }) content?: IonContent;
+  @ViewChild('subCategoryBar', { static: false }) subCategoryBar?: ElementRef;
 
   #route = inject(ActivatedRoute);
   #productService = inject(ProductService);
   #router = inject(Router);
 
   protected categoryId = signal<number | null>(null);
+  protected activeSubCategoryId = signal<number | null>(null);
   
   protected category = computed(() => {
     return this.#productService.categories().find(c => c.id === this.categoryId());
@@ -63,15 +67,46 @@ export class CategoryProductsPageComponent implements OnInit {
     const id = this.#route.snapshot.paramMap.get('id');
     if (id) {
       this.categoryId.set(Number(id));
+      // Set first subcategory as active initially if exists
+      const firstSub = this.subCategories()[0];
+      if (firstSub) this.activeSubCategoryId.set(firstSub.id);
+    }
+  }
+
+  protected onScroll(event: any) {
+    const scrollTop = event.detail.scrollTop;
+    const groups = this.productsGrouped();
+    
+    // Find which group is currently in view (with some offset)
+    for (let i = groups.length - 1; i >= 0; i--) {
+      const group = groups[i];
+      const element = document.getElementById(`sub-${group.subCategory?.id}`);
+      if (element) {
+        // offsetTop is relative to the offsetParent, but we need position relative to ion-content
+        if (element.offsetTop <= scrollTop + 100) {
+          if (group.subCategory && this.activeSubCategoryId() !== group.subCategory.id) {
+            this.activeSubCategoryId.set(group.subCategory.id);
+            this.scrollSubCategoryBar(group.subCategory.id);
+          }
+          break;
+        }
+      }
+    }
+  }
+
+  private scrollSubCategoryBar(subId: number) {
+    const btn = document.getElementById(`btn-sub-${subId}`);
+    if (btn && this.subCategoryBar) {
+      btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
     }
   }
 
   protected scrollToSubCategory(subId: number) {
     const element = document.getElementById(`sub-${subId}`);
-    if (element) {
-      const yOffset = -60; 
-      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      this.content?.scrollToPoint(0, y, 500);
+    if (element && this.content) {
+      const y = element.offsetTop - 20; // 20px padding
+      this.content.scrollToPoint(0, y, 500);
+      this.activeSubCategoryId.set(subId);
     }
   }
 

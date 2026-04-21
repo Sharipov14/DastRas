@@ -1,6 +1,100 @@
-// ion-header {
-//     --background: transparent;
-// }
+:host {
+    display: block;
+    height: 100%;
+}
+
+// Light Mode Defaults
+ion-toolbar {
+    --background: #ffffff;
+    --color: #111827;
+}
+
 ion-content {
-    --background: transparent;
+    --background: #ffffff;
+    --color: #111827;
+}
+
+ion-footer {
+    --background: #ffffff;
+}
+
+ion-item {
+    --padding-start: 12px;
+    --padding-end: 12px;
+    --inner-padding-end: 0;
+    --background: #f9fafb;
+    --color: #111827;
+    margin-bottom: 4px;
+}
+
+// Dark Mode Overrides using host-context
+:host-context(.dark) {
+    ion-toolbar {
+        --background: #1c1c1e;
+        --color: #ffffff;
+    }
+
+    ion-content {
+        --background: #000000;
+        --color: #ffffff;
+    }
+
+    ion-footer {
+        --background: #000000;
+    }
+
+    ion-item {
+        --background: #111111;
+        --color: #ffffff;
+    }
+
+    .custom-segment {
+        --background: #1c1c1e;
+        background: #1c1c1e;
+
+        ion-segment-button {
+            --indicator-color: #2c2c2e;
+            --color: #9ca3af;
+            --color-checked: #ffffff;
+        }
+    }
+
+    .active-slot {
+        --background: #1c1c1e;
+    }
+
+    .custom-radio {
+        --color: #374151;
+    }
+}
+
+.custom-segment {
+    --background: #f3f4f6;
+    background: #f3f4f6;
+    border-radius: 16px;
+    padding: 4px;
+
+    ion-segment-button {
+        --indicator-color: #ffffff;
+        --color: #6b7280;
+        --color-checked: #111827;
+        --border-radius: 12px;
+        margin: 0;
+        min-height: 40px;
+
+        &::part(indicator-background) {
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+    }
+}
+
+.active-slot {
+    border-color: #ff6b35 !important;
+    box-shadow: 0 4px 20px rgba(255, 107, 53, 0.08);
+}
+
+.custom-radio {
+    --color: #d1d5db;
+    --color-checked: #ff6b35;
+    margin: 0;
 }

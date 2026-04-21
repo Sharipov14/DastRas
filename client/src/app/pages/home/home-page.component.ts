@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgClass } from '@angular/common';
 import { InfiniteScrollCustomEvent, IonIcon, IonInfiniteScroll, IonInfiniteScrollContent, IonToolbar, IonContent, IonHeader } from '@ionic/angular/standalone';
@@ -33,10 +33,10 @@ export class HomePageComponent implements OnInit, OnDestroy {
     // Template state
     protected currentAddress = 'Select address';
     protected notificationUnreadCount = 0;
-    
-    // Используем сигналы из сервиса
+
+    // Local UI state
     protected categories = this.#productService.categories;
-    protected selectedCategory = this.#productService.selectedCategory;
+    protected selectedCategoryId = signal<number | null>(null);
 
     constructor() {
         // Рекомендуется централизовать в будущем, но пока оставляем здесь
@@ -52,8 +52,13 @@ export class HomePageComponent implements OnInit, OnDestroy {
     }
 
     protected selectCategory(id: number | null) {
-        this.#productService.selectedCategory.set(id);
+        if (id === null) {
+            this.selectedCategoryId.set(null);
+        } else {
+            this.#router.navigate(['/category', id]);
+        }
     }
+
 
     protected goToAddresses() {
         this.#router.navigate(['/addresses']);

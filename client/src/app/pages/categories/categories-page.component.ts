@@ -2,33 +2,30 @@ import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, inject } from '@
 import { IonHeader, IonContent, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonText, IonSearchbar, IonIcon } from "@ionic/angular/standalone";
 import { ProductService } from '../../core/services/product.service';
 import { Router } from '@angular/router';
-import { ModalController } from '@ionic/angular/standalone';
-import { SearchModalComponent } from '../../shared/components/search/search-modal.component';
 
 @Component({
   selector: 'app-categories-page',
   standalone: true,
   templateUrl: './categories-page.component.html',
   styleUrls: ['./categories-page.component.scss'],
-  imports: [IonIcon, 
+  imports: [IonIcon,
     IonSearchbar,
-    IonText, 
-    IonCardContent, 
-    IonCard, 
-    IonCol, 
-    IonRow, 
-    IonGrid, 
-    IonToolbar, 
-    IonTitle, 
-    IonHeader, 
-    IonContent
+    IonText,
+    IonCardContent,
+    IonCard,
+    IonCol,
+    IonRow,
+    IonGrid,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    IonHeader
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CategoriesPageComponent implements OnInit, OnDestroy {
   #productService = inject(ProductService);
   #router = inject(Router);
-  #modalController = inject(ModalController);
 
   protected categories = this.#productService.categories;
 
@@ -41,28 +38,15 @@ export class CategoriesPageComponent implements OnInit, OnDestroy {
     console.log('categories destroy');
   }
 
-  protected async openSearch() {
-    const modal = await this.#modalController.create({
-      component: SearchModalComponent,
-      cssClass: 'search-modal-fullscreen',
-      animated: true,
-      mode: 'ios',
-      backdropDismiss: true,
-      handle: false
-    });
-    
-    await modal.present();
+  protected goToSearch() {
+    this.#router.navigate(['/search']);
   }
 
   protected selectCategory(id: number) {
     if (id === 0) {
-      this.#productService.selectedCategory.set(null);
-      this.#productService.searchQuery.set('');
       this.#router.navigate(['/tabs/home']);
     } else {
-      this.#productService.selectedCategory.set(id);
-      this.#productService.searchQuery.set('');
-      this.#router.navigate(['/tabs/category', id]);
+      this.#router.navigate(['/category', id]);
     }
   }
 }
