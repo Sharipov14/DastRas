@@ -1,9 +1,22 @@
 import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgClass } from '@angular/common';
-import { InfiniteScrollCustomEvent, IonIcon, IonInfiniteScroll, IonInfiniteScrollContent, IonToolbar, IonContent, IonHeader } from '@ionic/angular/standalone';
+import { 
+  InfiniteScrollCustomEvent, 
+  IonIcon, 
+  IonInfiniteScroll, 
+  IonInfiniteScrollContent, 
+  IonToolbar, 
+  IonContent, 
+  IonHeader,
+  IonButtons,
+  IonButton,
+  IonTitle,
+  IonSearchbar,
+  IonBadge
+} from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { add, chevronDown, notifications, remove, star, trashOutline } from 'ionicons/icons';
+import { add, chevronDown, notifications, remove, star, trashOutline, search, locationOutline } from 'ionicons/icons';
 import { ProductsGridComponent } from "../../shared/components/products/products-grid.component";
 import { ThemeService } from '../../shared/services/theme.service';
 import { ProductService } from '../../core/services/product.service';
@@ -19,6 +32,11 @@ import { ProductService } from '../../core/services/product.service';
     IonIcon,
     IonInfiniteScroll,
     IonInfiniteScrollContent,
+    IonButtons,
+    IonButton,
+    IonTitle,
+    IonSearchbar,
+    IonBadge,
     ProductsGridComponent
   ],
   templateUrl: './home-page.component.html',
@@ -31,24 +49,21 @@ export class HomePageComponent implements OnInit, OnDestroy {
     #productService = inject(ProductService);
 
     // Template state
-    protected currentAddress = 'Select address';
-    protected notificationUnreadCount = 0;
+    protected currentAddress = signal('Выбрать адрес');
+    protected notificationUnreadCount = signal(2); // Mock value
 
     // Local UI state
     protected categories = this.#productService.categories;
     protected selectedCategoryId = signal<number | null>(null);
 
     constructor() {
-        // Рекомендуется централизовать в будущем, но пока оставляем здесь
-        addIcons({ chevronDown, notifications, star, add, remove, trashOutline });
+        addIcons({ chevronDown, notifications, star, add, remove, trashOutline, search, locationOutline });
     }
 
     ngOnInit(): void {
-        console.log('home init');
     }
 
     ngOnDestroy(): void {
-        console.log('home destroy');
     }
 
     protected selectCategory(id: number | null) {
@@ -64,8 +79,16 @@ export class HomePageComponent implements OnInit, OnDestroy {
         this.#router.navigate(['/addresses']);
     }
 
+    protected goToSearch() {
+        this.#router.navigate(['/search']);
+    }
+
     protected async openNotifications() {
-        this.#themeService.toggleTheme(!this.#themeService.isDark());
+        // Here we could open a modal or navigate to notifications page
+        // For now, let's toggle theme as a placeholder if needed, or just console log
+        console.log('Open notifications');
+        // Toggle theme for demo if requested by user hint previously (it was in the code)
+        // this.#themeService.toggleTheme(!this.#themeService.isDark());
     }
 
     protected onIonInfinite(ev: any) {

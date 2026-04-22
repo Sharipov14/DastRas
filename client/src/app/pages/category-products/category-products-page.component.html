@@ -1,9 +1,10 @@
 <ion-header class="ion-no-border pt-safe">
   <ion-toolbar class="px-2">
     <ion-buttons slot="start">
-      <ion-button (click)="goBack()">
-        <ion-icon name="arrow-back" class="text-gray-900 dark:text-white text-xl"></ion-icon>
-      </ion-button>
+      <ion-back-button defaultHref="/tabs/home" 
+        class="text-gray-900 dark:text-white"
+        text="" icon="arrow-back">
+      </ion-back-button>
     </ion-buttons>
     <ion-title class="font-extrabold text-xl">
       {{ category()?.emoji }} {{ category()?.name }}

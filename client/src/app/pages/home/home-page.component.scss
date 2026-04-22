@@ -1,1 +1,70 @@
+:host {
+  display: block;
+}
 
+.pt-safe {
+  padding-top: var(--app-safe-top);
+}
+
+ion-toolbar {
+  --background: transparent;
+  --border-width: 0;
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --min-height: 56px;
+}
+
+.address-button {
+  --padding-start: 8px;
+  --padding-end: 8px;
+  --border-radius: 12px;
+  height: auto;
+  margin: 0;
+
+  &::part(native) {
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+}
+
+.notification-button {
+  --padding-start: 0;
+  --padding-end: 0;
+  --border-radius: 12px;
+  margin: 0;
+}
+
+.search-container {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.category-pill {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Smooth Category Selection Transition */
+.category-pill {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Banner Animation */
+.bg-gradient-to-br {
+  background-size: 200% 200%;
+  animation: gradientBG 15s ease infinite;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}

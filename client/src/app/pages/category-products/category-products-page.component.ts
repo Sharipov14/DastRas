@@ -109,8 +109,4 @@ export class CategoryProductsPageComponent implements OnInit {
       this.activeSubCategoryId.set(subId);
     }
   }
-
-  protected goBack() {
-    this.#router.navigate(['/tabs/categories']);
-  }
 }
