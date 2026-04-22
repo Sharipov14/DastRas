@@ -83,3 +83,22 @@
         -ms-overflow-style: none;
         scrollbar-width: none;
       }
+
+      /* Splash Screen Animations */
+      @keyframes pulse-slow {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.05); opacity: 0.9; }
+      }
+
+      @keyframes progress-fast {
+        0% { transform: translateX(-100%); width: 30%; }
+        100% { transform: translateX(400%); width: 30%; }
+      }
+
+      .animate-pulse-slow {
+        animation: pulse-slow 3s infinite ease-in-out;
+      }
+
+      .animate-progress-fast {
+        animation: progress-fast 1s infinite linear;
+      }

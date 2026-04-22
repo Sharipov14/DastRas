@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { IonHeader, IonContent, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonText, IonSearchbar, IonIcon } from "@ionic/angular/standalone";
+import { IonHeader, IonContent, IonTitle, IonToolbar, IonIcon } from "@ionic/angular/standalone";
 import { ProductService } from '../../core/services/product.service';
 import { Router } from '@angular/router';
 
@@ -9,13 +9,6 @@ import { Router } from '@angular/router';
   templateUrl: './categories-page.component.html',
   styleUrls: ['./categories-page.component.scss'],
   imports: [IonIcon,
-    IonSearchbar,
-    IonText,
-    IonCardContent,
-    IonCard,
-    IonCol,
-    IonRow,
-    IonGrid,
     IonToolbar,
     IonTitle,
     IonContent,

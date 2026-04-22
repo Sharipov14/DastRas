@@ -1,3 +1,114 @@
-<p>
-  profile works!
-</p>
+<ion-header class="ion-no-border pt-safe bg-white dark:bg-black">
+    <ion-toolbar class="px-2">
+        <ion-title class="text-xl font-black">Профиль</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="bg-white dark:bg-black">
+    <div class="px-5 pb-32">
+        
+        <!-- User Info -->
+        <div class="flex items-center gap-4 mt-6 mb-8">
+            <div class="w-20 h-20 rounded-[2rem] overflow-hidden border-4 border-orange-100 dark:border-orange-500/20 shadow-lg">
+                <img [src]="user().avatar" class="w-full h-full object-cover">
+            </div>
+            <div>
+                <h2 class="text-xl font-black text-gray-900 dark:text-white mb-0.5">{{ user().name }}</h2>
+                <p class="text-sm font-bold text-gray-400">{{ user().phone }}</p>
+                <button class="mt-2 text-xs font-black text-[#ff6b35] uppercase tracking-widest flex items-center gap-1 active:opacity-60 transition-opacity">
+                    Редактировать
+                    <ion-icon name="chevron-forward-outline"></ion-icon>
+                </button>
+            </div>
+        </div>
+
+        <!-- Wallet Card -->
+        <div class="bg-gradient-to-br from-gray-900 to-black dark:from-[#1c1c1e] dark:to-black rounded-[2.5rem] p-6 mb-8 shadow-2xl relative overflow-hidden">
+            <div class="relative z-10 flex flex-col h-full">
+                <div class="flex items-center gap-2 mb-4 opacity-60">
+                    <ion-icon name="wallet-outline" class="text-white text-lg"></ion-icon>
+                    <span class="text-xs font-bold text-white uppercase tracking-[0.2em]">DastRas Кошелек</span>
+                </div>
+                <div class="flex items-end justify-between">
+                    <div>
+                        <p class="text-3xl font-black text-white leading-none mb-1">
+                            {{ user().balance }} <span class="text-lg font-bold">сом</span>
+                        </p>
+                        <p class="text-[10px] font-bold text-orange-400 uppercase tracking-widest">Доступный баланс</p>
+                    </div>
+                    <ion-button size="small" class="--border-radius-xl font-black text-xs h-10 px-4" color="primary">
+                        Пополнить
+                    </ion-button>
+                </div>
+            </div>
+            <!-- Decorative circle -->
+            <div class="absolute -right-10 -top-10 w-40 h-40 bg-orange-500/10 rounded-full blur-3xl"></div>
+        </div>
+
+        <!-- Menu List -->
+        <div class="flex flex-col gap-2">
+            
+            <button (click)="navigateTo('/addresses')" class="menu-item">
+                <div class="menu-icon-wrapper bg-blue-100 dark:bg-blue-500/10 text-blue-500">
+                    <ion-icon name="location-outline"></ion-icon>
+                </div>
+                <span class="menu-label">Мои адреса</span>
+                <ion-icon name="chevron-forward-outline" class="menu-arrow"></ion-icon>
+            </button>
+
+            <button class="menu-item">
+                <div class="menu-icon-wrapper bg-purple-100 dark:bg-purple-500/10 text-purple-500">
+                    <ion-icon name="card-outline"></ion-icon>
+                </div>
+                <span class="menu-label">Способы оплаты</span>
+                <ion-icon name="chevron-forward-outline" class="menu-arrow"></ion-icon>
+            </button>
+
+            <button class="menu-item">
+                <div class="menu-icon-wrapper bg-green-100 dark:bg-green-500/10 text-green-500">
+                    <ion-icon name="notifications-outline"></ion-icon>
+                </div>
+                <span class="menu-label">Уведомления</span>
+                <ion-badge color="danger" class="menu-badge">2</ion-badge>
+                <ion-icon name="chevron-forward-outline" class="menu-arrow ml-2"></ion-icon>
+            </button>
+
+            <div class="h-[1px] bg-gray-100 dark:bg-white/5 my-2"></div>
+
+            <!-- Theme Toggle -->
+            <div class="menu-item no-active">
+                <div class="menu-icon-wrapper bg-orange-100 dark:bg-orange-500/10 text-[#ff6b35]">
+                    <ion-icon name="moon-outline"></ion-icon>
+                </div>
+                <span class="menu-label">Темная тема</span>
+                <ion-toggle [checked]="themeService.isDark()" (ionChange)="toggleTheme($event)" slot="end" mode="md"></ion-toggle>
+            </div>
+
+            <button class="menu-item">
+                <div class="menu-icon-wrapper bg-teal-100 dark:bg-teal-500/10 text-teal-500">
+                    <ion-icon name="language-outline"></ion-icon>
+                </div>
+                <span class="menu-label">Язык приложения</span>
+                <ion-note slot="end" class="text-xs font-bold mr-2">Русский</ion-note>
+                <ion-icon name="chevron-forward-outline" class="menu-arrow"></ion-icon>
+            </button>
+
+            <button class="menu-item">
+                <div class="menu-icon-wrapper bg-gray-100 dark:bg-white/10 text-gray-500">
+                    <ion-icon name="help-circle-outline"></ion-icon>
+                </div>
+                <span class="menu-label">Служба поддержки</span>
+                <ion-icon name="chevron-forward-outline" class="menu-arrow"></ion-icon>
+            </button>
+
+            <button (click)="logout()" class="menu-item mt-4 text-red-500">
+                <div class="menu-icon-wrapper bg-red-100 dark:bg-red-500/10 text-red-500">
+                    <ion-icon name="log-out-outline"></ion-icon>
+                </div>
+                <span class="menu-label font-black">Выйти из аккаунта</span>
+            </button>
+
+        </div>
+
+    </div>
+</ion-content>

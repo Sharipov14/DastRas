@@ -11,8 +11,6 @@ import {
   IonHeader,
   IonButtons,
   IonButton,
-  IonTitle,
-  IonSearchbar,
   IonBadge
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
@@ -34,8 +32,6 @@ import { ProductService } from '../../core/services/product.service';
     IonInfiniteScrollContent,
     IonButtons,
     IonButton,
-    IonTitle,
-    IonSearchbar,
     IonBadge,
     ProductsGridComponent
   ],

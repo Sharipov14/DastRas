@@ -1,0 +1,33 @@
+.payment-item {
+    --padding-start: 0;
+    --inner-padding-end: 0;
+    --background: transparent;
+    margin-bottom: 0;
+
+    div {
+        transition: all 0.2s ease-in-out;
+    }
+}
+
+ion-radio {
+    --color: #d1d5db;
+    --color-checked: #ff6b35;
+}
+
+/* Custom Alert Styling hint */
+::ng-deep .custom-alert {
+    --background: var(--ion-background-color, #fff);
+    
+    .alert-button-group {
+        padding: 10px;
+    }
+    
+    .alert-button {
+        background: #ff6b35;
+        color: white;
+        border-radius: 12px;
+        font-weight: bold;
+        width: 100%;
+        margin: 0;
+    }
+}

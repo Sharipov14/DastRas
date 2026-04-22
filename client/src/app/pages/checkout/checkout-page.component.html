@@ -1,0 +1,135 @@
+<ion-header class="ion-no-border pt-safe bg-white dark:bg-black">
+    <ion-toolbar class="px-2">
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/cart" text="" icon="chevron-back"></ion-back-button>
+        </ion-buttons>
+        <ion-title class="text-xl font-black">Оформление</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="bg-white dark:bg-black">
+    <div class="px-5 pb-32">
+        
+        <!-- Delivery Section -->
+        <div class="mt-6 mb-8">
+            <h3 class="text-lg font-black text-gray-900 dark:text-white mb-4">Доставка</h3>
+            
+            <div class="flex flex-col gap-3">
+                <!-- Address Card -->
+                <button (click)="changeAddress()" class="w-full bg-gray-50 dark:bg-white/5 rounded-3xl p-4 flex items-center justify-between border border-gray-100 dark:border-white/5 text-left active:scale-[0.98] transition-transform">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-2xl bg-orange-100 dark:bg-orange-500/20 flex items-center justify-center">
+                            <ion-icon name="location-outline" class="text-xl text-[#ff6b35]"></ion-icon>
+                        </div>
+                        <div>
+                            <p class="text-[10px] text-gray-400 font-bold uppercase tracking-wider mb-0.5">Адрес доставки</p>
+                            <p class="text-sm font-bold text-gray-900 dark:text-white truncate max-w-[200px]">
+                                {{ selectedAddress() }}
+                            </p>
+                        </div>
+                    </div>
+                    <ion-icon name="chevron-forward-outline" class="text-gray-300"></ion-icon>
+                </button>
+
+                <!-- Time Card -->
+                <div class="w-full bg-gray-50 dark:bg-white/5 rounded-3xl p-4 flex items-center gap-4 border border-gray-100 dark:border-white/5">
+                    <div class="w-10 h-10 rounded-2xl bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center">
+                        <ion-icon name="time-outline" class="text-xl text-blue-500"></ion-icon>
+                    </div>
+                    <div>
+                        <p class="text-[10px] text-gray-400 font-bold uppercase tracking-wider mb-0.5">Время доставки</p>
+                        <p class="text-sm font-bold text-gray-900 dark:text-white">
+                            {{ cartService.deliveryDay() }}, {{ cartService.deliveryTime() }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Method Section -->
+        <div class="mb-8">
+            <h3 class="text-lg font-black text-gray-900 dark:text-white mb-4">Способ оплаты</h3>
+            
+            <ion-radio-group [value]="paymentMethod()" (ionChange)="setPaymentMethod($event)">
+                <div class="flex flex-col gap-3">
+                    <!-- Cash -->
+                    <ion-item lines="none" class="payment-item --background-transparent">
+                        <div class="w-full flex items-center justify-between bg-gray-50 dark:bg-white/5 rounded-3xl p-4 border border-gray-100 dark:border-white/5"
+                             [ngClass]="{'border-[#ff6b35] bg-orange-50/30 dark:bg-orange-500/5': paymentMethod() === 'cash'}">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-2xl bg-green-100 dark:bg-green-500/20 flex items-center justify-center">
+                                    <ion-icon name="cash-outline" class="text-xl text-green-500"></ion-icon>
+                                </div>
+                                <ion-label class="text-sm font-bold text-gray-900 dark:text-white">Наличными курьеру</ion-label>
+                            </div>
+                            <ion-radio slot="end" value="cash" mode="md" class="--color-checked-[#ff6b35]"></ion-radio>
+                        </div>
+                    </ion-item>
+
+                    <!-- Card -->
+                    <ion-item lines="none" class="payment-item --background-transparent">
+                        <div class="w-full flex items-center justify-between bg-gray-50 dark:bg-white/5 rounded-3xl p-4 border border-gray-100 dark:border-white/5"
+                             [ngClass]="{'border-[#ff6b35] bg-orange-50/30 dark:bg-orange-500/5': paymentMethod() === 'card'}">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-2xl bg-purple-100 dark:bg-purple-500/20 flex items-center justify-center">
+                                    <ion-icon name="card-outline" class="text-xl text-purple-500"></ion-icon>
+                                </div>
+                                <ion-label class="text-sm font-bold text-gray-900 dark:text-white">Картой при получении</ion-label>
+                            </div>
+                            <ion-radio slot="end" value="card" mode="md"></ion-radio>
+                        </div>
+                    </ion-item>
+
+                    <!-- Wallet -->
+                    <ion-item lines="none" class="payment-item --background-transparent">
+                        <div class="w-full flex items-center justify-between bg-gray-50 dark:bg-white/5 rounded-3xl p-4 border border-gray-100 dark:border-white/5"
+                             [ngClass]="{'border-[#ff6b35] bg-orange-50/30 dark:bg-orange-500/5': paymentMethod() === 'wallet'}">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-2xl bg-yellow-100 dark:bg-yellow-500/20 flex items-center justify-center">
+                                    <ion-icon name="wallet-outline" class="text-xl text-yellow-600"></ion-icon>
+                                </div>
+                                <div>
+                                    <ion-label class="text-sm font-bold text-gray-900 dark:text-white">DastRas Кошелек</ion-label>
+                                    <p class="text-[10px] text-gray-400 font-bold tracking-tight">Баланс: 0.00 сом</p>
+                                </div>
+                            </div>
+                            <ion-radio slot="end" value="wallet" mode="md"></ion-radio>
+                        </div>
+                    </ion-item>
+                </div>
+            </ion-radio-group>
+        </div>
+
+        <!-- Summary Section -->
+        <div class="bg-gray-900 dark:bg-white rounded-[2.5rem] p-6 text-white dark:text-black shadow-xl">
+            <h4 class="text-xs font-bold uppercase tracking-[0.2em] opacity-50 mb-4">Ваш заказ</h4>
+            <div class="flex justify-between mb-2">
+                <span class="text-sm font-medium opacity-80">Сумма товаров</span>
+                <span class="text-sm font-bold">{{ cartService.totalPrice() }} сом</span>
+            </div>
+            <div class="flex justify-between mb-4">
+                <span class="text-sm font-medium opacity-80">Доставка</span>
+                <span class="text-sm font-bold text-[#ff6b35]">Бесплатно</span>
+            </div>
+            <div class="h-[1px] bg-white/10 dark:bg-black/10 mb-4"></div>
+            <div class="flex justify-between items-center">
+                <span class="text-lg font-black">К оплате</span>
+                <span class="text-2xl font-black text-[#ff6b35]">{{ cartService.totalPrice() }} сом</span>
+            </div>
+        </div>
+
+        <div class="mt-6 flex items-center gap-3 px-2">
+            <ion-icon name="checkmark-circle-outline" class="text-xl text-green-500"></ion-icon>
+            <p class="text-[11px] text-gray-400 font-medium leading-tight">
+                Нажимая кнопку «Оформить», вы соглашаетесь с условиями оферты и политикой конфиденциальности.
+            </p>
+        </div>
+
+    </div>
+</ion-content>
+
+<ion-footer class="ion-no-border bg-white dark:bg-black p-5 pb-safe">
+    <ion-button (click)="confirmOrder()" expand="block" class="h-16 text-lg font-black --border-radius-2xl shadow-xl shadow-orange-500/30">
+        Подтвердить заказ
+    </ion-button>
+</ion-footer>

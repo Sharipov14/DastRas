@@ -1,3 +1,93 @@
-<p>
-  orders-page works!
-</p>
+<ion-header class="ion-no-border pt-safe bg-white dark:bg-black">
+    <ion-toolbar class="px-2">
+        <ion-title class="text-xl font-black">Мои заказы</ion-title>
+    </ion-toolbar>
+    <ion-toolbar class="px-4 pb-2">
+        <ion-segment [value]="selectedSegment()" (ionChange)="segmentChanged($event)" mode="md" class="bg-gray-100 dark:bg-white/5 rounded-2xl p-1">
+            <ion-segment-button value="active" class="min-h-[36px] --indicator-color-transparent">
+                <ion-label class="text-xs font-bold">Активные</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="past" class="min-h-[36px] --indicator-color-transparent">
+                <ion-label class="text-xs font-bold">Завершенные</ion-label>
+            </ion-segment-button>
+        </ion-segment>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="bg-white dark:bg-black">
+    <div class="px-5 pb-32">
+        
+        @if (filteredOrders().length > 0) {
+            <div class="flex flex-col gap-4 mt-4">
+                @for (order of filteredOrders(); track order.id) {
+                    <div class="bg-gray-50 dark:bg-white/5 rounded-[2rem] p-4 border border-gray-100 dark:border-white/5 active:scale-[0.98] transition-transform"
+                         (click)="viewOrderDetails(order.id)">
+                        
+                        <!-- Top Info -->
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-2xl overflow-hidden bg-gray-200 dark:bg-black/20 flex-shrink-0">
+                                    <img [src]="order.imageUrl" class="w-full h-full object-cover">
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-black text-gray-900 dark:text-white mb-0.5">
+                                        {{ order.id }}
+                                    </h4>
+                                    <p class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">
+                                        {{ order.date }}
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex flex-col items-end gap-1">
+                                <div class="flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider"
+                                     [ngClass]="{
+                                        'bg-green-100 text-green-600 dark:bg-green-500/10 dark:text-green-500': order.status === 'delivered',
+                                        'bg-orange-100 text-orange-600 dark:bg-orange-500/10 dark:text-orange-500': order.status === 'pending',
+                                        'bg-red-100 text-red-600 dark:bg-red-500/10 dark:text-red-500': order.status === 'cancelled'
+                                     }">
+                                    <ion-icon [name]="getStatusIcon(order.status)"></ion-icon>
+                                    {{ getStatusLabel(order.status) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="h-[1px] bg-gray-100 dark:bg-white/5 mb-4"></div>
+
+                        <!-- Bottom Info -->
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-[10px] text-gray-400 font-bold uppercase tracking-wider mb-0.5">Сумма заказа</p>
+                                <p class="text-base font-black text-gray-900 dark:text-white">
+                                    {{ order.totalPrice }} сом <span class="text-[10px] text-gray-400 font-medium normal-case">({{ order.itemsCount }} товаров)</span>
+                                </p>
+                            </div>
+                            
+                            <ion-button (click)="$event.stopPropagation(); repeatOrder(order.id)" 
+                                        fill="clear" 
+                                        class="h-10 px-0 text-[#ff6b35] font-bold text-xs uppercase tracking-widest">
+                                <ion-icon slot="start" name="repeat-outline" class="mr-1"></ion-icon>
+                                Повторить
+                            </ion-button>
+                        </div>
+
+                    </div>
+                }
+            </div>
+        } @else {
+            <!-- Empty State -->
+            <div class="flex flex-col items-center justify-center py-24 text-center">
+                <div class="w-32 h-32 rounded-[2.5rem] bg-gray-50 dark:bg-white/5 flex items-center justify-center mb-6">
+                    <ion-icon name="receipt-outline" class="text-6xl text-gray-200 dark:text-gray-800"></ion-icon>
+                </div>
+                <h3 class="text-2xl font-black text-gray-900 dark:text-white mb-2">
+                    {{ selectedSegment() === 'active' ? 'Нет активных заказов' : 'История пуста' }}
+                </h3>
+                <p class="text-gray-500 dark:text-gray-400 font-medium max-w-[200px]">
+                    {{ selectedSegment() === 'active' ? 'Все ваши заказы доставлены или еще не оформлены' : 'Здесь будет список ваших завершенных покупок' }}
+                </p>
+            </div>
+        }
+
+    </div>
+</ion-content>

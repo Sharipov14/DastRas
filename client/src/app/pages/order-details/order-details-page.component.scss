@@ -1,0 +1,15 @@
+ion-toolbar {
+    ion-title {
+        font-size: 1.1rem;
+    }
+}
+
+ion-item {
+    --padding-start: 0;
+    --inner-padding-end: 0;
+}
+
+.bg-gray-900 {
+    /* For dark mode inversion in summary card if needed, 
+       but we use dark:bg-white utility in template */
+}

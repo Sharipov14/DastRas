@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal, computed } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { 
   IonHeader, 
@@ -7,12 +7,10 @@ import {
   IonTitle, 
   IonButtons, 
   IonIcon, 
-  IonButton, 
   IonFooter,
   IonSegment,
   IonSegmentButton,
   IonLabel,
-  IonList,
   IonItem,
   IonRadioGroup,
   IonRadio
@@ -30,7 +28,6 @@ import { ThemeService } from '../../services/theme.service';
   styleUrls: ['./delivery-modal.component.scss'],
   imports: [
     CommonModule,
-    IonButton, 
     IonIcon, 
     IonButtons, 
     IonTitle, 
@@ -41,7 +38,6 @@ import { ThemeService } from '../../services/theme.service';
     IonSegment,
     IonSegmentButton,
     IonLabel,
-    IonList,
     IonItem,
     IonRadioGroup,
     IonRadio

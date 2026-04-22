@@ -1,0 +1,129 @@
+<ion-header class="ion-no-border pt-safe bg-white dark:bg-black">
+    <ion-toolbar class="px-2">
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/tabs/home" text="" icon="chevron-back"></ion-back-button>
+        </ion-buttons>
+        <ion-title class="text-xl font-black">Корзина</ion-title>
+        <ion-buttons slot="end">
+            @if (cartService.totalItems() > 0) {
+                <ion-button (click)="clearCart()" color="danger" class="text-sm font-bold">
+                    Очистить
+                </ion-button>
+            }
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="bg-white dark:bg-black">
+    <div class="px-5 pb-32">
+        @if (cartService.totalItems() > 0) {
+            <!-- Delivery Info Card -->
+            <div class="bg-gray-50 dark:bg-white/5 rounded-3xl p-4 mt-4 mb-6 flex items-center justify-between border border-gray-100 dark:border-white/5">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-2xl bg-orange-100 dark:bg-orange-500/20 flex items-center justify-center">
+                        <ion-icon name="time-outline" class="text-xl text-[#ff6b35]"></ion-icon>
+                    </div>
+                    <div>
+                        <p class="text-[10px] text-gray-400 font-bold uppercase tracking-wider mb-0.5">Доставка</p>
+                        <p class="text-sm font-black text-gray-900 dark:text-white">
+                            {{ cartService.deliveryDay() }}, {{ cartService.deliveryTime() }}
+                        </p>
+                    </div>
+                </div>
+                <ion-icon name="chevron-forward-outline" class="text-gray-300"></ion-icon>
+            </div>
+
+            <!-- Items List -->
+            <div class="flex flex-col gap-4">
+                @for (item of cartService.items(); track item.product.id) {
+                    <ion-item-sliding>
+                        <ion-item lines="none" class="cart-item-wrapper --padding-start-0">
+                            <div class="w-full flex items-center gap-4 bg-white dark:bg-white/5 rounded-3xl p-3 border border-gray-50 dark:border-white/5">
+                                <!-- Image -->
+                                <div class="w-20 h-20 rounded-2xl overflow-hidden bg-gray-100 dark:bg-black/20 flex-shrink-0">
+                                    <img [src]="item.product.imageUrl" class="w-full h-full object-cover">
+                                </div>
+                                
+                                <!-- Info -->
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="text-sm font-bold text-gray-900 dark:text-white truncate mb-1">
+                                        {{ item.product.nameRu }}
+                                    </h4>
+                                    <p class="text-xs text-gray-400 font-medium mb-2">
+                                        {{ item.product.price }} сом / {{ item.product.unit }}
+                                    </p>
+                                    
+                                    <div class="flex items-center justify-between">
+                                        <p class="text-base font-black text-[#ff6b35]">
+                                            {{ item.product.price * item.quantity }} сом
+                                        </p>
+                                        
+                                        <!-- Quantity Controls -->
+                                        <div class="flex items-center gap-3 bg-gray-50 dark:bg-white/10 rounded-xl p-1 px-2 border border-gray-100 dark:border-white/5">
+                                            <button (click)="decreaseQuantity(item.product.id, item.quantity)" class="w-6 h-6 flex items-center justify-center text-gray-500">
+                                                <ion-icon name="remove-outline"></ion-icon>
+                                            </button>
+                                            <span class="text-sm font-bold text-gray-900 dark:text-white min-w-[20px] text-center">
+                                                {{ item.quantity }}
+                                            </span>
+                                            <button (click)="increaseQuantity(item.product.id, item.quantity)" class="w-6 h-6 flex items-center justify-center text-[#ff6b35]">
+                                                <ion-icon name="add-outline"></ion-icon>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ion-item>
+
+                        <ion-item-options side="end">
+                            <ion-item-option color="danger" (click)="removeItem(item.product.id)" class="rounded-3xl my-2 mr-2">
+                                <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+                            </ion-item-option>
+                        </ion-item-options>
+                    </ion-item-sliding>
+                }
+            </div>
+
+            <!-- Summary Card -->
+            <div class="mt-8 bg-gray-50 dark:bg-white/5 rounded-[2.5rem] p-6 border border-gray-100 dark:border-white/5">
+                <div class="flex justify-between mb-3">
+                    <span class="text-gray-500 font-medium">Товары ({{ cartService.totalItems() }})</span>
+                    <span class="text-gray-900 dark:text-white font-bold">{{ cartService.totalPrice() }} сом</span>
+                </div>
+                <div class="flex justify-between mb-6">
+                    <span class="text-gray-500 font-medium">Доставка</span>
+                    <span class="text-green-500 font-bold uppercase text-xs tracking-widest">Бесплатно</span>
+                </div>
+                <div class="h-[1px] bg-gray-200 dark:bg-white/10 mb-6"></div>
+                <div class="flex justify-between items-center">
+                    <span class="text-lg font-black text-gray-900 dark:text-white">Итого</span>
+                    <span class="text-2xl font-black text-[#ff6b35]">{{ cartService.totalPrice() }} сом</span>
+                </div>
+            </div>
+
+        } @else {
+            <!-- Empty State -->
+            <div class="flex flex-col items-center justify-center py-20 text-center">
+                <div class="w-32 h-32 rounded-full bg-gray-50 dark:bg-white/5 flex items-center justify-center mb-6">
+                    <ion-icon name="cart-outline" class="text-6xl text-gray-300 dark:text-gray-700"></ion-icon>
+                </div>
+                <h3 class="text-2xl font-black text-gray-900 dark:text-white mb-2">Корзина пуста</h3>
+                <p class="text-gray-500 dark:text-gray-400 font-medium max-w-[200px] mb-8">
+                    Добавьте товары в корзину, чтобы сделать заказ
+                </p>
+                <ion-button (click)="goToHome()" fill="clear" color="primary" class="font-bold">
+                    Перейти к покупкам
+                    <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
+                </ion-button>
+            </div>
+        }
+    </div>
+</ion-content>
+
+@if (cartService.totalItems() > 0) {
+    <ion-footer class="ion-no-border bg-white dark:bg-black p-5 pb-safe">
+        <ion-button (click)="checkout()" expand="block" class="h-16 text-lg font-black --border-radius-2xl shadow-xl shadow-orange-500/30">
+            Оформить заказ
+        </ion-button>
+    </ion-footer>
+}

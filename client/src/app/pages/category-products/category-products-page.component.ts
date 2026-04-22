@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, OnInit, inject, signal, computed, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, signal, computed, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IonHeader, IonContent, IonToolbar, IonTitle, IonButtons, IonBackButton, IonIcon, IonText, IonGrid, IonRow, IonCol, IonButton, IonFooter } from "@ionic/angular/standalone";
+import { IonHeader, IonContent, IonToolbar, IonTitle, IonButtons, IonBackButton, IonFooter } from "@ionic/angular/standalone";
 import { ProductService } from '../../core/services/product.service';
-import { Category, Product, SubCategory } from '../../core/models/product.model';
+import { Product, SubCategory } from '../../core/models/product.model';
 import { addIcons } from 'ionicons';
 import { arrowBack, cart } from 'ionicons/icons';
 import { CommonModule } from '@angular/common';
@@ -13,9 +13,9 @@ import { MiniCartComponent } from '../../shared/components/mini-cart/mini-cart.c
   selector: 'app-category-products-page',
   standalone: true,
   templateUrl: './category-products-page.component.html',
-  imports: [IonButton, 
+  imports: [ 
     CommonModule,
-    IonCol, IonRow, IonFooter, IonGrid, IonText, IonIcon, IonBackButton, IonButtons, IonToolbar, IonTitle, IonHeader, IonContent,
+    IonFooter, IonBackButton, IonButtons, IonToolbar, IonTitle, IonHeader, IonContent,
     ProductCardComponent,
     MiniCartComponent
   ],
