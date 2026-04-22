@@ -12,9 +12,9 @@
                 <ion-icon [name]="isFavorite() ? 'heart' : 'heart-outline'" 
                     [class.text-red-500]="isFavorite()" class="text-xl"></ion-icon>
             </button>
-            <!-- <button class="bg-white dark:bg-black/50 backdrop-blur-md rounded-full w-10 h-10 mr-4 flex items-center justify-center shadow-lg active:scale-90 transition-transform text-gray-900 dark:text-white">
+            <button class="bg-white dark:bg-black/50 backdrop-blur-md rounded-full w-10 h-10 mr-4 flex items-center justify-center shadow-lg active:scale-90 transition-transform text-gray-900 dark:text-white">
                 <ion-icon name="share-social-outline" class="text-xl"></ion-icon>
-            </button> -->
+            </button>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
@@ -26,12 +26,12 @@
             <swiper-container pagination="true" pagination-dynamic-bullets="true" zoom="true">
                 <swiper-slide>
                     <div class="swiper-zoom-container w-full h-full">
-                        <img [src]="p.imageUrl" [alt]="p.nameRu" class="w-full h-full object-contain p-4">
+                        <img [src]="p.imageUrl" [alt]="p.nameRu" class="w-full h-full object-contain">
                     </div>
                 </swiper-slide>
                 <swiper-slide>
                     <div class="swiper-zoom-container w-full h-full">
-                        <img [src]="p.imageUrl" [alt]="p.nameRu" class="w-full h-full object-contain p-8 opacity-80">
+                        <img [src]="p.imageUrl" [alt]="p.nameRu" class="w-full h-full object-contain opacity-80">
                     </div>
                 </swiper-slide>
             </swiper-container>
