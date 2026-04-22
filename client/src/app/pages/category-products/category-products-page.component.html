@@ -1,4 +1,4 @@
-<ion-header class="ion-no-border pt-safe">
+<ion-header class="ion-no-border pt-safe bg-white dark:bg-black">
   <ion-toolbar class="px-2">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs/home" 
@@ -10,9 +10,9 @@
       {{ category()?.emoji }} {{ category()?.name }}
     </ion-title>
     <ion-buttons slot="end">
-      <ion-button class="relative" routerLink="/tabs/orders">
+      <!-- <ion-button class="relative" routerLink="/tabs/orders">
         <ion-icon name="cart" class="text-gray-900 dark:text-white text-xl"></ion-icon>
-      </ion-button>
+      </ion-button> -->
     </ion-buttons>
   </ion-toolbar>
 
@@ -22,10 +22,10 @@
       <button 
         [id]="'btn-sub-' + sub.id"
         (click)="scrollToSubCategory(sub.id)"
-        class="px-4 py-2 rounded-xl text-xs font-bold transition-all duration-300 active:scale-95"
+        class="px-5 py-2.5 rounded-2xl text-sm font-bold transition-all duration-300 active:scale-95"
         [ngClass]="activeSubCategoryId() === sub.id 
           ? 'bg-[#ff6b35] text-white shadow-lg shadow-orange-500/20' 
-          : 'bg-gray-100 text-gray-600 dark:bg-white/5 dark:text-gray-400'">
+          : 'bg-gray-100 text-gray-600 dark:bg-white/10 dark:text-gray-400'">
         {{ sub.name }}
       </button>
     }
@@ -35,17 +35,19 @@
 <ion-content #scrollContent 
   [scrollEvents]="true" 
   (ionScroll)="onScroll($event)"
-  class="bg-gray-50 dark:bg-black ion-padding">
+  class="bg-white dark:bg-black">
   
-  <div class="px-2 pb-32">
+  <div class="px-5 pb-32 pt-4">
     
     @for (group of productsGrouped(); track group.subCategory?.id) {
-      <div [id]="'sub-' + (group.subCategory?.id || 0)" class="mb-8 scroll-mt-20">
+      <div [id]="'sub-' + (group.subCategory?.id || 0)" class="mb-8 scroll-mt-24">
         <!-- Subcategory Title -->
-        <h3 class="text-lg font-extrabold text-gray-900 dark:text-white mb-4 px-1 flex items-center gap-2">
-          {{ group.subCategory ? group.subCategory.name : 'Прочее' }}
-          <div class="h-1 flex-1 bg-gray-100 dark:bg-white/5 rounded-full mt-1"></div>
-        </h3>
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="text-xl font-black text-gray-900 dark:text-white flex items-center gap-2">
+                {{ group.subCategory ? group.subCategory.name : 'Прочее' }}
+            </h3>
+            <div class="h-[2px] flex-1 bg-gray-100 dark:bg-white/5 rounded-full ml-4"></div>
+        </div>
 
         <!-- Products Grid -->
         <div class="grid grid-cols-2 gap-4">
@@ -60,7 +62,7 @@
       <div class="flex flex-col items-center justify-center py-20 text-center">
         <span class="text-6xl mb-4 animate-bounce">🔍</span>
         <h3 class="text-lg font-bold text-gray-900 dark:text-white">Товары не найдены</h3>
-        <p class="text-gray-500 text-sm">В этой категории пока нет товаров</p>
+        <p class="text-gray-500 text-sm font-bold">В этой категории пока нет товаров</p>
       </div>
     }
 

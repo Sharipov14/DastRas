@@ -12,50 +12,49 @@
                 <ion-icon [name]="isFavorite() ? 'heart' : 'heart-outline'" 
                     [class.text-red-500]="isFavorite()" class="text-xl"></ion-icon>
             </button>
-            <button class="bg-white dark:bg-black/50 backdrop-blur-md rounded-full w-10 h-10 mr-4 flex items-center justify-center shadow-lg active:scale-90 transition-transform text-gray-900 dark:text-white">
+            <!-- <button class="bg-white dark:bg-black/50 backdrop-blur-md rounded-full w-10 h-10 mr-4 flex items-center justify-center shadow-lg active:scale-90 transition-transform text-gray-900 dark:text-white">
                 <ion-icon name="share-social-outline" class="text-xl"></ion-icon>
-            </button>
+            </button> -->
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="bg-white dark:bg-black">
     @if (product(); as p) {
         <!-- Product Images Swiper -->
-        <div class="relative w-full aspect-square bg-gray-100 dark:bg-gray-900 overflow-hidden">
+        <div class="relative w-full aspect-square bg-gray-50 dark:bg-gray-900 overflow-hidden">
             <swiper-container pagination="true" pagination-dynamic-bullets="true" zoom="true">
                 <swiper-slide>
                     <div class="swiper-zoom-container w-full h-full">
-                        <img [src]="p.imageUrl" [alt]="p.nameRu" class="w-full h-full object-cover">
+                        <img [src]="p.imageUrl" [alt]="p.nameRu" class="w-full h-full object-contain p-4">
                     </div>
                 </swiper-slide>
-                <!-- Multiple slides could be added here if available in model -->
                 <swiper-slide>
                     <div class="swiper-zoom-container w-full h-full">
-                        <img [src]="p.imageUrl" [alt]="p.nameRu" class="w-full h-full object-cover opacity-80">
+                        <img [src]="p.imageUrl" [alt]="p.nameRu" class="w-full h-full object-contain p-8 opacity-80">
                     </div>
                 </swiper-slide>
             </swiper-container>
             
             <!-- Rating Badge on Image -->
-            <div class="absolute bottom-10 right-6 z-10 bg-white/90 dark:bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-2xl flex items-center gap-1.5 shadow-lg">
+            <div class="absolute bottom-12 right-6 z-10 bg-white/90 dark:bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-2xl flex items-center gap-1.5 shadow-lg">
                 <ion-icon name="star" class="text-yellow-400 text-sm"></ion-icon>
-                <span class="font-bold text-sm dark:text-white">{{ p.rating }}</span>
+                <span class="font-black text-sm dark:text-white">{{ p.rating }}</span>
             </div>
         </div>
 
         <!-- Product Content Card -->
-        <div class="bg-white dark:bg-[#1c1c1e] rounded-t-[2.5rem] -mt-8 relative z-10 p-6 min-h-[50vh] shadow-[0_-10px_40px_rgba(0,0,0,0.05)] dark:shadow-none">
+        <div class="bg-white dark:bg-black rounded-t-[2.5rem] -mt-8 relative z-10 px-5 pt-8 pb-32 min-h-[50vh] shadow-[0_-15px_40px_rgba(0,0,0,0.05)] dark:shadow-none">
             <!-- Header Info -->
-            <div class="flex justify-between items-start mb-4">
+            <div class="flex justify-between items-start mb-6">
                 <div class="flex-1">
-                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white leading-tight mb-1">
+                    <h1 class="text-2xl font-black text-gray-900 dark:text-white leading-tight mb-2">
                         {{ p.nameRu }}
                     </h1>
-                    <p class="text-sm text-gray-400 dark:text-gray-500 font-medium">{{ p.unit }}</p>
+                    <p class="text-sm text-gray-400 dark:text-gray-500 font-bold uppercase tracking-wider">{{ p.unit }}</p>
                 </div>
                 <div class="text-right">
-                    <span class="text-2xl font-black text-[#ff6b35]">
+                    <span class="text-3xl font-black text-[#ff6b35]">
                         {{ p.price }} <span class="text-sm font-bold">с.</span>
                     </span>
                 </div>
@@ -63,44 +62,44 @@
 
             <!-- Nutrients / Highlights -->
             <div class="grid grid-cols-4 gap-3 mb-8">
-                <div class="bg-orange-50 dark:bg-orange-950/20 p-3 rounded-2xl flex flex-col items-center justify-center text-center">
+                <div class="bg-orange-100/30 dark:bg-orange-950/20 p-4 rounded-2xl flex flex-col items-center justify-center text-center">
                     <ion-icon name="flame-outline" class="text-orange-500 text-xl mb-1"></ion-icon>
-                    <span class="text-[10px] text-gray-500 dark:text-gray-400 font-medium">Ккал</span>
-                    <span class="text-xs font-bold dark:text-white">45</span>
+                    <span class="text-[10px] text-gray-400 font-bold uppercase">Ккал</span>
+                    <span class="text-xs font-black dark:text-white">45</span>
                 </div>
-                <div class="bg-blue-50 dark:bg-blue-950/20 p-3 rounded-2xl flex flex-col items-center justify-center text-center">
+                <div class="bg-blue-100/30 dark:bg-blue-950/20 p-4 rounded-2xl flex flex-col items-center justify-center text-center">
                     <ion-icon name="fitness-outline" class="text-blue-500 text-xl mb-1"></ion-icon>
-                    <span class="text-[10px] text-gray-500 dark:text-gray-400 font-medium">Белки</span>
-                    <span class="text-xs font-bold dark:text-white">0.9г</span>
+                    <span class="text-[10px] text-gray-400 font-bold uppercase">Белки</span>
+                    <span class="text-xs font-black dark:text-white">0.9г</span>
                 </div>
-                <div class="bg-green-50 dark:bg-green-950/20 p-3 rounded-2xl flex flex-col items-center justify-center text-center">
+                <div class="bg-green-100/30 dark:bg-green-950/20 p-4 rounded-2xl flex flex-col items-center justify-center text-center">
                     <ion-icon name="leaf-outline" class="text-green-500 text-xl mb-1"></ion-icon>
-                    <span class="text-[10px] text-gray-500 dark:text-gray-400 font-medium">Жиры</span>
-                    <span class="text-xs font-bold dark:text-white">0.2г</span>
+                    <span class="text-[10px] text-gray-400 font-bold uppercase">Жиры</span>
+                    <span class="text-xs font-black dark:text-white">0.2г</span>
                 </div>
-                <div class="bg-yellow-50 dark:bg-yellow-950/20 p-3 rounded-2xl flex flex-col items-center justify-center text-center">
+                <div class="bg-yellow-100/30 dark:bg-yellow-950/20 p-4 rounded-2xl flex flex-col items-center justify-center text-center">
                     <ion-icon name="time-outline" class="text-yellow-600 text-xl mb-1"></ion-icon>
-                    <span class="text-[10px] text-gray-500 dark:text-gray-400 font-medium">Срок</span>
-                    <span class="text-xs font-bold dark:text-white">7 дн</span>
+                    <span class="text-[10px] text-gray-400 font-bold uppercase">Срок</span>
+                    <span class="text-xs font-black dark:text-white">7 дн</span>
                 </div>
             </div>
 
             <!-- Description Section -->
             <div class="mb-8">
-                <h2 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Описание</h2>
-                <p class="text-gray-600 dark:text-gray-400 leading-relaxed text-[15px]">
+                <h2 class="text-xl font-black text-gray-900 dark:text-white mb-3">Описание</h2>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed font-medium">
                     {{ p.description }} Свежие и натуральные продукты напрямую от проверенных поставщиков. Тщательно отобраны для вашего здоровья и удовольствия.
                 </p>
             </div>
 
             <!-- Delivery Info -->
-            <div class="bg-gray-50 dark:bg-gray-900/50 p-4 rounded-[1.5rem] flex items-center gap-4 mb-6">
-                <div class="w-12 h-12 rounded-full bg-white dark:bg-gray-800 flex items-center justify-center shadow-sm">
+            <div class="bg-gray-100 dark:bg-white/5 p-5 rounded-3xl flex items-center gap-4 mb-6">
+                <div class="w-12 h-12 rounded-full bg-white dark:bg-black flex items-center justify-center shadow-sm">
                     <ion-icon name="time-outline" class="text-[#ff6b35] text-2xl"></ion-icon>
                 </div>
                 <div>
-                    <h4 class="text-sm font-bold text-gray-900 dark:text-white">Доставка за 30-45 минут</h4>
-                    <p class="text-xs text-gray-500 dark:text-gray-400">Доставим свежим и холодным</p>
+                    <h4 class="text-base font-black text-gray-900 dark:text-white">Доставка за 30-45 минут</h4>
+                    <p class="text-sm font-bold text-gray-500 dark:text-gray-400">Доставим свежим и холодным</p>
                 </div>
             </div>
         </div>
@@ -108,22 +107,22 @@
         <div class="flex flex-col items-center justify-center h-full p-6 text-center">
             <ion-icon name="alert-circle-outline" class="text-6xl text-gray-300 mb-4"></ion-icon>
             <h2 class="text-xl font-bold text-gray-900 dark:text-white">Товар не найден</h2>
-            <ion-button fill="clear" routerLink="/tabs/home">Вернуться на главную</ion-button>
+            <ion-button fill="clear" routerLink="/tabs/home" class="font-bold text-[#ff6b35]">Вернуться на главную</ion-button>
         </div>
     }
 </ion-content>
 
-<ion-footer class="ion-no-border bg-white dark:bg-[#1c1c1e] p-6 pt-2 pb-safe">
+<ion-footer class="ion-no-border bg-white/80 dark:bg-black/80 backdrop-blur-xl p-5 pt-3 pb-safe border-t border-white/10">
     @if (product(); as p) {
         <div class="flex items-center gap-4">
-            <!-- Quantity Control (only if quantity > 0) -->
+            <!-- Quantity Control -->
             @if (quantity() > 0) {
-                <div class="flex items-center bg-gray-100 dark:bg-gray-800 rounded-full h-14 px-1 shrink-0 animate-in fade-in slide-in-from-left-4 duration-300">
+                <div class="flex items-center bg-gray-100 dark:bg-white/10 rounded-2xl h-14 px-1 shrink-0 animate-in fade-in slide-in-from-left-4 duration-300">
                     <button class="w-12 h-full flex items-center justify-center text-gray-900 dark:text-white active:opacity-70"
                         (click)="changeQuantity(-1)">
                         <ion-icon [name]="quantity() === 1 ? 'trash-outline' : 'remove'" class="text-xl"></ion-icon>
                     </button>
-                    <span class="text-lg font-bold mx-2 min-w-[20px] text-center dark:text-white">
+                    <span class="text-lg font-black mx-2 min-w-[24px] text-center dark:text-white">
                         {{ quantity() }}
                     </span>
                     <button class="w-12 h-full flex items-center justify-center text-gray-900 dark:text-white active:opacity-70"
@@ -134,14 +133,14 @@
             }
 
             <!-- Main Action Button -->
-            <button class="flex-1 h-14 bg-[#ff6b35] text-white rounded-full font-bold text-lg shadow-lg shadow-orange-500/30 active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-3"
+            <button class="flex-1 h-14 bg-[#ff6b35] text-white rounded-2xl font-black text-lg shadow-xl shadow-orange-500/30 active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-3"
                 (click)="quantity() === 0 ? changeQuantity(1) : goToCart()">
                 @if (quantity() === 0) {
                     <span class="animate-in fade-in zoom-in-95">В корзину</span>
                 } @else {
                     <div class="flex items-center gap-2 animate-in fade-in zoom-in-95">
-                        <span>Перейти в корзину</span>
-                        <span class="text-sm opacity-80 font-medium">({{ p.price * quantity() }} с.)</span>
+                        <span>Корзина</span>
+                        <span class="text-sm opacity-90 font-bold bg-white/20 px-2 py-0.5 rounded-lg">{{ p.price * quantity() }} с.</span>
                     </div>
                 }
             </button>

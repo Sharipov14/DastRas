@@ -1,20 +1,20 @@
-<ion-header class="ion-no-border">
+<ion-header class="ion-no-border pt-safe bg-white dark:bg-black">
     <ion-toolbar class="px-2">
         <ion-title class="font-extrabold text-xl">Время доставки</ion-title>
         <ion-buttons slot="end">
-            <button (click)="closeModal()" class="w-10 h-10 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center active:scale-90 transition-transform">
+            <button (click)="$event.stopPropagation(); closeModal()" class="w-10 h-10 rounded-xl bg-gray-100 dark:bg-white/10 flex items-center justify-center active:scale-90 transition-transform">
                 <ion-icon name="close" class="text-xl text-gray-900 dark:text-white"></ion-icon>
             </button>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding bg-white dark:bg-black">
-    <div class="flex flex-col gap-6 pb-12">
+<ion-content class="bg-white dark:bg-black">
+    <div class="px-5 flex flex-col gap-8 pb-12 pt-4">
 
         <!-- Day Selection -->
         <div>
-            <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-3 px-1">Выберите день</h3>
+            <h3 class="text-sm font-black text-gray-400 uppercase tracking-widest mb-4">Выберите день</h3>
             <ion-segment [value]="selectedDay()" (ionChange)="onDayChange($event)" mode="ios" class="custom-segment">
                 @for (day of days; track day.value) {
                     <ion-segment-button [value]="day.value">
@@ -26,27 +26,27 @@
 
         <!-- Time Slots Selection -->
         <div>
-            <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-3 px-1">Доступные интервалы</h3>
+            <h3 class="text-sm font-black text-gray-400 uppercase tracking-widest mb-4">Доступные интервалы</h3>
 
             <ion-radio-group [value]="selectedTime()" (ionChange)="onTimeChange($event)">
-                <div class="flex flex-col gap-2">
+                <div class="flex flex-col gap-3">
                     @for (slot of timeSlots; track slot) {
                         <div class="relative">
                             <ion-item lines="none" 
                                 class="rounded-2xl transition-all duration-200 border border-gray-100 dark:border-white/5"
                                 [class.active-slot]="selectedTime() === slot">
-                                <div class="flex items-center gap-3 w-full py-1">
-                                    <div class="w-10 h-10 rounded-full flex items-center justify-center"
-                                        [class]="selectedTime() === slot ? 'bg-orange-500/10 text-[#ff6b35]' : 'bg-gray-50 dark:bg-white/5 text-gray-400'">
-                                        <ion-icon name="time-outline" class="text-xl"></ion-icon>
+                                <div class="flex items-center gap-4 w-full py-2">
+                                    <div class="w-12 h-12 rounded-full flex items-center justify-center transition-colors"
+                                        [class]="selectedTime() === slot ? 'bg-orange-500/10 text-[#ff6b35]' : 'bg-gray-100 dark:bg-white/5 text-gray-400'">
+                                        <ion-icon name="time-outline" class="text-2xl"></ion-icon>
                                     </div>
-                                    <ion-label class="font-bold text-gray-900 dark:text-white">{{ slot }}</ion-label>
+                                    <ion-label class="font-black text-gray-900 dark:text-white text-lg">{{ slot }}</ion-label>
                                     <ion-radio [value]="slot" slot="end" class="custom-radio"></ion-radio>
                                 </div>
                             </ion-item>
                             @if (selectedTime() === slot) {
-                                <div class="absolute -right-1 -top-1">
-                                    <ion-icon name="checkmark-circle" class="text-[#ff6b35] text-xl bg-white dark:bg-black rounded-full"></ion-icon>
+                                <div class="absolute -right-1 -top-1 z-10">
+                                    <ion-icon name="checkmark-circle" class="text-[#ff6b35] text-2xl bg-white dark:bg-black rounded-full"></ion-icon>
                                 </div>
                             }
                         </div>
@@ -58,9 +58,9 @@
     </div>
 </ion-content>
 
-<ion-footer class="ion-no-border bg-white dark:bg-black p-6 pb-safe">
+<ion-footer class="ion-no-border bg-white dark:bg-black p-5 pb-safe border-t border-gray-100 dark:border-white/5">
     <button (click)="confirm()" 
-        class="w-full h-14 bg-[#ff6b35] text-white rounded-full font-bold text-lg shadow-lg shadow-orange-500/30 active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2">
+        class="w-full h-14 bg-[#ff6b35] text-white rounded-2xl font-black text-lg shadow-xl shadow-orange-500/30 active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2">
         <span>Готово</span>
     </button>
 </ion-footer>
