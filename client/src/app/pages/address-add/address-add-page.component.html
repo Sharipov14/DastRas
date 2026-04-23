@@ -1,0 +1,197 @@
+<!-- STEP 1: MAP -->
+@if (step() === 'map') {
+  <ion-content [fullscreen]="true" [scrollY]="false">
+    <!-- Full Screen Map -->
+    <div class="absolute inset-0 w-full h-full z-0 bg-gray-200 dark:bg-gray-900">
+      <div id="map" class="w-full h-full z-10"></div>
+      
+      <!-- Center Pin -->
+      <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none -mt-8">
+          <ion-icon name="location" 
+            class="text-5xl drop-shadow-xl transition-colors duration-300"
+            [class.text-[#ff6b35]]="isInsideZone()"
+            [class.text-red-500]="!isInsideZone()">
+          </ion-icon>
+          <div class="w-3 h-3 bg-black/50 rounded-full mx-auto -mt-1 blur-[2px]"></div>
+      </div>
+
+      <!-- Loading Indicator -->
+      @if (isMapLoading()) {
+        <div class="absolute top-24 left-1/2 transform -translate-x-1/2 bg-white dark:bg-[#1c1c1e] px-4 py-2 rounded-full shadow-lg z-30 flex items-center gap-2 animate-fade-in border border-gray-100 dark:border-gray-800">
+          <ion-spinner name="crescent" class="w-4 h-4 text-[#ff6b35]"></ion-spinner>
+          <span class="text-xs font-bold dark:text-white">Уточняем адрес...</span>
+        </div>
+      }
+
+      <!-- Outside Zone Alert -->
+      @if (!isInsideZone() && !isMapLoading()) {
+        <div class="absolute top-24 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-4 py-2 rounded-full shadow-xl z-30 flex items-center gap-2 animate-fade-in border border-red-400">
+          <ion-icon name="alert-circle-outline" class="text-lg"></ion-icon>
+          <span class="text-xs font-black uppercase tracking-wider">Вне зоны доставки</span>
+        </div>
+      }
+    </div>
+
+    <!-- Map Controls (Top Left & Top Right) -->
+    <div class="absolute top-0 left-0 z-30 w-full pt-[calc(var(--ion-safe-area-top)+10px)] px-4 pointer-events-none flex justify-between items-start">
+       <!-- Back Button -->
+       <button (click)="goBack()" class="pointer-events-auto bg-white/90 dark:bg-black/60 backdrop-blur-sm rounded-full w-10 h-10 shadow-sm flex items-center justify-center transition-transform active:scale-95">
+          <ion-icon name="arrow-back" class="text-black dark:text-white text-xl"></ion-icon>
+       </button>
+
+       <div class="flex flex-col gap-3">
+          <!-- Locate Me Button -->
+          <button (click)="getCurrentPosition()" class="pointer-events-auto bg-white/90 dark:bg-black/60 backdrop-blur-sm rounded-full w-10 h-10 shadow-sm flex items-center justify-center transition-transform active:scale-95 relative">
+              @if (isLocating()) {
+                <ion-spinner name="crescent" class="w-5 h-5 text-[#ff6b35]"></ion-spinner>
+              } @else {
+                <ion-icon name="locate" class="text-black dark:text-white text-xl"></ion-icon>
+              }
+          </button>
+
+          <!-- Compass / Reset North Button -->
+          @if (mapBearing() !== 0) {
+            <button (click)="resetNorth()" class="pointer-events-auto bg-white/90 dark:bg-black/60 backdrop-blur-sm rounded-full w-10 h-10 shadow-sm flex items-center justify-center transition-all active:scale-95 animate-fade-in">
+                <ion-icon name="compass-outline" 
+                  class="text-[#ff6b35] text-2xl transition-transform duration-300"
+                  [style.transform]="'rotate(' + (-mapBearing()) + 'deg)'">
+                </ion-icon>
+            </button>
+          }
+       </div>
+    </div>
+
+    <!-- Bottom Sheet -->
+    <div class="absolute bottom-0 left-0 w-full z-30 bg-white dark:bg-[#1c1c1e] rounded-t-[2.5rem] shadow-[0_-5px_25px_rgba(0,0,0,0.05)] dark:shadow-none pb-[var(--ion-safe-area-bottom)]">
+      
+      <!-- Drag Handle -->
+      <div class="w-full flex justify-center pt-4 pb-2">
+          <div class="w-12 h-1.5 bg-gray-200 dark:bg-gray-800 rounded-full"></div>
+      </div>
+
+      <div class="px-5 pb-8 pt-2">
+        <!-- Address Field -->
+        <div class="mb-6">
+            <label class="block text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-3 ml-1">Адрес доставки</label>
+            <div class="flex items-center gap-3 bg-gray-50 dark:bg-black rounded-2xl px-4 py-0 border-2 border-transparent focus-within:border-[#ff6b35] transition-all h-14"
+                 [class.opacity-50]="!isInsideZone()">
+              <ion-icon name="location-outline" class="text-2xl text-[#ff6b35] shrink-0"></ion-icon>
+              <input 
+                type="text"
+                [(ngModel)]="formData.details" 
+                placeholder="Улица, дом..."
+                class="w-full bg-transparent text-base font-bold text-gray-900 dark:text-white outline-none placeholder-gray-400 leading-normal truncate h-full border-none"
+              >
+            </div>
+        </div>
+
+        <!-- Continue Button -->
+        <button 
+          class="w-full font-black h-14 rounded-2xl shadow-xl active:scale-[0.98] transition-all flex items-center justify-center gap-2 text-base"
+          [disabled]="!formData.details || isMapLoading() || !isInsideZone()"
+          [ngClass]="isInsideZone() ? 'bg-gradient-to-r from-[#ff6b35] to-[#ff8c42] text-white shadow-orange-500/20' : 'bg-gray-200 text-gray-400 shadow-none cursor-not-allowed'"
+          (click)="goToFormStep()">
+          @if (!isInsideZone()) {
+             Доставка недоступна
+          } @else {
+             Подтвердить адрес
+          }
+        </button>
+      </div>
+    </div>
+  </ion-content>
+} 
+
+<!-- STEP 2: FORM -->
+@else {
+  <ion-header class="ion-no-border">
+    <ion-toolbar class="px-2">
+      <ion-buttons slot="start">
+        <ion-button (click)="goBack()">
+          <ion-icon name="arrow-back" class="text-black dark:text-white text-xl"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-title class="font-bold text-lg dark:text-white">{{ editId() ? 'Редактировать адрес' : 'Уточнение адреса' }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content class="bg-white dark:bg-black">
+    <div class="px-5 py-4 pb-32">
+      
+      <!-- Name -->
+      <div class="mb-6">
+        <label class="block text-sm font-bold text-gray-500 dark:text-gray-400 mb-2.5 pl-1">Название (Дом, Работа...)</label>
+        <input 
+          type="text" 
+          [(ngModel)]="formData.title" 
+          placeholder="Например: Мой дом"
+          class="w-full bg-gray-100 dark:bg-[#1c1c1e] rounded-2xl px-4 h-14 outline-none dark:text-white border-none text-base font-bold">
+      </div>
+
+      <!-- Address Details -->
+      <div class="mb-6">
+        <label class="block text-sm font-bold text-gray-500 dark:text-gray-400 mb-2.5 pl-1">Улица и дом</label>
+        <div class="w-full bg-gray-100 dark:bg-[#1c1c1e] rounded-2xl px-4 py-4 dark:text-white text-base font-bold min-h-[3.5rem] flex items-center">
+            {{ formData.details }}
+        </div>
+      </div>
+
+      <!-- Private House Toggle -->
+      <div class="flex items-center justify-between mb-6 py-2 px-4 bg-gray-50 dark:bg-[#1c1c1e]/50 rounded-2xl">
+        <span class="text-base text-gray-800 dark:text-white font-bold">Частный дом</span>
+        <ion-toggle [(ngModel)]="formData.isPrivateHouse" mode="ios" color="danger"></ion-toggle>
+      </div>
+
+      <!-- Grid inputs -->
+      @if (!formData.isPrivateHouse) {
+        <div class="grid grid-cols-3 gap-3 mb-6">
+          <div>
+            <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 pl-1">Подъезд</label>
+            <input 
+              type="text" 
+              [(ngModel)]="formData.entrance" 
+              class="w-full bg-gray-100 dark:bg-[#1c1c1e] rounded-2xl px-2 h-14 outline-none dark:text-white border-none text-base font-bold text-center">
+          </div>
+          <div>
+            <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 pl-1">Этаж</label>
+            <input 
+              type="text" 
+              [(ngModel)]="formData.floor" 
+              class="w-full bg-gray-100 dark:bg-[#1c1c1e] rounded-2xl px-2 h-14 outline-none dark:text-white border-none text-base font-bold text-center">
+          </div>
+          <div>
+            <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 pl-1">Кв / Офис</label>
+            <input 
+              type="text" 
+              [(ngModel)]="formData.apartment" 
+              class="w-full bg-gray-100 dark:bg-[#1c1c1e] rounded-2xl px-2 h-14 outline-none dark:text-white border-none text-base font-bold text-center">
+          </div>
+        </div>
+
+        <!-- Intercom -->
+        <div class="mb-6">
+          <label class="block text-sm font-bold text-gray-500 dark:text-gray-400 mb-2.5 pl-1">Домофон</label>
+          <input 
+            type="text" 
+            [(ngModel)]="formData.intercom" 
+            class="w-full bg-gray-100 dark:bg-[#1c1c1e] rounded-2xl px-4 h-14 outline-none dark:text-white border-none text-base font-bold">
+        </div>
+      }
+
+    </div>
+  </ion-content>
+
+  <!-- Footer -->
+  <div class="fixed bottom-0 left-0 w-full bg-white dark:bg-black p-5 pb-8 z-20 border-t border-gray-100 dark:border-gray-800">
+    @if (!formData.apartment && !formData.isPrivateHouse) {
+      <p class="text-xs font-bold text-orange-500 mb-4 pl-1 text-center uppercase tracking-wider">Необходимо заполнить номер квартиры</p>
+    }
+    
+    <button 
+       class="w-full font-black h-14 rounded-2xl active:scale-[0.98] transition-all text-base shadow-xl"
+       [ngClass]="isValid() ? 'bg-gradient-to-r from-[#ff6b35] to-[#ff8c42] shadow-orange-500/20 text-white' : 'bg-gray-100 dark:bg-[#1c1c1e] text-gray-400 shadow-none'"
+       (click)="save()">
+       Сохранить адрес
+    </button>
+  </div>
+}

@@ -16,7 +16,15 @@ import {
   timeOutline,
   flameOutline,
   leafOutline,
-  fitnessOutline
+  fitnessOutline,
+  arrowBack,
+  pencil,
+  checkmark,
+  createOutline,
+  checkmarkCircleOutline,
+  locationOutline,
+  homeOutline,
+  businessOutline
 } from 'ionicons/icons';
 import { filter, firstValueFrom } from 'rxjs';
 
@@ -32,17 +40,17 @@ register();
 })
 export class AppComponent {
   title = 'DastRas';
-  
+
   #router = inject(Router);
   #themeService = inject(ThemeService);
-  
+
   protected isNavigating = signal(false);
   protected isAppLoading = signal(true);
-  
+
   constructor() {
     this.#setupRouterTracking();
     this.#initializeApp();
-    
+
     addIcons({
       chevronBack,
       heartOutline,
@@ -55,7 +63,15 @@ export class AppComponent {
       timeOutline,
       flameOutline,
       leafOutline,
-      fitnessOutline
+      fitnessOutline,
+      arrowBack,
+      pencil,
+      checkmark,
+      createOutline,
+      checkmarkCircleOutline,
+      locationOutline,
+      homeOutline,
+      businessOutline
     });
   }
 

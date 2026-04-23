@@ -56,5 +56,17 @@ export const routes: Routes = [
     {
         path: 'category/:id',
         loadComponent: () => import('./pages/category-products/category-products-page.component').then(m => m.CategoryProductsPageComponent)
+    },
+    {
+        path: 'addresses',
+        loadComponent: () => import('./pages/addresses/addresses-page.component').then(m => m.AddressesPageComponent)
+    },
+    {
+        path: 'addresses/new',
+        loadComponent: () => import('./pages/address-add/address-add-page.component').then(m => m.AddressAddPageComponent)
+    },
+    {
+        path: 'addresses/edit/:id',
+        loadComponent: () => import('./pages/address-add/address-add-page.component').then(m => m.AddressAddPageComponent)
     }
 ];

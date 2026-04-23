@@ -1,0 +1,22 @@
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -10px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+// Убедимся, что карта занимает все пространство
+#map {
+  background: #f0f0f0;
+}
+
+// Стили для темной темы Leaflet (опционально, если захотите инвертировать карту)
+// .dark #map { filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%); }
