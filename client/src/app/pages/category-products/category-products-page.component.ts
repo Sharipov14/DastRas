@@ -13,6 +13,7 @@ import { MiniCartComponent } from '../../shared/components/mini-cart/mini-cart.c
   selector: 'app-category-products-page',
   standalone: true,
   templateUrl: './category-products-page.component.html',
+  styleUrl: './category-products-page.component.scss',
   imports: [ 
     CommonModule,
     IonFooter, IonBackButton, IonButtons, IonToolbar, IonTitle, IonHeader, IonContent,

@@ -31,3 +31,10 @@ ion-radio {
         margin: 0;
     }
 }
+
+ion-toolbar {
+  --background: transparent;
+  --border-width: 0;
+  --padding-top: 0;
+  --padding-bottom: 0;
+}

@@ -1,4 +1,4 @@
-<ion-header class="ion-no-border pt-safe bg-white dark:bg-black">
+<ion-header [translucent]="true" class="ion-no-border pt-safe bg-white dark:bg-black">
   <!-- Main Header Bar -->
   <ion-toolbar class="px-2">
     <!-- Address Selection (Left/Center aligned) -->
@@ -32,6 +32,16 @@
   </ion-toolbar>
 
   <!-- Fake Search Bar Toolbar -->
+  <!-- <ion-toolbar class="px-4 pb-2">
+    <div (click)="goToSearch()" class="search-container flex items-center gap-3 bg-gray-100 dark:bg-white/10 rounded-2xl px-4 py-3 active:bg-gray-200 dark:active:bg-white/20 transition-all cursor-pointer">
+      <ion-icon name="search" class="text-xl text-gray-400"></ion-icon>
+      <span class="text-gray-400 font-medium">Найти продукты...</span>
+    </div>
+  </ion-toolbar> -->
+</ion-header>
+
+<ion-content [fullscreen]="true" class="bg-white dark:bg-black">
+<ion-header>
   <ion-toolbar class="px-4 pb-2">
     <div (click)="goToSearch()" class="search-container flex items-center gap-3 bg-gray-100 dark:bg-white/10 rounded-2xl px-4 py-3 active:bg-gray-200 dark:active:bg-white/20 transition-all cursor-pointer">
       <ion-icon name="search" class="text-xl text-gray-400"></ion-icon>
@@ -39,8 +49,6 @@
     </div>
   </ion-toolbar>
 </ion-header>
-
-<ion-content [fullscreen]="true" class="bg-white dark:bg-black">
   <div class="px-5">
     <!-- Categories (Horizontal Scroll) -->
     <div class="sticky top-0 z-40 bg-white/80 dark:bg-black/80 backdrop-blur-md py-3 -mx-5 px-5 mb-4 overflow-x-auto whitespace-nowrap no-scrollbar flex gap-2.5">
