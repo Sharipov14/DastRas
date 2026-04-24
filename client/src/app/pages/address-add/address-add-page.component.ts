@@ -11,10 +11,14 @@ import {
   IonContent, 
   IonToggle,
   IonSpinner,
-  IonTitle
-} from '@ionic/angular/standalone';
+  IonTitle, IonFooter,
+  IonModal,
+  IonList,
+  IonItem,
+  IonLabel,
+  IonInput } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { arrowBack, checkmarkCircleOutline, location, locationOutline, locate, compassOutline, alertCircleOutline } from 'ionicons/icons';
+import { arrowBack, checkmarkCircleOutline, location, locationOutline, locate, compassOutline, alertCircleOutline, search, closeCircle } from 'ionicons/icons';
 import { toastController } from '@ionic/core';
 import { AddressService } from '../../core/services/address.service';
 import { Address } from '../../core/models/address.model';
@@ -26,7 +30,7 @@ declare const L: any;
 @Component({
   selector: 'app-address-add-page',
   standalone: true,
-  imports: [
+  imports: [IonFooter, 
     CommonModule, 
     FormsModule,
     IonHeader, 
@@ -37,7 +41,12 @@ declare const L: any;
     IonContent, 
     IonToggle,
     IonSpinner,
-    IonTitle
+    IonTitle,
+    IonModal,
+    IonList,
+    IonItem,
+    IonLabel,
+    IonInput
   ],
   templateUrl: './address-add-page.component.html',
   styleUrls: ['./address-add-page.component.scss'],
@@ -55,6 +64,13 @@ export class AddressAddPageComponent implements OnInit, AfterViewInit, OnDestroy
   protected mapBearing = signal(0);
   protected isInsideZone = signal(true);
   protected editId = signal<number | null>(null);
+
+  // Search Modal Signals
+  protected isSearchModalOpen = signal(false);
+  protected searchQuery = signal('');
+  protected searchResults = signal<any[]>([]);
+  protected isSearching = signal(false);
+  #searchTimeout: any;
 
   // Константы зоны доставки
   readonly STORE_LOCATION = { lat: 38.5598, lng: 68.7870 }; // Центр Душанбе
@@ -76,7 +92,7 @@ export class AddressAddPageComponent implements OnInit, AfterViewInit, OnDestroy
   #moveTimeout: any;
 
   constructor() {
-    addIcons({ arrowBack, checkmarkCircleOutline, location, locationOutline, locate, compassOutline, 'alert-circle-outline': alertCircleOutline });
+    addIcons({ arrowBack, checkmarkCircleOutline, location, locationOutline, locate, compassOutline, 'alert-circle-outline': alertCircleOutline, search, 'close-circle': closeCircle });
   }
 
   ngOnInit() {
@@ -271,5 +287,59 @@ export class AddressAddPageComponent implements OnInit, AfterViewInit, OnDestroy
     await toast.present();
 
     this.router.navigate(['/addresses']);
+  }
+
+  // Address Search Logic
+  protected openSearchModal() {
+    this.searchQuery.set(this.formData.details || '');
+    if (this.formData.details) {
+      this.searchAddress(this.formData.details);
+    }
+    this.isSearchModalOpen.set(true);
+  }
+
+  protected clearSearch() {
+    this.searchQuery.set('');
+    this.searchResults.set([]);
+  }
+
+  protected onSearchInput(query: string) {
+    this.searchQuery.set(query);
+    if (!query.trim()) {
+      this.searchResults.set([]);
+      return;
+    }
+    
+    if (this.#searchTimeout) clearTimeout(this.#searchTimeout);
+    
+    this.#searchTimeout = setTimeout(() => {
+      this.searchAddress(query);
+    }, 500);
+  }
+
+  protected async searchAddress(query: string) {
+    this.isSearching.set(true);
+    try {
+      // Ищем с приоритетом по Таджикистану
+      const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5&accept-language=ru&countrycodes=tj`);
+      const data = await response.json();
+      this.searchResults.set(data);
+    } catch (error) {
+      console.error('Search error:', error);
+    } finally {
+      this.isSearching.set(false);
+    }
+  }
+
+  protected selectAddress(result: any) {
+    const lat = parseFloat(result.lat);
+    const lon = parseFloat(result.lon);
+    
+    this.isSearchModalOpen.set(false);
+    this.clearSearch();
+    
+    if (this.#map) {
+      this.#map.flyTo([lat, lon], 17);
+    }
   }
 }

@@ -74,6 +74,66 @@
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
       }
+
+      /* GLOBAL COMPONENT OVERRIDES (DastRas Brand) */
+      
+      /* Global Button Styles */
+      ion-button {
+        --border-radius: 1rem;
+        font-weight: 900; /* Black weight */
+        text-transform: none;
+        
+        &.button-solid {
+          --box-shadow: 0 10px 15px -3px rgba(255, 107, 53, 0.2);
+        }
+      }
+
+      /* Global Input Styles */
+      ion-input {
+        --background: #f3f4f6;
+        --border-radius: 1rem;
+        --padding-start: 16px !important;
+        --padding-end: 16px !important;
+        min-height: 56px;
+        font-weight: 700;
+        color: #111827;
+
+        &.ion-invalid {
+          --background: #fee2e2;
+        }
+      }
+
+      .dark ion-input {
+        --background: #1c1c1e;
+        color: white;
+      }
+
+      /* Global Item Styles (for lists/results) */
+      ion-item {
+        --border-radius: 1rem;
+        --inner-padding-end: 0;
+        --padding-start: 0;
+        margin-bottom: 4px;
+        
+        &::part(native) {
+          border-radius: 1rem;
+        }
+      }
+
+      /* Global Modal Styles */
+      ion-modal {
+        --border-radius: 2.5rem;
+        
+        &::part(handle) {
+          background: #e5e7eb;
+          width: 48px;
+          height: 6px;
+        }
+      }
+
+      .dark ion-modal::part(handle) {
+        background: #374151;
+      }
       
       /* Hide scrollbar for horizontal lists */
       .no-scrollbar::-webkit-scrollbar {
