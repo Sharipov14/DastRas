@@ -13,10 +13,10 @@ import {
   IonLabel,
   IonItem,
   IonRadioGroup,
-  IonRadio
+  IonRadio,
+  IonButton,
+  IonList
 } from "@ionic/angular/standalone";
-import { addIcons } from 'ionicons';
-import { close, timeOutline, checkmarkCircle } from 'ionicons/icons';
 import { CartService } from '../../../core/services/cart.service';
 import { ModalController } from '@ionic/angular/standalone';
 import { ThemeService } from '../../services/theme.service';
@@ -40,7 +40,9 @@ import { ThemeService } from '../../services/theme.service';
     IonLabel,
     IonItem,
     IonRadioGroup,
-    IonRadio
+    IonRadio,
+    IonButton,
+    IonList
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -73,10 +75,6 @@ export class DeliveryModalComponent {
 
   protected selectedDay = signal<string>(this.#cartService.deliveryDay());
   protected selectedTime = signal<string>(this.#cartService.deliveryTime());
-
-  constructor() {
-    addIcons({ close, timeOutline, checkmarkCircle });
-  }
 
   protected onDayChange(event: any) {
     this.selectedDay.set(event.detail.value);

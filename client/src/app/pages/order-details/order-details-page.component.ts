@@ -12,19 +12,6 @@ import {
   IonFooter,
   IonButton
 } from "@ionic/angular/standalone";
-import { addIcons } from 'ionicons';
-import { 
-  receiptOutline, 
-  locationOutline, 
-  timeOutline, 
-  callOutline, 
-  chatbubbleEllipsesOutline,
-  repeatOutline,
-  checkmarkCircle,
-  radioButtonOffOutline,
-  radioButtonOnOutline,
-  closeCircle
-} from 'ionicons/icons';
 
 interface OrderDetail {
   id: string;
@@ -68,21 +55,6 @@ export class OrderDetailsPageComponent implements OnInit {
     { key: 'shipping', label: 'В пути', icon: 'location-outline' },
     { key: 'delivered', label: 'Доставлен', icon: 'checkmark-circle' }
   ];
-
-  constructor() {
-    addIcons({ 
-      receiptOutline, 
-      locationOutline, 
-      timeOutline, 
-      callOutline, 
-      chatbubbleEllipsesOutline,
-      repeatOutline,
-      checkmarkCircle,
-      radioButtonOffOutline,
-      radioButtonOnOutline,
-      closeCircle
-    });
-  }
 
   ngOnInit() {
     const id = this.#route.snapshot.paramMap.get('id');

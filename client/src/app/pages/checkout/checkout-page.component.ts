@@ -14,18 +14,9 @@ import {
   IonFooter,
   IonRadioGroup,
   IonRadio,
-  AlertController
+  AlertController,
+  IonList
 } from "@ionic/angular/standalone";
-import { addIcons } from 'ionicons';
-import { 
-  locationOutline, 
-  timeOutline, 
-  cardOutline, 
-  cashOutline, 
-  chevronForwardOutline, 
-  checkmarkCircleOutline,
-  walletOutline
-} from 'ionicons/icons';
 import { CartService } from '../../core/services/cart.service';
 import { Router } from '@angular/router';
 
@@ -47,6 +38,7 @@ import { Router } from '@angular/router';
     IonFooter,
     IonRadioGroup,
     IonRadio,
+    IonList
   ],
   templateUrl: './checkout-page.component.html',
   styleUrl: './checkout-page.component.scss',
@@ -60,19 +52,6 @@ export class CheckoutPageComponent {
 
   protected paymentMethod = signal<'cash' | 'card' | 'wallet'>('cash');
   protected selectedAddress = signal('ул. Рудаки, 45, кв. 12'); // Mock address
-
-  constructor() {
-
-    addIcons({ 
-      locationOutline, 
-      timeOutline, 
-      cardOutline, 
-      cashOutline, 
-      chevronForwardOutline, 
-      checkmarkCircleOutline,
-      walletOutline
-    });
-  }
 
   protected setPaymentMethod(method: any) {
     this.paymentMethod.set(method.detail.value);

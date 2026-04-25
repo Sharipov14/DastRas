@@ -9,20 +9,7 @@ import {
   IonIcon, 
   IonButton, 
   IonToggle,
-  IonNote, IonBadge } from "@ionic/angular/standalone";
-import { addIcons } from 'ionicons';
-import { 
-  personOutline, 
-  locationOutline, 
-  cardOutline, 
-  notificationsOutline, 
-  moonOutline, 
-  helpCircleOutline, 
-  logOutOutline,
-  chevronForwardOutline,
-  walletOutline,
-  languageOutline
-} from 'ionicons/icons';
+  IonNote, IonBadge, IonList, IonItem, IonLabel } from "@ionic/angular/standalone";
 import { ThemeService } from '../../shared/services/theme.service';
 
 @Component({
@@ -37,7 +24,10 @@ import { ThemeService } from '../../shared/services/theme.service';
     IonIcon, 
     IonButton, 
     IonToggle,
-    IonNote
+    IonNote,
+    IonList,
+    IonItem,
+    IonLabel
   ],
   templateUrl: './profile-page.component.html',
   styleUrl: './profile-page.component.scss',
@@ -53,21 +43,6 @@ export class ProfilePageComponent {
     avatar: 'https://i.pravatar.cc/150?u=alisher',
     balance: 150.50
   });
-
-  constructor() {
-    addIcons({ 
-      personOutline, 
-      locationOutline, 
-      cardOutline, 
-      notificationsOutline, 
-      moonOutline, 
-      helpCircleOutline, 
-      logOutOutline,
-      chevronForwardOutline,
-      walletOutline,
-      languageOutline
-    });
-  }
 
   protected toggleTheme(event: any) {
     this.themeService.toggleTheme(event.detail.checked);

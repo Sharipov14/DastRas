@@ -8,10 +8,13 @@ import {
   IonButton, 
   IonIcon, 
   IonContent, 
-  IonFooter 
+  IonFooter,
+  IonList,
+  IonItem,
+  IonLabel,
+  IonRadio,
+  IonRadioGroup
 } from '@ionic/angular/standalone';
-import { addIcons } from 'ionicons';
-import { arrowBack, pencil, checkmark, createOutline, trashOutline } from 'ionicons/icons';
 import { alertController } from '@ionic/core';
 import { AddressService } from '../../core/services/address.service';
 import { Address } from '../../core/models/address.model';
@@ -28,7 +31,12 @@ import { Address } from '../../core/models/address.model';
     IonButton, 
     IonIcon, 
     IonContent, 
-    IonFooter
+    IonFooter,
+    IonList,
+    IonItem,
+    IonLabel,
+    IonRadio,
+    IonRadioGroup
   ],
   templateUrl: './addresses-page.component.html',
   styleUrls: ['./addresses-page.component.scss'],
@@ -41,10 +49,6 @@ export class AddressesPageComponent implements OnInit {
   
   protected isEditMode = signal(false);
   protected tempSelectedId = signal<number | null>(null);
-
-  constructor() {
-    addIcons({ arrowBack, pencil, checkmark, createOutline, trashOutline });
-  }
 
   ngOnInit() {
     this.tempSelectedId.set(this.addressService.selectedAddress()?.id || null);

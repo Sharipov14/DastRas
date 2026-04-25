@@ -1,5 +1,4 @@
 <ion-header class="ion-no-border pt-safe bg-white dark:bg-black">
-  <!-- Top bar with Back and Title -->
   <ion-toolbar class="px-2">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs/home" 
@@ -7,15 +6,14 @@
         text="" icon="arrow-back">
       </ion-back-button>
     </ion-buttons>
-    <ion-title class="font-extrabold text-xl">Поиск</ion-title>
+    <ion-title class="font-black text-xl">Поиск</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="cancelSearch()" class="text-sm font-bold text-[#ff6b35]">
+      <ion-button (click)="cancelSearch()" class="font-bold text-[#ff6b35]">
         Отмена
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 
-  <!-- Searchbar -->
   <ion-toolbar class="px-4 pb-2">
     <ion-searchbar 
       #searchbar
@@ -25,24 +23,28 @@
       (ionInput)="onSearch($event)"
       [debounce]="300"
       show-cancel-button="never"
-      [animated]="true">
-    </ion-searchbar>
+      [animated]="true"
+      style="--background: #f3f4f6; --border-radius: 1rem;"
+    ></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="bg-white dark:bg-black">
   <div class="px-5 animate-in fade-in slide-in-from-bottom-4 duration-300">
-    <!-- Recommendations: Shown only when query is empty -->
+    <!-- Recommendations -->
     @if (!searchQuery()) {
       <div class="mt-6 mb-8">
         <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">Рекомендуем</h3>
         <div class="flex flex-wrap gap-2">
           @for (tag of recommendations; track tag) {
-            <ion-chip 
+            <ion-button 
               (click)="selectRecommendation(tag)"
-              class="bg-gray-100 dark:bg-white/5 text-gray-800 dark:text-gray-200 shadow-none m-0 px-4 py-3 h-auto rounded-2xl active:scale-95 transition-transform border-none">
-              <ion-label class="text-sm font-bold">{{ tag }}</ion-label>
-            </ion-chip>
+              mode="ios"
+              fill="clear"
+              class="ion-no-margin h-auto font-bold text-sm"
+              style="--padding-start: 16px; --padding-end: 16px; --padding-top: 10px; --padding-bottom: 10px; --background: #f3f4f6; --color: #374151; --border-radius: 1rem;">
+              {{ tag }}
+            </ion-button>
           }
         </div>
       </div>
@@ -55,7 +57,7 @@
           <h3 class="text-xl font-black text-gray-900 dark:text-white">
             Результаты поиска
           </h3>
-          <span class="text-xs font-bold text-[#ff6b35] bg-orange-500/10 px-3 py-1.5 rounded-xl">
+          <span class="text-[10px] font-black text-[#ff6b35] bg-orange-500/10 px-3 py-1.5 rounded-xl uppercase tracking-wider">
             "{{ searchQuery() }}"
           </span>
         </div>
@@ -65,13 +67,12 @@
         </h3>
       }
 
-      <!-- Reusing the Products Grid -->
       <app-products-grid [searchQuery]="searchQuery()"></app-products-grid>
     </div>
   </div>
 </ion-content>
 
-<ion-footer class="ion-no-border p-4 pb-safe floating-footer pointer-events-none fixed bottom-0 left-0 w-full z-[100]" style="--background: transparent; background: transparent;">
+<ion-footer class="ion-no-border p-4 pb-safe pointer-events-none fixed bottom-0 left-0 w-full z-[100]" style="--background: transparent; background: transparent;">
   <div class="pointer-events-auto">
     <app-mini-cart></app-mini-cart>
   </div>

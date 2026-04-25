@@ -15,10 +15,10 @@
             <div>
                 <h2 class="text-xl font-black text-gray-900 dark:text-white mb-0.5">{{ user().name }}</h2>
                 <p class="text-sm font-bold text-gray-400">{{ user().phone }}</p>
-                <button class="mt-2 text-xs font-black text-[#ff6b35] uppercase tracking-widest flex items-center gap-1 active:opacity-60 transition-opacity">
+                <ion-button fill="clear" size="small" class="ion-no-padding h-auto mt-1 font-black text-[#ff6b35] uppercase tracking-widest text-[10px]">
                     Редактировать
-                    <ion-icon name="chevron-forward-outline"></ion-icon>
-                </button>
+                    <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
+                </ion-button>
             </div>
         </div>
 
@@ -36,7 +36,7 @@
                         </p>
                         <p class="text-[10px] font-bold text-orange-400 uppercase tracking-widest">Доступный баланс</p>
                     </div>
-                    <ion-button size="small" class="--border-radius-xl font-black text-xs h-10 px-4" color="primary">
+                    <ion-button size="small" color="primary" class="font-black text-xs px-4">
                         Пополнить
                     </ion-button>
                 </div>
@@ -46,69 +46,69 @@
         </div>
 
         <!-- Menu List -->
-        <div class="flex flex-col gap-2">
+        <ion-list class="bg-transparent ion-no-padding">
             
-            <button (click)="navigateTo('/addresses')" class="menu-item">
-                <div class="menu-icon-wrapper bg-gray-100 dark:bg-white/10 text-gray-500">
+            <ion-item (click)="navigateTo('/addresses')" button detail="false" class="menu-item-native">
+                <div slot="start" class="menu-icon-wrapper bg-gray-100 dark:bg-white/10 text-gray-500">
                     <ion-icon name="location-outline"></ion-icon>
                 </div>
-                <span class="menu-label">Мои адреса</span>
-                <ion-icon name="chevron-forward-outline" class="menu-arrow"></ion-icon>
-            </button>
+                <ion-label class="menu-label">Мои адреса</ion-label>
+                <ion-icon slot="end" name="chevron-forward-outline" class="menu-arrow"></ion-icon>
+            </ion-item>
 
-            <button class="menu-item">
-                <div class="menu-icon-wrapper bg-gray-100 dark:bg-white/10 text-gray-500">
+            <ion-item button detail="false" class="menu-item-native">
+                <div slot="start" class="menu-icon-wrapper bg-gray-100 dark:bg-white/10 text-gray-500">
                     <ion-icon name="card-outline"></ion-icon>
                 </div>
-                <span class="menu-label">Способы оплаты</span>
-                <ion-icon name="chevron-forward-outline" class="menu-arrow"></ion-icon>
-            </button>
+                <ion-label class="menu-label">Способы оплаты</ion-label>
+                <ion-icon slot="end" name="chevron-forward-outline" class="menu-arrow"></ion-icon>
+            </ion-item>
 
-            <button class="menu-item">
-                <div class="menu-icon-wrapper bg-gray-100 dark:bg-white/10 text-gray-500">
+            <ion-item button detail="false" class="menu-item-native">
+                <div slot="start" class="menu-icon-wrapper bg-gray-100 dark:bg-white/10 text-gray-500">
                     <ion-icon name="notifications-outline"></ion-icon>
                 </div>
-                <span class="menu-label">Уведомления</span>
-                <ion-badge color="danger" class="menu-badge">2</ion-badge>
-                <ion-icon name="chevron-forward-outline" class="menu-arrow ml-2"></ion-icon>
-            </button>
+                <ion-label class="menu-label">Уведомления</ion-label>
+                <ion-badge slot="end" color="danger">2</ion-badge>
+                <ion-icon slot="end" name="chevron-forward-outline" class="menu-arrow"></ion-icon>
+            </ion-item>
 
-            <div class="h-[1px] bg-gray-100 dark:bg-white/5 my-2"></div>
+            <div class="h-[1px] bg-gray-100 dark:bg-white/5 my-2 mx-4"></div>
 
             <!-- Theme Toggle -->
-            <div class="menu-item no-active">
-                <div class="menu-icon-wrapper bg-gray-100 dark:bg-white/10 text-gray-500">
+            <ion-item lines="none" class="menu-item-native">
+                <div slot="start" class="menu-icon-wrapper bg-gray-100 dark:bg-white/10 text-gray-500">
                     <ion-icon name="moon-outline"></ion-icon>
                 </div>
-                <span class="menu-label">Темная тема</span>
-                <ion-toggle [checked]="themeService.isDark()" (ionChange)="toggleTheme($event)" slot="end" mode="md"></ion-toggle>
-            </div>
+                <ion-label class="menu-label">Темная тема</ion-label>
+                <ion-toggle slot="end" [checked]="themeService.isDark()" (ionChange)="toggleTheme($event)" mode="ios" color="primary"></ion-toggle>
+            </ion-item>
 
-            <button class="menu-item">
-                <div class="menu-icon-wrapper bg-gray-100 dark:bg-white/10 text-gray-500">
+            <ion-item button detail="false" class="menu-item-native">
+                <div slot="start" class="menu-icon-wrapper bg-gray-100 dark:bg-white/10 text-gray-500">
                     <ion-icon name="language-outline"></ion-icon>
                 </div>
-                <span class="menu-label">Язык приложения</span>
-                <ion-note slot="end" class="text-xs font-bold mr-2">Русский</ion-note>
-                <ion-icon name="chevron-forward-outline" class="menu-arrow"></ion-icon>
-            </button>
+                <ion-label class="menu-label">Язык приложения</ion-label>
+                <ion-note slot="end" class="text-xs font-bold">Русский</ion-note>
+                <ion-icon slot="end" name="chevron-forward-outline" class="menu-arrow"></ion-icon>
+            </ion-item>
 
-            <button class="menu-item">
-                <div class="menu-icon-wrapper bg-gray-100 dark:bg-white/10 text-gray-500">
+            <ion-item button detail="false" class="menu-item-native">
+                <div slot="start" class="menu-icon-wrapper bg-gray-100 dark:bg-white/10 text-gray-500">
                     <ion-icon name="help-circle-outline"></ion-icon>
                 </div>
-                <span class="menu-label">Служба поддержки</span>
-                <ion-icon name="chevron-forward-outline" class="menu-arrow"></ion-icon>
-            </button>
+                <ion-label class="menu-label">Служба поддержки</ion-label>
+                <ion-icon slot="end" name="chevron-forward-outline" class="menu-arrow"></ion-icon>
+            </ion-item>
 
-            <button (click)="logout()" class="menu-item mt-4 text-red-500">
-                <div class="menu-icon-wrapper bg-red-100 dark:bg-red-500/10 text-red-500">
+            <ion-item (click)="logout()" button detail="false" class="menu-item-native mt-4" style="--color: #ef4444;">
+                <div slot="start" class="menu-icon-wrapper bg-red-100 dark:bg-red-500/10 text-red-500">
                     <ion-icon name="log-out-outline"></ion-icon>
                 </div>
-                <span class="menu-label font-black">Выйти из аккаунта</span>
-            </button>
+                <ion-label class="menu-label font-black">Выйти из аккаунта</ion-label>
+            </ion-item>
 
-        </div>
+        </ion-list>
 
     </div>
 </ion-content>

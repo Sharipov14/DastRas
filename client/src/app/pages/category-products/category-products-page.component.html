@@ -6,23 +6,18 @@
         text="" icon="arrow-back">
       </ion-back-button>
     </ion-buttons>
-    <ion-title class="font-extrabold text-xl">
+    <ion-title class="font-black text-xl">
       {{ category()?.emoji }} {{ category()?.name }}
     </ion-title>
-    <ion-buttons slot="end">
-      <!-- <ion-button class="relative" routerLink="/tabs/orders">
-        <ion-icon name="cart" class="text-gray-900 dark:text-white text-xl"></ion-icon>
-      </ion-button> -->
-    </ion-buttons>
   </ion-toolbar>
 
   <!-- Sticky Subcategories List -->
-  <div #subCategoryBar class="bg-white/80 dark:bg-black/80 backdrop-blur-md border-b border-gray-100 dark:border-white/5 overflow-x-auto whitespace-nowrap px-5 py-3 no-scrollbar flex gap-2">
+  <div #subCategoryBar class="bg-white/80 dark:bg-black/80 backdrop-blur-md border-b border-gray-100 dark:border-white/5 overflow-x-auto whitespace-nowrap px-5 py-3 no-scrollbar flex gap-2.5">
     @for (sub of subCategories(); track sub.id) {
       <button 
         [id]="'btn-sub-' + sub.id"
         (click)="scrollToSubCategory(sub.id)"
-        class="px-5 py-2.5 rounded-2xl text-sm font-bold transition-all duration-300 active:scale-95"
+        class="px-5 py-2.5 rounded-2xl text-sm font-black transition-all duration-300 active:scale-95"
         [ngClass]="activeSubCategoryId() === sub.id 
           ? 'bg-[#ff6b35] text-white shadow-lg shadow-orange-500/20' 
           : 'bg-gray-100 text-gray-600 dark:bg-white/10 dark:text-gray-400'">
@@ -60,8 +55,8 @@
     
     @if (productsGrouped().length === 0) {
       <div class="flex flex-col items-center justify-center py-20 text-center">
-        <span class="text-6xl mb-4 animate-bounce">🔍</span>
-        <h3 class="text-lg font-bold text-gray-900 dark:text-white">Товары не найдены</h3>
+        <span class="text-6xl mb-4">🔍</span>
+        <h3 class="text-lg font-black text-gray-900 dark:text-white">Товары не найдены</h3>
         <p class="text-gray-500 text-sm font-bold">В этой категории пока нет товаров</p>
       </div>
     }
@@ -69,7 +64,6 @@
   </div>
 </ion-content>
 
-<!-- Transparent Footer with floating mini-cart -->
 <ion-footer class="ion-no-border p-4 pb-safe pointer-events-none fixed bottom-0 left-0 w-full z-[100]" style="--background: transparent; background: transparent;">
   <div class="pointer-events-auto">
     <app-mini-cart></app-mini-cart>

@@ -9,17 +9,7 @@ import {
   IonButton, 
   IonIcon,
   IonSegment,
-  IonSegmentButton
-} from "@ionic/angular/standalone";
-import { addIcons } from 'ionicons';
-import { 
-  receiptOutline, 
-  chevronForwardOutline, 
-  repeatOutline, 
-  checkmarkCircle, 
-  timeOutline, 
-  closeCircle 
-} from 'ionicons/icons';
+  IonSegmentButton, IonItem } from "@ionic/angular/standalone";
 import { Router } from '@angular/router';
 
 interface OrderHistoryItem {
@@ -34,7 +24,7 @@ interface OrderHistoryItem {
 @Component({
   selector: 'app-orders-page',
   standalone: true,
-  imports: [
+  imports: [IonItem, 
     CommonModule,
     IonHeader, 
     IonToolbar, 
@@ -105,17 +95,6 @@ export class OrdersPageComponent {
       return order.status === 'delivered' || order.status === 'cancelled';
     });
   });
-
-  constructor() {
-    addIcons({ 
-      receiptOutline, 
-      chevronForwardOutline, 
-      repeatOutline, 
-      checkmarkCircle, 
-      timeOutline, 
-      closeCircle 
-    });
-  }
 
   protected segmentChanged(event: any) {
     this.selectedSegment.set(event.detail.value);

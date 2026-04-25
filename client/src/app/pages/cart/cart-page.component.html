@@ -8,7 +8,7 @@
         <ion-title class="text-xl font-black">Корзина</ion-title>
         <ion-buttons slot="end">
             @if (cartService.totalItems() > 0) {
-                <ion-button (click)="clearCart()" color="danger" class="text-sm font-bold">
+                <ion-button (click)="clearCart()" color="danger" class="font-bold">
                     Очистить
                 </ion-button>
             }
@@ -39,7 +39,7 @@
             <div class="flex flex-col gap-4">
                 @for (item of cartService.items(); track item.product.id) {
                     <ion-item-sliding>
-                        <ion-item lines="none" class="cart-item-wrapper --padding-start-0">
+                        <ion-item lines="none" class="cart-item-wrapper ion-no-padding overflow-hidden">
                             <div class="w-full flex items-center gap-4 bg-white dark:bg-white/5 rounded-3xl p-3 border border-gray-50 dark:border-white/5">
                                 <!-- Image -->
                                 <div class="w-20 h-20 rounded-2xl overflow-hidden bg-gray-100 dark:bg-black/20 flex-shrink-0">
@@ -61,16 +61,16 @@
                                         </p>
                                         
                                         <!-- Quantity Controls -->
-                                        <div class="flex items-center gap-3 bg-gray-50 dark:bg-white/10 rounded-xl p-1 px-2 border border-gray-100 dark:border-white/5">
-                                            <button (click)="decreaseQuantity(item.product.id, item.quantity)" class="w-6 h-6 flex items-center justify-center text-gray-500">
-                                                <ion-icon name="remove-outline"></ion-icon>
-                                            </button>
-                                            <span class="text-sm font-bold text-gray-900 dark:text-white min-w-[20px] text-center">
+                                        <div class="flex items-center gap-1 bg-gray-50 dark:bg-white/10 rounded-xl p-0.5 border border-gray-100 dark:border-white/5">
+                                            <ion-button (click)="decreaseQuantity(item.product.id, item.quantity)" fill="clear" size="small" color="dark" class="ion-no-margin w-8 h-8">
+                                                <ion-icon slot="icon-only" name="remove-outline" size="small"></ion-icon>
+                                            </ion-button>
+                                            <span class="text-sm font-bold text-gray-900 dark:text-white min-w-[24px] text-center">
                                                 {{ item.quantity }}
                                             </span>
-                                            <button (click)="increaseQuantity(item.product.id, item.quantity)" class="w-6 h-6 flex items-center justify-center text-[#ff6b35]">
-                                                <ion-icon name="add-outline"></ion-icon>
-                                            </button>
+                                            <ion-button (click)="increaseQuantity(item.product.id, item.quantity)" fill="clear" size="small" color="primary" class="ion-no-margin w-8 h-8">
+                                                <ion-icon slot="icon-only" name="add-outline" size="small"></ion-icon>
+                                            </ion-button>
                                         </div>
                                     </div>
                                 </div>
@@ -124,7 +124,7 @@
 
 @if (cartService.totalItems() > 0) {
     <ion-footer class="ion-no-border bg-white dark:bg-black p-5 pb-safe">
-        <ion-button (click)="checkout()" expand="block" class="h-16 text-lg font-black --border-radius-2xl shadow-xl shadow-orange-500/30">
+        <ion-button (click)="checkout()" expand="block" color="primary" class="h-16 text-lg font-black ion-no-margin">
             Оформить заказ
         </ion-button>
     </ion-footer>

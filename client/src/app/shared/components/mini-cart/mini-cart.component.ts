@@ -2,8 +2,6 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { IonIcon, ModalController } from '@ionic/angular/standalone';
-import { addIcons } from 'ionicons';
-import { time, chevronDown, cart } from 'ionicons/icons';
 import { CartService } from '../../../core/services/cart.service';
 import { DeliveryModalComponent } from '../delivery-modal/delivery-modal.component';
 
@@ -19,10 +17,6 @@ import { DeliveryModalComponent } from '../delivery-modal/delivery-modal.compone
 export class MiniCartComponent {
   protected cartService = inject(CartService);
   #modalController = inject(ModalController);
-
-  constructor() {
-    addIcons({ time, 'chevron-down': chevronDown, cart });
-  }
 
   protected async openDeliveryModal() {
     const modal = await this.#modalController.create({

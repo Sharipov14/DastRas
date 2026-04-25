@@ -15,8 +15,6 @@ import {
   IonItemOptions,
   IonItemOption
 } from "@ionic/angular/standalone";
-import { addIcons } from 'ionicons';
-import { addOutline, removeOutline, trashOutline, cartOutline, chevronForwardOutline, timeOutline } from 'ionicons/icons';
 import { CartService } from '../../core/services/cart.service';
 import { Router } from '@angular/router';
 
@@ -46,10 +44,6 @@ import { Router } from '@angular/router';
 export class CartPageComponent {
   protected cartService = inject(CartService);
   #router = inject(Router);
-
-  constructor() {
-    addIcons({ addOutline, removeOutline, trashOutline, cartOutline, chevronForwardOutline, timeOutline });
-  }
 
   protected increaseQuantity(productId: number, currentQty: number) {
     this.cartService.updateQuantity(productId, currentQty + 1);

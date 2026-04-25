@@ -3,8 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IonHeader, IonContent, IonToolbar, IonTitle, IonButtons, IonBackButton, IonFooter } from "@ionic/angular/standalone";
 import { ProductService } from '../../core/services/product.service';
 import { Product, SubCategory } from '../../core/models/product.model';
-import { addIcons } from 'ionicons';
-import { arrowBack, cart } from 'ionicons/icons';
 import { CommonModule } from '@angular/common';
 import { ProductCardComponent } from '../../shared/components/products/product-card.component';
 import { MiniCartComponent } from '../../shared/components/mini-cart/mini-cart.component';
@@ -59,10 +57,6 @@ export class CategoryProductsPageComponent implements OnInit {
 
     return groups;
   });
-
-  constructor() {
-    addIcons({ arrowBack, cart });
-  }
 
   ngOnInit() {
     const id = this.#route.snapshot.paramMap.get('id');

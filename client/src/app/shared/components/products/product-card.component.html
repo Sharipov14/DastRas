@@ -1,4 +1,4 @@
-<div class="bg-white dark:bg-[#1c1c1e] rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none flex flex-col h-full active:scale-[0.98] transition-all duration-200"
+<div class="bg-white dark:bg-[#1c1c1e] rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none flex flex-col h-full active:scale-[0.98] transition-all duration-200 cursor-pointer"
     (click)="goToDetails()">
 
     <!-- Image Section -->
@@ -6,8 +6,7 @@
         <img [src]="product.imageUrl" class="w-full h-full object-cover" [alt]="product.nameRu">
 
         <!-- Rating Badge -->
-        <div
-            class="absolute top-2.5 right-2.5 bg-white/80 dark:bg-black/60 backdrop-blur-md px-2 py-1 rounded-full text-[10px] font-bold flex items-center gap-1 shadow-sm dark:text-white">
+        <div class="absolute top-2.5 right-2.5 bg-white/80 dark:bg-black/60 backdrop-blur-md px-2 py-1 rounded-full text-[10px] font-black flex items-center gap-1 shadow-sm dark:text-white">
             <ion-icon name="star" class="text-yellow-400 text-xs"></ion-icon> {{ product.rating }}
         </div>
     </div>
@@ -19,20 +18,22 @@
                 {{ product.nameRu }}
             </h3>
         </div>
-        <p class="text-xs text-gray-400 dark:text-gray-500 mb-3 font-medium">{{ product.unit }}</p>
+        <p class="text-xs text-gray-400 dark:text-gray-500 mb-3 font-bold">{{ product.unit }}</p>
 
         <!-- Quantity and Price -->
         <div class="mt-auto flex items-center justify-between">
-            <span class="font-bold text-lg text-gray-900 dark:text-white">
+            <span class="font-black text-lg text-gray-900 dark:text-white">
                 {{ product.price }} <span class="text-[#ff6b35] text-sm">c.</span>
             </span>
 
             @if (quantity === 0) {
-                <button
-                    class="w-9 h-9 rounded-full bg-gray-900 dark:bg-white text-white dark:text-black flex items-center justify-center active:scale-90 transition-transform shadow-lg shadow-gray-900/20"
-                    (click)="addToCart($event)">
-                    <ion-icon name="add" class="text-xl"></ion-icon>
-                </button>
+                <ion-button 
+                    (click)="addToCart($event)"
+                    mode="ios"
+                    class="ion-no-margin h-9 w-9"
+                    style="--padding-start: 0; --padding-end: 0; --background: #111827; --color: white; --border-radius: 50%;">
+                    <ion-icon slot="icon-only" name="add" class="text-xl"></ion-icon>
+                </ion-button>
             } @else {
                 <div class="flex items-center bg-[#ff6b35] rounded-full h-9 px-1 shadow-lg shadow-orange-500/30"
                     (click)="$event.stopPropagation()">
@@ -42,7 +43,7 @@
                             class="text-lg">
                         </ion-icon>
                     </button>
-                    <span class="text-sm font-bold mx-0.5 min-w-[14px] text-center text-white">
+                    <span class="text-sm font-black mx-0.5 min-w-[14px] text-center text-white">
                         {{ quantity }}
                     </span>
                     <button class="w-8 h-full flex items-center justify-center text-white active:opacity-70"

@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
 import { IonApp, IonRouterOutlet, IonLoading } from "@ionic/angular/standalone";
 import { ThemeService } from './shared/services/theme.service';
@@ -6,13 +6,18 @@ import { register } from 'swiper/element/bundle';
 import { addIcons } from 'ionicons';
 import { 
   chevronBack, 
+  chevronDown,
+  chevronForwardOutline,
   heartOutline, 
   heart, 
   shareSocialOutline, 
   star, 
   add, 
+  addOutline,
   remove, 
+  removeOutline,
   trashOutline,
+  time,
   timeOutline,
   flameOutline,
   leafOutline,
@@ -20,25 +25,45 @@ import {
   arrowBack,
   pencil,
   checkmark,
-  createOutline,
+  checkmarkCircle,
   checkmarkCircleOutline,
+  createOutline,
+  location,
   locationOutline,
+  home,
   homeOutline,
-  businessOutline
-} from 'ionicons/icons';
+  businessOutline,
+  notifications,
+  grid,
+  receipt,
+  person,
+  close,
+  closeCircle,
+  locate,
+  compassOutline,
+  alertCircleOutline,
+  cashOutline,
+  radioButtonOnOutline,
+  radioButtonOffOutline,
+  chatbubbleEllipsesOutline,
+  callOutline,
+  receiptOutline,
+  repeatOutline
+  } from 'ionicons/icons';
 import { filter, firstValueFrom } from 'rxjs';
 
-// Register Swiper custom elements
-register();
+  // Register Swiper custom elements
+  register();
 
-@Component({
+  @Component({
   selector: 'app-root',
   standalone: true,
   imports: [IonApp, IonRouterOutlet, IonLoading],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
-})
-export class AppComponent {
+  styleUrl: './app.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
+  })
+  export class AppComponent {
   title = 'DastRas';
 
   #router = inject(Router);
@@ -53,13 +78,18 @@ export class AppComponent {
 
     addIcons({
       chevronBack,
+      chevronDown,
+      chevronForwardOutline,
       heartOutline,
       heart,
       shareSocialOutline,
       star,
       add,
+      addOutline,
       remove,
+      removeOutline,
       trashOutline,
+      time,
       timeOutline,
       flameOutline,
       leafOutline,
@@ -67,16 +97,35 @@ export class AppComponent {
       arrowBack,
       pencil,
       checkmark,
-      createOutline,
+      checkmarkCircle,
       checkmarkCircleOutline,
+      createOutline,
+      location,
       locationOutline,
+      home,
       homeOutline,
-      businessOutline
+      businessOutline,
+      notifications,
+      grid,
+      receipt,
+      person,
+      close,
+      closeCircle,
+      locate,
+      compassOutline,
+      'alert-circle-outline': alertCircleOutline,
+      cashOutline,
+      radioButtonOnOutline,
+      radioButtonOffOutline,
+      chatbubbleEllipsesOutline,
+      callOutline,
+      receiptOutline,
+      repeatOutline
     });
   }
 
   async #initializeApp() {
-    // 1. Minimum branding time (1.5 seconds)
+
     const minTime = new Promise(resolve => setTimeout(resolve, 1500));
 
     // 2. Wait for the initial navigation to complete

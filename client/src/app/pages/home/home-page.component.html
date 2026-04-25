@@ -1,13 +1,11 @@
 <ion-header [translucent]="true" class="ion-no-border pt-safe bg-white dark:bg-black">
-  <!-- Main Header Bar -->
   <ion-toolbar class="px-2">
-    <!-- Address Selection (Left/Center aligned) -->
     <ion-buttons slot="start">
-      <ion-button (click)="goToAddresses()" class="address-button">
-        <div class="flex flex-col items-start text-left">
-          <span class="text-[10px] text-gray-400 font-bold tracking-widest uppercase leading-none mb-1">Доставка</span>
+      <ion-button (click)="goToAddresses()" class="address-button ion-no-margin h-auto">
+        <div class="flex flex-col items-start text-left py-1">
+          <span class="text-[10px] text-gray-400 font-black tracking-widest uppercase leading-none mb-1">Доставка</span>
           <div class="flex items-center gap-1">
-            <span class="text-base font-extrabold text-gray-900 dark:text-white truncate max-w-[180px]">
+            <span class="text-base font-black text-gray-900 dark:text-white truncate max-w-[180px]">
               {{ currentAddress() }}
             </span>
             <ion-icon name="chevron-down" class="text-[10px] text-[#ff6b35]"></ion-icon>
@@ -16,9 +14,8 @@
       </ion-button>
     </ion-buttons>
 
-    <!-- Notification Button (Right aligned) -->
     <ion-buttons slot="end">
-      <ion-button (click)="openNotifications()" class="notification-button">
+      <ion-button (click)="openNotifications()" class="ion-no-margin">
         <div class="relative w-10 h-10 rounded-xl bg-gray-100 dark:bg-white/10 flex items-center justify-center transition-transform active:scale-90">
           <ion-icon name="notifications" class="text-xl text-gray-900 dark:text-white"></ion-icon>
           @if (notificationUnreadCount() > 0) {
@@ -30,31 +27,24 @@
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
-
-  <!-- Fake Search Bar Toolbar -->
-  <!-- <ion-toolbar class="px-4 pb-2">
-    <div (click)="goToSearch()" class="search-container flex items-center gap-3 bg-gray-100 dark:bg-white/10 rounded-2xl px-4 py-3 active:bg-gray-200 dark:active:bg-white/20 transition-all cursor-pointer">
-      <ion-icon name="search" class="text-xl text-gray-400"></ion-icon>
-      <span class="text-gray-400 font-medium">Найти продукты...</span>
-    </div>
-  </ion-toolbar> -->
 </ion-header>
 
 <ion-content [fullscreen]="true" class="bg-white dark:bg-black">
-<ion-header>
-  <ion-toolbar class="px-4 pb-2">
-    <div (click)="goToSearch()" class="search-container flex items-center gap-3 bg-gray-100 dark:bg-white/10 rounded-2xl px-4 py-3 active:bg-gray-200 dark:active:bg-white/20 transition-all cursor-pointer">
-      <ion-icon name="search" class="text-xl text-gray-400"></ion-icon>
-      <span class="text-gray-400 font-medium">Найти продукты...</span>
-    </div>
-  </ion-toolbar>
-</ion-header>
+  <ion-header collapse="condense" class="ion-no-border">
+    <ion-toolbar class="px-4 pb-2">
+      <ion-button (click)="goToSearch()" fill="clear" mode="md" class="ion-no-margin w-full h-14 bg-gray-100 dark:bg-white/10 rounded-2xl px-4 flex items-center justify-start gap-3 transition-all active:scale-[0.98]" style="--padding-start: 0; --padding-end: 0;">
+        <ion-icon name="search" class="text-xl text-gray-400"></ion-icon>
+        <span class="text-gray-400 font-bold lowercase">Найти продукты...</span>
+      </ion-button>
+    </ion-toolbar>
+  </ion-header>
+
   <div class="px-5">
     <!-- Categories (Horizontal Scroll) -->
     <div class="sticky top-0 z-40 bg-white/80 dark:bg-black/80 backdrop-blur-md py-3 -mx-5 px-5 mb-4 overflow-x-auto whitespace-nowrap no-scrollbar flex gap-2.5">
       <!-- "All" Category -->
       <button 
-        class="category-pill flex items-center gap-2 px-5 py-2.5 rounded-2xl text-sm font-bold transition-all"
+        class="category-pill flex items-center gap-2 px-5 py-2.5 rounded-2xl text-sm font-black transition-all"
         [ngClass]="selectedCategoryId() === null ? 'bg-[#ff6b35] text-white shadow-lg shadow-orange-500/30' : 'bg-gray-100 text-gray-600 dark:bg-white/10 dark:text-gray-300'"
         (click)="selectCategory(null)">
         Все
@@ -62,7 +52,7 @@
 
       @for (cat of categories(); track cat.id) {
         <button 
-          class="category-pill flex items-center gap-2 px-5 py-2.5 rounded-2xl text-sm font-bold transition-all"
+          class="category-pill flex items-center gap-2 px-5 py-2.5 rounded-2xl text-sm font-black transition-all"
           [ngClass]="selectedCategoryId() === cat.id ? 'bg-[#ff6b35] text-white shadow-lg shadow-orange-500/30' : 'bg-gray-100 text-gray-600 dark:bg-white/10 dark:text-gray-300'"
           (click)="selectCategory(cat.id)">
           <span class="text-lg leading-none">{{ cat.emoji }}</span> 
@@ -73,7 +63,7 @@
 
     <!-- Main Content -->
     <div class="pb-24">
-      <!-- Promo Banner Section (Mock) -->
+      <!-- Promo Banner Section -->
       @if (selectedCategoryId() === null) {
         <div class="w-full h-40 rounded-3xl bg-gradient-to-br from-[#ff6b35] to-[#ff8c42] p-6 mb-8 relative overflow-hidden shadow-xl shadow-orange-500/20">
           <div class="relative z-10 flex flex-col justify-between h-full">
@@ -87,7 +77,7 @@
         </div>
       }
 
-      <div class="flex items-center justify-between mb-4">
+      <div class="mb-4">
         <h3 class="text-xl font-black text-gray-900 dark:text-white">
           {{ selectedCategoryId() ? 'Товары категории' : 'Популярные товары' }}
         </h3>

@@ -35,13 +35,13 @@
     <!-- Map Controls (Top Left & Top Right) -->
     <div class="absolute top-0 left-0 z-30 w-full pt-[calc(var(--ion-safe-area-top)+10px)] px-4 pointer-events-none flex justify-between items-start">
        <!-- Back Button -->
-       <ion-button (click)="goBack()" mode="md" class="pointer-events-auto h-10 w-10 ion-no-padding overflow-hidden" style="--border-radius: 50%; --background: rgba(255,255,255,0.9); --background-activated: rgba(255,255,255,0.7); --box-shadow: 0 1px 2px rgba(0,0,0,0.1); --color: black;">
+       <ion-button (click)="goBack()" mode="md" class="pointer-events-auto h-10 w-10 ion-no-padding overflow-hidden" style="--border-radius: 50%; --background: rgba(255,255,255,0.9); --box-shadow: 0 1px 2px rgba(0,0,0,0.1); --color: black;">
           <ion-icon name="arrow-back" class="text-xl"></ion-icon>
        </ion-button>
 
        <div class="flex flex-col gap-3">
           <!-- Locate Me Button -->
-          <ion-button (click)="getCurrentPosition()" mode="md" class="pointer-events-auto h-10 w-10 ion-no-padding overflow-hidden relative" style="--border-radius: 50%; --background: rgba(255,255,255,0.9); --background-activated: rgba(255,255,255,0.7); --box-shadow: 0 1px 2px rgba(0,0,0,0.1); --color: black;">
+          <ion-button (click)="getCurrentPosition()" mode="md" class="pointer-events-auto h-10 w-10 ion-no-padding overflow-hidden relative" style="--border-radius: 50%; --background: rgba(255,255,255,0.9); --box-shadow: 0 1px 2px rgba(0,0,0,0.1); --color: black;">
               @if (isLocating()) {
                 <ion-spinner name="crescent" class="w-5 h-5 text-[#ff6b35]"></ion-spinner>
               } @else {
@@ -51,7 +51,7 @@
 
           <!-- Compass / Reset North Button -->
           @if (mapBearing() !== 0) {
-            <ion-button (click)="resetNorth()" mode="md" class="pointer-events-auto h-10 w-10 ion-no-padding overflow-hidden animate-fade-in" style="--border-radius: 50%; --background: rgba(255,255,255,0.9); --background-activated: rgba(255,255,255,0.7); --box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
+            <ion-button (click)="resetNorth()" mode="md" class="pointer-events-auto h-10 w-10 ion-no-padding overflow-hidden animate-fade-in" style="--border-radius: 50%; --background: rgba(255,255,255,0.9); --box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
                 <ion-icon name="compass-outline" 
                   class="text-[#ff6b35] text-2xl transition-transform duration-300"
                   [style.transform]="'rotate(' + (-mapBearing()) + 'deg)'">
@@ -63,7 +63,7 @@
 
   </ion-content>
 
-  <!-- Bottom Sheet in ion-footer to handle keyboard behavior naturally -->
+  <!-- Bottom Sheet in ion-footer -->
   <ion-footer class="ion-no-border bg-transparent absolute bottom-0">
     <div class="w-full z-30 bg-white dark:bg-[#1c1c1e] rounded-t-[2.5rem] shadow-[0_-5px_25px_rgba(0,0,0,0.05)] dark:shadow-none pb-[var(--ion-safe-area-bottom)]">
       
@@ -76,10 +76,10 @@
         <!-- Address Field -->
         <div class="mb-6">
             <label class="block text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-3 ml-1">Адрес доставки</label>
-            <div (click)="openSearchModal()" class="flex items-center gap-3 bg-gray-50 dark:bg-black rounded-2xl px-4 py-0 border-2 border-transparent transition-all h-14 cursor-pointer"
+            <div (click)="openSearchModal()" class="flex items-center gap-3 bg-gray-50 dark:bg-black rounded-2xl px-4 py-0 transition-all h-14 cursor-pointer"
                  [class.opacity-50]="!isInsideZone()">
               <ion-icon name="location-outline" class="text-2xl text-[#ff6b35] shrink-0"></ion-icon>
-              <div class="w-full bg-transparent text-base font-bold text-gray-900 dark:text-white leading-normal truncate">
+              <div class="w-full text-base font-bold text-gray-900 dark:text-white leading-normal truncate">
                 {{ formData.details || 'Найти адрес...' }}
               </div>
             </div>
@@ -94,7 +94,6 @@
           class="ion-no-margin h-14 text-base font-black transition-all active:scale-[0.98]"
           [style.--background]="isInsideZone() ? 'linear-gradient(to right, #ff6b35, #ff8c42)' : '#e5e7eb'"
           [style.--color]="isInsideZone() ? 'white' : '#9ca3af'"
-          [style.--border-radius]="'1rem'"
           [style.--box-shadow]="isInsideZone() ? '0 10px 15px -3px rgba(255, 107, 53, 0.2)' : 'none'">
           @if (!isInsideZone()) {
              Доставка недоступна
@@ -117,15 +116,13 @@
           </ion-buttons>
         </ion-toolbar>
         <ion-toolbar class="px-4 pb-2">
-          <div class="flex items-center gap-1 bg-gray-100 dark:bg-black rounded-2xl px-3 h-14 border-2 border-transparent focus-within:border-[#ff6b35] transition-all">
+          <div class="flex items-center gap-1 bg-gray-100 dark:bg-black rounded-2xl px-3 h-14 transition-all">
             <ion-icon name="search" class="text-xl text-gray-400 ml-1"></ion-icon>
             <ion-input 
-              type="text" 
               [ngModel]="searchQuery()" 
               (ngModelChange)="onSearchInput($event)"
               placeholder="Улица, дом, район..."
               class="font-bold text-gray-900 dark:text-white ion-no-padding"
-              style="--padding-start: 8px;"
               [clearInput]="true"
               (ionClear)="clearSearch()"
               #searchInput
@@ -176,7 +173,7 @@
 
 <!-- STEP 2: FORM -->
 @else {
-  <ion-header class="ion-no-border">
+  <ion-header class="ion-no-border pt-safe bg-white dark:bg-black">
     <ion-toolbar class="px-2">
       <ion-buttons slot="start">
         <ion-button (click)="goBack()" class="ion-no-padding" style="--color: black;">
@@ -194,11 +191,10 @@
       <div class="mb-6">
         <label class="block text-sm font-bold text-gray-500 dark:text-gray-400 mb-2.5 pl-1">Название (Дом, Работа...)</label>
         <ion-input 
-          type="text" 
           [(ngModel)]="formData.title" 
           placeholder="Например: Мой дом"
-          class="w-full h-14 text-base font-bold ion-no-padding dark:text-white"
-          style="--background: #f3f4f6; --padding-start: 16px; --border-radius: 1rem;"></ion-input>
+          class="font-bold dark:text-white ion-no-padding"
+        ></ion-input>
       </div>
 
       <!-- Address Details -->
@@ -221,26 +217,23 @@
           <div>
             <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 pl-1 text-center">Подъезд</label>
             <ion-input 
-              type="text" 
               [(ngModel)]="formData.entrance" 
-              class="w-full h-14 text-base font-bold ion-text-center ion-no-padding dark:text-white"
-              style="--background: #f3f4f6; --border-radius: 1rem;"></ion-input>
+              class="ion-text-center ion-no-padding dark:text-white"
+            ></ion-input>
           </div>
           <div>
             <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 pl-1 text-center">Этаж</label>
             <ion-input 
-              type="text" 
               [(ngModel)]="formData.floor" 
-              class="w-full h-14 text-base font-bold ion-text-center ion-no-padding dark:text-white"
-              style="--background: #f3f4f6; --border-radius: 1rem;"></ion-input>
+              class="ion-text-center ion-no-padding dark:text-white"
+            ></ion-input>
           </div>
           <div>
             <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 pl-1 text-center">Кв / Офис</label>
             <ion-input 
-              type="text" 
               [(ngModel)]="formData.apartment" 
-              class="w-full h-14 text-base font-bold ion-text-center ion-no-padding dark:text-white"
-              style="--background: #f3f4f6; --border-radius: 1rem;"></ion-input>
+              class="ion-text-center ion-no-padding dark:text-white"
+            ></ion-input>
           </div>
         </div>
 
@@ -248,10 +241,9 @@
         <div class="mb-6">
           <label class="block text-sm font-bold text-gray-500 dark:text-gray-400 mb-2.5 pl-1">Домофон</label>
           <ion-input 
-            type="text" 
             [(ngModel)]="formData.intercom" 
-            class="w-full h-14 text-base font-bold ion-no-padding dark:text-white"
-            style="--background: #f3f4f6; --padding-start: 16px; --border-radius: 1rem;"></ion-input>
+            class="ion-no-padding dark:text-white"
+          ></ion-input>
         </div>
       }
 
@@ -272,7 +264,6 @@
        class="ion-no-margin h-14 text-base font-black transition-all active:scale-[0.98]"
        [style.--background]="isValid() ? 'linear-gradient(to right, #ff6b35, #ff8c42)' : '#f3f4f6'"
        [style.--color]="isValid() ? 'white' : '#9ca3af'"
-       [style.--border-radius]="'1rem'"
        [style.--box-shadow]="isValid() ? '0 10px 15px -3px rgba(255, 107, 53, 0.2)' : 'none'">
        Сохранить адрес
     </ion-button>

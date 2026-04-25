@@ -1,94 +1,80 @@
-<ion-header class="ion-no-border">
+<ion-header class="ion-no-border pt-safe bg-white dark:bg-black">
   <ion-toolbar class="px-2">
     <ion-buttons slot="start">
       <ion-button (click)="goBack()">
         <ion-icon name="arrow-back" class="text-black dark:text-white text-xl"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <h1 class="text-lg font-bold dark:text-white text-center w-full absolute left-0 -z-10">Мои адреса</h1>
+    <ion-title class="font-black">Мои адреса</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="toggleEditMode()">
-        <ion-icon [name]="isEditMode() ? 'checkmark' : 'pencil'" class="text-black dark:text-white text-xl"></ion-icon>
+        <ion-icon [name]="isEditMode() ? 'checkmark' : 'pencil'" class="text-[#ff6b35] text-xl"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="bg-white dark:bg-black">
-  <div class="px-5 pt-4 pb-44 space-y-6">
-    @for (addr of addressService.addresses(); track addr.id) {
-    <div class="relative flex items-center justify-between group cursor-pointer"
-      (click)="select(addr)">
+  <div class="px-5 pt-4 pb-44">
+    @if (addressService.addresses().length > 0) {
+      <ion-radio-group [value]="tempSelectedId()" (ionChange)="tempSelectedId.set($event.detail.value)">
+        <ion-list class="bg-transparent ion-no-padding">
+          @for (addr of addressService.addresses(); track addr.id) {
+            <ion-item lines="none" class="address-item-native mb-4">
+              <div class="w-full flex items-center justify-between py-2" (click)="select(addr)">
+                <!-- Left Info -->
+                <div class="flex-1 pr-4">
+                  <h3 class="text-base font-bold text-gray-900 dark:text-white mb-0.5">
+                    {{ addr.title }}
+                  </h3>
+                  <p class="text-sm text-gray-400 dark:text-gray-500 font-medium leading-snug">
+                    {{ addr.details }}
+                  </p>
 
-      <!-- Left Info -->
-      <div class="pr-14 flex-1">
-        <h3 class="text-base font-semibold text-gray-900 dark:text-white mb-1">
-          {{ addr.title }}
-        </h3>
-        <p class="text-sm text-gray-400 dark:text-gray-500 font-normal leading-snug">
-          {{ addr.details }}
-        </p>
+                  @if (addressService.selectedAddress()?.id === addr.id && !isEditMode()) {
+                    <p class="text-[10px] text-green-500 font-black uppercase tracking-wider mt-1.5 flex items-center gap-1">
+                      <div class="w-1.5 h-1.5 rounded-full bg-green-500"></div>
+                      Текущий адрес
+                    </p>
+                  }
+                </div>
 
-        @if (addressService.selectedAddress()?.id === addr.id && !isEditMode()) {
-        <p class="text-xs text-green-500 font-medium mt-1">
-          Текущий адрес доставки
-        </p>
-        }
-      </div>
-
-      <!-- Right Actions -->
-      <div class="absolute right-0 top-1/2 transform -translate-y-1/2 flex items-center gap-2">
-
-        @if (isEditMode()) {
-        <!-- Edit Button -->
-        <button
-          class="w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-700 dark:text-white active:bg-gray-200 transition-colors"
-          (click)="$event.stopPropagation(); goToEdit(addr.id)">
-          <ion-icon name="create-outline" class="text-xl"></ion-icon>
-        </button>
-
-        <!-- Delete Button -->
-        <button
-          class="w-9 h-9 rounded-full bg-red-50 dark:bg-red-900/20 flex items-center justify-center text-red-500 active:bg-red-100 transition-colors"
-          (click)="$event.stopPropagation(); deleteAddress(addr)">
-          <ion-icon name="trash-outline" class="text-xl"></ion-icon>
-        </button>
-        } @else {
-        <!-- Radio Selection -->
-        <div class="w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all"
-          [class.border-[#ff6b35]]="tempSelectedId() === addr.id"
-          [class.border-gray-300]="tempSelectedId() !== addr.id"
-          [class.dark:border-gray-600]="tempSelectedId() !== addr.id">
-          @if (tempSelectedId() === addr.id) {
-          <div class="w-3 h-3 rounded-full bg-[#ff6b35]"></div>
+                <!-- Right Actions -->
+                <div class="flex items-center gap-2 shrink-0">
+                  @if (isEditMode()) {
+                    <ion-button fill="clear" color="dark" (click)="$event.stopPropagation(); goToEdit(addr.id)" class="ion-no-margin">
+                      <ion-icon slot="icon-only" name="create-outline" size="small"></ion-icon>
+                    </ion-button>
+                    <ion-button fill="clear" color="danger" (click)="$event.stopPropagation(); deleteAddress(addr)" class="ion-no-margin">
+                      <ion-icon slot="icon-only" name="trash-outline" size="small"></ion-icon>
+                    </ion-button>
+                  } @else {
+                    <ion-radio [value]="addr.id" mode="md" color="primary"></ion-radio>
+                  }
+                </div>
+              </div>
+            </ion-item>
           }
+        </ion-list>
+      </ion-radio-group>
+    } @else {
+      <!-- Empty State -->
+      <div class="flex flex-col items-center justify-center py-20 text-center">
+        <div class="w-24 h-24 rounded-full bg-gray-50 dark:bg-white/5 flex items-center justify-center mb-6">
+            <ion-icon name="location-outline" class="text-5xl text-gray-200 dark:text-gray-800"></ion-icon>
         </div>
-        }
-
+        <p class="text-gray-500 font-bold">У вас пока нет сохраненных адресов</p>
       </div>
-
-    </div>
-    }
-
-    @if (addressService.addresses().length === 0) {
-    <div class="text-center py-20 text-gray-400">
-      <p>У вас пока нет сохраненных адресов.</p>
-    </div>
     }
   </div>
 </ion-content>
 
-<ion-footer class="ion-no-border">
-  <div class="w-full bg-white dark:bg-black p-5 pb-8 z-20 border-t border-gray-100 dark:border-gray-800 shadow-[0_-5px_20px_rgba(0,0,0,0.02)]">
-    <button
-      class="w-full bg-gradient-to-r from-[#ff6b35] to-[#ff8c42] text-white font-bold h-12 rounded-2xl mb-3 shadow-lg shadow-orange-500/20 active:scale-[0.98] transition-transform text-base"
-      (click)="saveAndClose()">
+<ion-footer class="ion-no-border bg-white dark:bg-black p-5 pb-safe border-t border-gray-100 dark:border-gray-800 shadow-xl">
+    <ion-button (click)="saveAndClose()" expand="block" color="primary" class="h-14 font-black mb-3 ion-no-margin">
       Готово
-    </button>
-    <button
-      class="w-full bg-gray-100 dark:bg-[#1c1c1e] text-black dark:text-white font-bold h-12 rounded-2xl active:scale-[0.98] transition-transform text-base"
-      (click)="goToAdd()">
+    </ion-button>
+    <ion-button (click)="goToAdd()" expand="block" fill="clear" color="dark" class="h-12 font-bold text-gray-500 ion-no-margin">
+      <ion-icon slot="start" name="add"></ion-icon>
       Добавить новый адрес
-    </button>
-  </div>
+    </ion-button>
 </ion-footer>

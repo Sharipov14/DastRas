@@ -13,8 +13,6 @@ import {
   IonBackButton,
   IonFooter
 } from "@ionic/angular/standalone";
-import { addIcons } from 'ionicons';
-import { arrowBack, closeCircle, search } from 'ionicons/icons';
 import { ProductService } from '../../core/services/product.service';
 import { ProductsGridComponent } from '../../shared/components/products/products-grid.component';
 import { Router } from '@angular/router';
@@ -51,10 +49,6 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
 
   protected searchQuery = signal<string>('');
   protected recommendations = ['Помидоры', 'Молоко', 'Свежий хлеб', 'Мясо', 'Фрукты'];
-
-  constructor() {
-    addIcons({ arrowBack, closeCircle, search });
-  }
 
   ngOnInit() {
   }

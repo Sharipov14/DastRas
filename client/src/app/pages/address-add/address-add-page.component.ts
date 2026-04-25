@@ -17,8 +17,6 @@ import {
   IonItem,
   IonLabel,
   IonInput } from '@ionic/angular/standalone';
-import { addIcons } from 'ionicons';
-import { arrowBack, checkmarkCircleOutline, location, locationOutline, locate, compassOutline, alertCircleOutline, search, closeCircle } from 'ionicons/icons';
 import { toastController } from '@ionic/core';
 import { AddressService } from '../../core/services/address.service';
 import { Address } from '../../core/models/address.model';
@@ -90,10 +88,6 @@ export class AddressAddPageComponent implements OnInit, AfterViewInit, OnDestroy
 
   #map: any;
   #moveTimeout: any;
-
-  constructor() {
-    addIcons({ arrowBack, checkmarkCircleOutline, location, locationOutline, locate, compassOutline, 'alert-circle-outline': alertCircleOutline, search, 'close-circle': closeCircle });
-  }
 
   ngOnInit() {
     const idParam = this.route.snapshot.paramMap.get('id');

@@ -3,25 +3,27 @@
     <div class="pointer-events-auto bg-white/60 dark:bg-[#1c1c1e]/60 backdrop-blur-xl rounded-[1.2rem] p-1 shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-white/40 dark:border-white/10 flex items-center justify-between h-12">
       
       <!-- Delivery Time Selection -->
-      <button (click)="openDeliveryModal()"
-        class="flex items-center gap-2 pl-1 pr-2 h-full rounded-xl active:bg-black/5 dark:active:bg-white/5 transition-colors">
-        <div class="w-8 h-8 rounded-full bg-[#ff6b35]/10 flex items-center justify-center text-[#ff6b35]">
-           <ion-icon name="time" class="text-lg"></ion-icon>
+      <ion-button (click)="openDeliveryModal()" fill="clear" mode="ios" class="ion-no-margin h-full" style="--padding-start: 4px; --padding-end: 8px;">
+        <div class="flex items-center gap-2 h-full">
+          <div class="w-8 h-8 rounded-full bg-[#ff6b35]/10 flex items-center justify-center text-[#ff6b35] shrink-0">
+             <ion-icon name="time" class="text-lg"></ion-icon>
+          </div>
+          <div class="flex flex-col items-start text-left">
+             <span class="text-[9px] text-gray-500 font-black uppercase tracking-wider leading-none mb-0.5">Доставка</span>
+             <span class="text-xs font-black text-gray-900 dark:text-white leading-none flex items-center gap-0.5">
+               {{ cartService.deliveryDay() }}, {{ cartService.deliveryTime() }}
+               <ion-icon name="chevron-down" class="text-[10px] text-[#ff6b35]"></ion-icon>
+             </span>
+          </div>
         </div>
-        <div class="flex flex-col items-start">
-           <span class="text-[9px] text-gray-500 font-bold uppercase tracking-wider leading-none mb-0.5">Доставка</span>
-           <span class="text-xs font-bold text-gray-900 dark:text-white leading-none flex items-center gap-0.5">
-             {{ cartService.deliveryDay() }}, {{ cartService.deliveryTime() }}
-             <ion-icon name="chevron-down" class="text-[10px] text-[#ff6b35]"></ion-icon>
-           </span>
-        </div>
-      </button>
+      </ion-button>
 
       <!-- Cart Button -->
-      <button routerLink="/cart" class="bg-[#ff6b35] text-white rounded-xl px-4 flex items-center gap-2 shadow-lg shadow-orange-500/30 active:scale-95 transition-transform h-9 mr-0.5">
-         <ion-icon name="cart" class="text-lg"></ion-icon>
-         <span class="font-bold text-sm whitespace-nowrap">{{ cartService.totalPrice() }} с.</span>
-      </button>
+      <ion-button routerLink="/cart" mode="ios" class="ion-no-margin h-9 mr-0.5 font-black text-sm" 
+                  style="--background: #ff6b35; --color: white; --border-radius: 0.75rem; --box-shadow: 0 4px 10px rgba(255, 107, 53, 0.3);">
+         <ion-icon slot="start" name="cart" class="text-lg"></ion-icon>
+         {{ cartService.totalPrice() }} с.
+      </ion-button>
     
     </div>
   </div>

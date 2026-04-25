@@ -13,8 +13,6 @@ import {
   IonButton,
   IonBadge
 } from '@ionic/angular/standalone';
-import { addIcons } from 'ionicons';
-import { add, chevronDown, notifications, remove, star, trashOutline, search, locationOutline } from 'ionicons/icons';
 import { ProductsGridComponent } from "../../shared/components/products/products-grid.component";
 import { ThemeService } from '../../shared/services/theme.service';
 import { ProductService } from '../../core/services/product.service';
@@ -51,10 +49,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
     // Local UI state
     protected categories = this.#productService.categories;
     protected selectedCategoryId = signal<number | null>(null);
-
-    constructor() {
-        addIcons({ chevronDown, notifications, star, add, remove, trashOutline, search, locationOutline });
-    }
 
     ngOnInit(): void {
     }
