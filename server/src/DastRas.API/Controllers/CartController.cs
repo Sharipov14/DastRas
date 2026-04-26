@@ -8,7 +8,7 @@ namespace DastRas.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
+[AllowAnonymous]
 public class CartController : ControllerBase
 {
     private readonly ICartService _cartService;
@@ -18,7 +18,7 @@ public class CartController : ControllerBase
         _cartService = cartService;
     }
 
-    private int UserId => int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+    private int UserId => 1; // Temporary hardcoded for dev without client auth
 
     [HttpGet]
     public async Task<IActionResult> GetCart()

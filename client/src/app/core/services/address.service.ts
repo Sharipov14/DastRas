@@ -1,42 +1,34 @@
 import { Injectable, signal, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Address } from '../models/address.model';
+import { environment } from '../../../environments/environment';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AddressService {
-  #addresses = signal<Address[]>([
-    {
-      id: 1,
-      title: 'Дом',
-      details: 'ул. Пушкина, д. 10',
-      type: 'home',
-      isPrivateHouse: false,
-      entrance: '1',
-      floor: '5',
-      apartment: '42',
-      intercom: '42k'
-    },
-    {
-      id: 2,
-      title: 'Работа',
-      details: 'пр. Мира, д. 25',
-      type: 'work',
-      isPrivateHouse: false,
-      entrance: '2',
-      floor: '12',
-      apartment: '1201'
-    }
-  ]);
+  private http = inject(HttpClient);
+  private apiUrl = `${environment.apiUrl}/Addresses`;
+  
+  #addresses = signal<Address[]>([]);
 
   selectedAddress = signal<Address | null>(null);
   addresses = this.#addresses.asReadonly();
 
   constructor() {
-    // Set default selected address
-    const initial = this.#addresses();
-    if (initial.length > 0) {
-      this.selectedAddress.set(initial[0]);
+    this.loadAddresses();
+  }
+
+  private async loadAddresses() {
+    try {
+      const addresses = await firstValueFrom(this.http.get<Address[]>(this.apiUrl));
+      this.#addresses.set(addresses);
+      if (addresses.length > 0) {
+        this.selectedAddress.set(addresses[0]);
+      }
+    } catch (error) {
+      console.error('Error loading addresses:', error);
     }
   }
 
@@ -49,28 +41,41 @@ export class AddressService {
   }
 
   async addAddress(address: Omit<Address, 'id'>) {
-    const newId = Math.max(0, ...this.#addresses().map(a => a.id)) + 1;
-    const created: Address = { ...address, id: newId };
-    
-    this.#addresses.update(list => [...list, created]);
-    this.selectedAddress.set(created);
-    return created;
+    try {
+      const created = await firstValueFrom(this.http.post<Address>(this.apiUrl, address));
+      this.#addresses.update(list => [...list, created]);
+      this.selectedAddress.set(created);
+      return created;
+    } catch (error) {
+      console.error('Error adding address:', error);
+      throw error;
+    }
   }
 
   async updateAddress(updatedAddress: Address) {
-    this.#addresses.update(list =>
-      list.map(a => a.id === updatedAddress.id ? updatedAddress : a)
-    );
-    if (this.selectedAddress()?.id === updatedAddress.id) {
-      this.selectedAddress.set(updatedAddress);
+    try {
+      await firstValueFrom(this.http.put(`${this.apiUrl}/${updatedAddress.id}`, updatedAddress));
+      this.#addresses.update(list =>
+        list.map(a => a.id === updatedAddress.id ? updatedAddress : a)
+      );
+      if (this.selectedAddress()?.id === updatedAddress.id) {
+        this.selectedAddress.set(updatedAddress);
+      }
+    } catch (error) {
+      console.error('Error updating address:', error);
     }
   }
 
   async deleteAddress(id: number) {
-    this.#addresses.update(list => list.filter(a => a.id !== id));
-    if (this.selectedAddress()?.id === id) {
-      const remaining = this.#addresses();
-      this.selectedAddress.set(remaining.length > 0 ? remaining[0] : null);
+    try {
+      await firstValueFrom(this.http.delete(`${this.apiUrl}/${id}`));
+      this.#addresses.update(list => list.filter(a => a.id !== id));
+      if (this.selectedAddress()?.id === id) {
+        const remaining = this.#addresses();
+        this.selectedAddress.set(remaining.length > 0 ? remaining[0] : null);
+      }
+    } catch (error) {
+      console.error('Error deleting address:', error);
     }
   }
 }

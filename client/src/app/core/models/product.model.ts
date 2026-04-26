@@ -13,7 +13,7 @@ export interface SubCategory {
 export interface Product {
   id: number;
   categoryId: number;
-  subCategoryId: number; // Новое поле
+  subCategoryId?: number; // Опционально, пока нет на сервере
   nameRu: string;
   nameTj: string;
   nameEn: string;

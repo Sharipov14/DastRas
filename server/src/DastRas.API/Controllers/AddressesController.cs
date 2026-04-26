@@ -11,7 +11,7 @@ namespace DastRas.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
+[AllowAnonymous]
 public class AddressesController : ControllerBase
 {
     private readonly IRepository<Address> _addressRepo;
@@ -25,7 +25,7 @@ public class AddressesController : ControllerBase
         _validationService = validationService;
     }
 
-    private int UserId => int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+    private int UserId => 1; // Temporary hardcoded for dev without client auth
 
     [HttpGet]
     public async Task<IActionResult> GetAll()

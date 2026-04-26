@@ -1,4 +1,4 @@
 export const environment = {
-  production: true,
-  apiUrl: 'https://api.dastras.com/api'
+  production: false,
+  apiUrl: 'http://localhost:5223/api'
 };

@@ -7,7 +7,7 @@ namespace DastRas.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
+[AllowAnonymous]
 public class ProductsController : ControllerBase
 {
     private readonly IProductRepository _productRepo;

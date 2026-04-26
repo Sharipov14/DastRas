@@ -8,7 +8,7 @@ namespace DastRas.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
+[AllowAnonymous]
 public class OrdersController : ControllerBase
 {
     private readonly IOrderService _orderService;
@@ -18,7 +18,7 @@ public class OrdersController : ControllerBase
         _orderService = orderService;
     }
 
-    private int UserId => int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+    private int UserId => 1; // Temporary hardcoded for dev without client auth
 
     [HttpGet]
     public async Task<IActionResult> GetOrders()

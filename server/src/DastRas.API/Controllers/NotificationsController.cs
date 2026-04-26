@@ -9,7 +9,7 @@ namespace DastRas.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
+[AllowAnonymous]
 public class NotificationsController : ControllerBase
 {
     private readonly IRepository<Notification> _notificationRepo;
@@ -19,7 +19,7 @@ public class NotificationsController : ControllerBase
         _notificationRepo = notificationRepo;
     }
 
-    private int UserId => int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+    private int UserId => 1; // Temporary hardcoded for dev without client auth
 
     [HttpGet]
     public async Task<IActionResult> GetAll()

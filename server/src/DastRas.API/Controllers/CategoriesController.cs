@@ -8,7 +8,7 @@ namespace DastRas.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
+[AllowAnonymous]
 public class CategoriesController : ControllerBase
 {
     private readonly IRepository<Category> _categoryRepo;
