@@ -45,7 +45,8 @@ export class ProfilePageComponent {
   });
 
   protected toggleTheme(event: any) {
-    this.themeService.toggleTheme(event.detail.checked);
+    const isDark = typeof event === 'boolean' ? event : event.detail.checked;
+    this.themeService.toggleTheme(isDark);
   }
 
   protected navigateTo(path: string) {

@@ -2,6 +2,7 @@ import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/cor
 import { Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
 import { IonApp, IonRouterOutlet, IonLoading } from "@ionic/angular/standalone";
 import { ThemeService } from './shared/services/theme.service';
+import { NotificationService } from './core/services/notification.service';
 import { register } from 'swiper/element/bundle';
 import { addIcons } from 'ionicons';
 import { 
@@ -47,6 +48,13 @@ import {
   radioButtonOffOutline,
   chatbubbleEllipsesOutline,
   callOutline,
+  walletOutline,
+  cardOutline,
+  notificationsOutline,
+  moonOutline,
+  languageOutline,
+  helpCircleOutline,
+  logOutOutline,
   receiptOutline,
   repeatOutline
   } from 'ionicons/icons';
@@ -68,6 +76,7 @@ import { filter, firstValueFrom } from 'rxjs';
 
   #router = inject(Router);
   #themeService = inject(ThemeService);
+  #notificationService = inject(NotificationService);
 
   protected isNavigating = signal(false);
   protected isAppLoading = signal(true);
@@ -120,7 +129,14 @@ import { filter, firstValueFrom } from 'rxjs';
       chatbubbleEllipsesOutline,
       callOutline,
       receiptOutline,
-      repeatOutline
+      repeatOutline,
+      walletOutline,
+      cardOutline,
+      notificationsOutline,
+      moonOutline,
+      languageOutline,
+      helpCircleOutline,
+      logOutOutline
     });
   }
 
@@ -142,6 +158,8 @@ import { filter, firstValueFrom } from 'rxjs';
     // Wait for both conditions to be met
     try {
       await Promise.all([minTime, initialNav]);
+      // Инициализируем Push-уведомления после загрузки приложения
+      await this.#notificationService.initPush();
     } catch (e) {
       console.error('App initialization error', e);
     } finally {

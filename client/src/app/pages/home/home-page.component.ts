@@ -74,11 +74,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
     }
 
     protected async openNotifications() {
-        // Here we could open a modal or navigate to notifications page
-        // For now, let's toggle theme as a placeholder if needed, or just console log
-        console.log('Open notifications');
-        // Toggle theme for demo if requested by user hint previously (it was in the code)
-        // this.#themeService.toggleTheme(!this.#themeService.isDark());
+        this.#router.navigate(['/notifications']);
     }
 
     protected onIonInfinite(ev: any) {

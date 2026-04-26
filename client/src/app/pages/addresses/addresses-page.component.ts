@@ -13,8 +13,7 @@ import {
   IonItem,
   IonLabel,
   IonRadio,
-  IonRadioGroup
-} from '@ionic/angular/standalone';
+  IonRadioGroup, IonTitle } from '@ionic/angular/standalone';
 import { alertController } from '@ionic/core';
 import { AddressService } from '../../core/services/address.service';
 import { Address } from '../../core/models/address.model';
@@ -22,7 +21,7 @@ import { Address } from '../../core/models/address.model';
 @Component({
   selector: 'app-addresses-page',
   standalone: true,
-  imports: [
+  imports: [IonTitle, 
     CommonModule, 
     RouterModule,
     IonHeader, 

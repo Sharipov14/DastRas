@@ -1,0 +1,32 @@
+ion-toolbar {
+    --background: transparent;
+    --border-width: 0;
+    --padding-top: 0;
+    --padding-bottom: 0;
+}
+
+.input-item {
+    --padding-start: 0;
+    --inner-padding-end: 0;
+    --background: transparent;
+    --border-radius: 1.25rem;
+
+    ion-input {
+        --background: #f3f4f6;
+        --border-radius: 1.25rem;
+        --padding-start: 20px !important;
+        --padding-end: 20px !important;
+        min-height: 58px;
+        font-weight: 700;
+        transition: all 0.2s ease-in-out;
+    }
+}
+
+:host-context(body.dark) {
+    .input-item {
+        ion-input {
+            --background: #1c1c1e;
+            color: white;
+        }
+    }
+}

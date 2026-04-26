@@ -5,59 +5,98 @@ ion-toolbar {
   --padding-bottom: 0;
 }
 
-.menu-item {
-    width: 100%;
-    display: flex;
-    items-center: center;
-    padding: 0.75rem 0;
-    background: transparent;
-    text-align: left;
-    transition: all 0.2s ease-in-out;
+.menu-group {
+  background: #f9fafb;
+  border-radius: 2rem;
+  padding: 8px 16px;
+  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.03);
+  margin-bottom: 24px;
+
+  &.logout-group {
+    background: #fef2f2;
+  }
+}
+
+/* Стили для темной темы */
+:host-context(body.dark) {
+  .menu-group {
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: none;
+
+    &.logout-group {
+      background: rgba(239, 68, 68, 0.1);
+    }
+  }
+
+  .menu-item-divider {
+    background: rgba(255, 255, 255, 0.12); /* Сделал ярче для темной темы */
+  }
+}
+
+.menu-item-native {
+  --padding-start: 0;
+  --inner-padding-end: 0;
+  --background: transparent;
+  --border-style: none;
+  --min-height: 64px;
+  transition: all 0.2s ease-in-out;
+
+  &::part(native) {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  &:active {
+    opacity: 0.7;
+    transform: scale(0.98);
+  }
+
+  .menu-icon-wrapper {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
     display: flex;
     align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    margin-right: 16px;
+  }
 
-    &:active:not(.no-active) {
-        opacity: 0.6;
-        transform: translateX(4px);
-    }
+  .menu-label {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--ion-text-color);
+    --color: var(--ion-text-color);
+  }
 
-    .menu-icon-wrapper {
-        width: 40px;
-        height: 40px;
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.25rem;
-        margin-right: 1rem;
-    }
+  .menu-arrow {
+    color: #d1d5db;
+    font-size: 1.1rem;
+    opacity: 0.5;
+  }
 
-    .menu-label {
-        flex: 1;
-        font-size: 0.95rem;
-        font-weight: 600;
-        color: var(--ion-text-color);
-    }
+  ion-badge {
+    --padding-start: 6px;
+    --padding-end: 6px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 800;
+    margin-right: 8px;
+  }
+}
 
-    .menu-arrow {
-        color: #d1d5db;
-        font-size: 1rem;
-    }
-
-    .menu-badge {
-        --padding-start: 6px;
-        --padding-end: 6px;
-        border-radius: 6px;
-        font-size: 10px;
-        font-weight: 800;
-    }
+.menu-item-divider {
+  height: 1px;
+  background: #eceef1; /* Сделал темнее для светлой темы */
+  margin: 0;
+  width: 100%;
 }
 
 ion-toggle {
-    --handle-background: #ffffff;
-    --handle-background-checked: #ffffff;
-    --track-background: #e5e7eb;
-    --track-background-checked: #ff6b35;
-    padding: 0;
-    margin: 0;
+  --handle-background: #ffffff;
+  --handle-background-checked: #ffffff;
+  --track-background: #e5e7eb;
+  --track-background-checked: #ff6b35;
+  padding: 0;
+  margin: 0;
 }

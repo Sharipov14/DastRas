@@ -4,161 +4,168 @@
 
 /* You can add global styles to this file, and also import other style files */
 :root {
-        --ion-color-primary: #ff6b35;
-        --ion-color-primary-rgb: 255, 107, 53;
-        --ion-color-primary-contrast: #ffffff;
-        --ion-color-primary-contrast-rgb: 255, 255, 255;
-        --ion-color-primary-shade: #e05e2f;
-        --ion-color-primary-tint: #ff7a49;
-        --app-safe-top: max(var(--ion-safe-area-top, 0px), env(safe-area-inset-top, 0px));
-        --app-safe-bottom: max(var(--ion-safe-area-bottom, 0px), env(safe-area-inset-bottom, 0px));
-      }
+  --ion-color-primary: #ff6b35;
+  --ion-color-primary-rgb: 255, 107, 53;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #e05e2f;
+  --ion-color-primary-tint: #ff7a49;
+  --app-safe-top: max(var(--ion-safe-area-top, 0px), env(safe-area-inset-top, 0px));
+  --app-safe-bottom: max(var(--ion-safe-area-bottom, 0px), env(safe-area-inset-bottom, 0px));
+}
 
-      /* Keep Ionic primary color orange in both light and dark palettes */
-      html:root,
-      html.ion-palette-dark {
-        --ion-color-primary: #ff6b35;
-        --ion-color-primary-rgb: 255, 107, 53;
-        --ion-color-primary-contrast: #ffffff;
-        --ion-color-primary-contrast-rgb: 255, 255, 255;
-        --ion-color-primary-shade: #e05e2f;
-        --ion-color-primary-tint: #ff7a49;
-      }
+/* Keep Ionic primary color orange in both light and dark palettes */
+html:root,
+html.ion-palette-dark {
+  --ion-color-primary: #ff6b35;
+  --ion-color-primary-rgb: 255, 107, 53;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #e05e2f;
+  --ion-color-primary-tint: #ff7a49;
+}
 
-      /* Ionic Dark Theme */
-      body.dark {
-        --ion-color-primary: #ff6b35;
-        --ion-color-primary-rgb: 255,107,53;
-        --ion-color-primary-contrast: #ffffff;
-        --ion-color-primary-contrast-rgb: 255,255,255;
-        --ion-color-primary-shade: #e05e2f;
-        --ion-color-primary-tint: #ff7a49;
+/* Ionic Dark Theme */
+body.dark {
+  --ion-color-primary: #ff6b35;
+  --ion-color-primary-rgb: 255, 107, 53;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #e05e2f;
+  --ion-color-primary-tint: #ff7a49;
 
-        --ion-background-color: #000000;
-        --ion-background-color-rgb: 0,0,0;
+  --ion-background-color: #000000;
+  --ion-background-color-rgb: 0, 0, 0;
 
-        --ion-text-color: #ffffff;
-        --ion-text-color-rgb: 255,255,255;
+  --ion-text-color: #ffffff;
+  --ion-text-color-rgb: 255, 255, 255;
 
-        --ion-color-step-50: #0d0d0d;
-        --ion-color-step-100: #1a1a1a;
-        --ion-color-step-150: #262626;
-        --ion-color-step-200: #333333;
-        --ion-color-step-250: #404040;
-        --ion-color-step-300: #4d4d4d;
-        --ion-color-step-350: #595959;
-        --ion-color-step-400: #666666;
-        --ion-color-step-450: #737373;
-        --ion-color-step-500: #808080;
-        --ion-color-step-550: #8c8c8c;
-        --ion-color-step-600: #999999;
-        --ion-color-step-650: #a6a6a6;
-        --ion-color-step-700: #b3b3b3;
-        --ion-color-step-750: #bfbfbf;
-        --ion-color-step-800: #cccccc;
-        --ion-color-step-850: #d9d9d9;
-        --ion-color-step-900: #e6e6e6;
-        --ion-color-step-950: #f2f2f2;
+  --ion-color-step-50: #0d0d0d;
+  --ion-color-step-100: #1a1a1a;
+  --ion-color-step-150: #262626;
+  --ion-color-step-200: #333333;
+  --ion-color-step-250: #404040;
+  --ion-color-step-300: #4d4d4d;
+  --ion-color-step-350: #595959;
+  --ion-color-step-400: #666666;
+  --ion-color-step-450: #737373;
+  --ion-color-step-500: #808080;
+  --ion-color-step-550: #8c8c8c;
+  --ion-color-step-600: #999999;
+  --ion-color-step-650: #a6a6a6;
+  --ion-color-step-700: #b3b3b3;
+  --ion-color-step-750: #bfbfbf;
+  --ion-color-step-800: #cccccc;
+  --ion-color-step-850: #d9d9d9;
+  --ion-color-step-900: #e6e6e6;
+  --ion-color-step-950: #f2f2f2;
 
-        --ion-item-background: #1c1c1e;
-        --ion-card-background: #1c1c1e;
-      }
-      
-      body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      }
+  --ion-item-background: #1c1c1e;
+  --ion-card-background: #1c1c1e;
+}
 
-      /* Custom Orange Gradient Text */
-      .text-gradient {
-        background: linear-gradient(to right, #ff6b35, #ff8c42);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
 
-      /* GLOBAL COMPONENT OVERRIDES (DastRas Brand) */
-      
-      /* Global Button Styles */
-      ion-button {
-        --border-radius: 1rem;
-        font-weight: 900; /* Black weight */
-        text-transform: none;
-        
-        &.button-solid {
-          --box-shadow: 0 10px 15px -3px rgba(255, 107, 53, 0.2);
-        }
-      }
+/* Custom Orange Gradient Text */
+.text-gradient {
+  background: linear-gradient(to right, #ff6b35, #ff8c42);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
-      /* Global Input Styles */
-      ion-input {
-        --background: #f3f4f6;
-        --border-radius: 1rem;
-        --padding-start: 16px !important;
-        --padding-end: 16px !important;
-        min-height: 56px;
-        font-weight: 700;
-        color: #111827;
+/* GLOBAL COMPONENT OVERRIDES (DastRas Brand) */
 
-        &.ion-invalid {
-          --background: #fee2e2;
-        }
-      }
+/* Global Button Styles */
+ion-button {
+  --border-radius: 1.25rem !important; /* Увеличенное закругление */
+  font-weight: 900;
+  text-transform: none;
 
-      .dark ion-input {
-        --background: #1c1c1e;
-        color: white;
-      }
+  &.button-solid {
+    --box-shadow: 0 8px 20px -5px rgba(255, 107, 53, 0.3);
+  }
+}
 
-      /* Global Item Styles (for lists/results) */
-      ion-item {
-        --border-radius: 1rem;
-        --inner-padding-end: 0;
-        --padding-start: 0;
-        margin-bottom: 4px;
-        
-        &::part(native) {
-          border-radius: 1rem;
-        }
-      }
+/* Специальные стили для кнопок в темной теме */
+.dark ion-button {
+  &.button-solid {
+    --box-shadow: 0 8px 20px -5px rgba(0, 0, 0, 0.5);
+  }
+}
 
-      /* Global Modal Styles */
-      ion-modal {
-        --border-radius: 2.5rem;
-        
-        &::part(handle) {
-          background: #e5e7eb;
-          width: 48px;
-          height: 6px;
-        }
-      }
+/* Global Input Styles */
+ion-input {
+  --background: #f3f4f6;
+  --border-radius: 1.25rem;
+  --padding-start: 20px !important;
+  --padding-end: 20px !important;
+  min-height: 58px;
+  font-weight: 700;
+  color: #111827;
 
-      .dark ion-modal::part(handle) {
-        background: #374151;
-      }
-      
-      /* Hide scrollbar for horizontal lists */
-      .no-scrollbar::-webkit-scrollbar {
-        display: none;
-      }
-      .no-scrollbar {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-      }
+  &.ion-invalid {
+    --background: #fee2e2;
+  }
+}
 
-      /* Splash Screen Animations */
-      @keyframes pulse-slow {
-        0%, 100% { transform: scale(1); opacity: 1; }
-        50% { transform: scale(1.05); opacity: 0.9; }
-      }
+.dark ion-input {
+  --background: #1c1c1e;
+  color: white;
+}
 
-      @keyframes progress-fast {
-        0% { transform: translateX(-100%); width: 30%; }
-        100% { transform: translateX(400%); width: 30%; }
-      }
+/* Global Item Styles (for lists/results) */
+ion-item {
+  --border-radius: 1.25rem;
+  --inner-padding-end: 0;
+  --padding-start: 0;
+  margin-bottom: 6px;
 
-      .animate-pulse-slow {
-        animation: pulse-slow 3s infinite ease-in-out;
-      }
+  &::part(native) {
+    border-radius: 1.25rem;
+  }
+}
 
-      .animate-progress-fast {
-        animation: progress-fast 1s infinite linear;
-      }
+/* Global Modal Styles */
+ion-modal {
+  --border-radius: 2.5rem;
+
+  &::part(handle) {
+    background: #e5e7eb;
+    width: 48px;
+    height: 6px;
+  }
+}
+
+.dark ion-modal::part(handle) {
+  background: #374151;
+}
+
+/* Hide scrollbar for horizontal lists */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Splash Screen Animations */
+@keyframes pulse-slow {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.9; }
+}
+
+@keyframes progress-fast {
+  0% { transform: translateX(-100%); width: 30%; }
+  100% { transform: translateX(400%); width: 30%; }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s infinite ease-in-out;
+}
+
+.animate-progress-fast {
+  animation: progress-fast 1s infinite linear;
+}

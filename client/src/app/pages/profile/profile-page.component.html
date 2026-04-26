@@ -8,22 +8,22 @@
     <div class="px-5 pb-32">
         
         <!-- User Info -->
-        <div class="flex items-center gap-4 mt-6 mb-8">
+        <div (click)="navigateTo('/profile/edit')" class="flex items-center gap-4 mt-6 mb-8 active:opacity-60 transition-opacity cursor-pointer">
             <div class="w-20 h-20 rounded-[2rem] overflow-hidden border-4 border-orange-100 dark:border-orange-500/20 shadow-lg">
                 <img [src]="user().avatar" class="w-full h-full object-cover">
             </div>
-            <div>
+            <div class="flex-1">
                 <h2 class="text-xl font-black text-gray-900 dark:text-white mb-0.5">{{ user().name }}</h2>
                 <p class="text-sm font-bold text-gray-400">{{ user().phone }}</p>
-                <ion-button fill="clear" size="small" class="ion-no-padding h-auto mt-1 font-black text-[#ff6b35] uppercase tracking-widest text-[10px]">
+                <div class="flex items-center gap-1 mt-1 font-black text-[#ff6b35] uppercase tracking-widest text-[10px]">
                     Редактировать
-                    <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
-                </ion-button>
+                    <ion-icon name="chevron-forward-outline"></ion-icon>
+                </div>
             </div>
         </div>
 
         <!-- Wallet Card -->
-        <div class="bg-gradient-to-br from-gray-900 to-black dark:from-[#1c1c1e] dark:to-black rounded-[2.5rem] p-6 mb-8 shadow-2xl relative overflow-hidden">
+        <div class="bg-gradient-to-br from-gray-900 to-black dark:from-[#1c1c1e] dark:to-black rounded-[2.5rem] p-6 mb-10 shadow-2xl relative overflow-hidden">
             <div class="relative z-10 flex flex-col h-full">
                 <div class="flex items-center gap-2 mb-4 opacity-60">
                     <ion-icon name="wallet-outline" class="text-white text-lg"></ion-icon>
@@ -45,70 +45,84 @@
             <div class="absolute -right-10 -top-10 w-40 h-40 bg-orange-500/10 rounded-full blur-3xl"></div>
         </div>
 
-        <!-- Menu List -->
-        <ion-list class="bg-transparent ion-no-padding">
+        <!-- Menu Groups -->
+        <div class="space-y-6">
             
-            <ion-item (click)="navigateTo('/addresses')" button detail="false" class="menu-item-native">
-                <div slot="start" class="menu-icon-wrapper bg-gray-100 dark:bg-white/10 text-gray-500">
-                    <ion-icon name="location-outline"></ion-icon>
-                </div>
-                <ion-label class="menu-label">Мои адреса</ion-label>
-                <ion-icon slot="end" name="chevron-forward-outline" class="menu-arrow"></ion-icon>
-            </ion-item>
+            <!-- Group 1: Account -->
+            <div class="menu-group">
+                <ion-item (click)="navigateTo('/addresses')" button detail="false" class="menu-item-native">
+                    <div slot="start" class="menu-icon-wrapper bg-orange-50 dark:bg-orange-500/10 text-[#ff6b35]">
+                        <ion-icon name="location-outline"></ion-icon>
+                    </div>
+                    <ion-label class="menu-label font-bold">Мои адреса</ion-label>
+                    <ion-icon slot="end" name="chevron-forward-outline" class="menu-arrow"></ion-icon>
+                </ion-item>
+                
+                <div class="menu-item-divider"></div>
 
-            <ion-item button detail="false" class="menu-item-native">
-                <div slot="start" class="menu-icon-wrapper bg-gray-100 dark:bg-white/10 text-gray-500">
-                    <ion-icon name="card-outline"></ion-icon>
-                </div>
-                <ion-label class="menu-label">Способы оплаты</ion-label>
-                <ion-icon slot="end" name="chevron-forward-outline" class="menu-arrow"></ion-icon>
-            </ion-item>
+                <ion-item button detail="false" class="menu-item-native">
+                    <div slot="start" class="menu-icon-wrapper bg-orange-50 dark:bg-orange-500/10 text-[#ff6b35]">
+                        <ion-icon name="card-outline"></ion-icon>
+                    </div>
+                    <ion-label class="menu-label font-bold">Способы оплаты</ion-label>
+                    <ion-icon slot="end" name="chevron-forward-outline" class="menu-arrow"></ion-icon>
+                </ion-item>
+                
+                <div class="menu-item-divider"></div>
 
-            <ion-item button detail="false" class="menu-item-native">
-                <div slot="start" class="menu-icon-wrapper bg-gray-100 dark:bg-white/10 text-gray-500">
-                    <ion-icon name="notifications-outline"></ion-icon>
-                </div>
-                <ion-label class="menu-label">Уведомления</ion-label>
-                <ion-badge slot="end" color="danger">2</ion-badge>
-                <ion-icon slot="end" name="chevron-forward-outline" class="menu-arrow"></ion-icon>
-            </ion-item>
+                <ion-item (click)="navigateTo('/notifications')" button detail="false" class="menu-item-native" lines="none">
+                    <div slot="start" class="menu-icon-wrapper bg-orange-50 dark:bg-orange-500/10 text-[#ff6b35]">
+                        <ion-icon name="notifications-outline"></ion-icon>
+                    </div>
+                    <ion-label class="menu-label font-bold">Уведомления</ion-label>
+                    <ion-badge slot="end" color="danger">2</ion-badge>
+                    <ion-icon slot="end" name="chevron-forward-outline" class="menu-arrow"></ion-icon>
+                </ion-item>            </div>
 
-            <div class="h-[1px] bg-gray-100 dark:bg-white/5 my-2 mx-4"></div>
+            <!-- Group 2: Settings -->
+            <div class="menu-group">
+                <ion-item button detail="false" class="menu-item-native" (click)="toggleTheme(!themeService.isDark())">
+                    <div slot="start" class="menu-icon-wrapper bg-orange-50 dark:bg-orange-500/10 text-[#ff6b35]">
+                        <ion-icon name="moon-outline"></ion-icon>
+                    </div>
+                    <ion-label class="menu-label font-bold">Темная тема</ion-label>
+                    <ion-toggle slot="end" [checked]="themeService.isDark()" mode="ios" color="primary" class="pointer-events-none"></ion-toggle>
+                </ion-item>
+                
+                <div class="menu-item-divider"></div>
 
-            <!-- Theme Toggle -->
-            <ion-item lines="none" class="menu-item-native">
-                <div slot="start" class="menu-icon-wrapper bg-gray-100 dark:bg-white/10 text-gray-500">
-                    <ion-icon name="moon-outline"></ion-icon>
-                </div>
-                <ion-label class="menu-label">Темная тема</ion-label>
-                <ion-toggle slot="end" [checked]="themeService.isDark()" (ionChange)="toggleTheme($event)" mode="ios" color="primary"></ion-toggle>
-            </ion-item>
+                <ion-item button detail="false" class="menu-item-native" lines="none">
+                    <div slot="start" class="menu-icon-wrapper bg-orange-50 dark:bg-orange-500/10 text-[#ff6b35]">
+                        <ion-icon name="language-outline"></ion-icon>
+                    </div>
+                    <ion-label class="menu-label font-bold">Язык приложения</ion-label>
+                    <ion-note slot="end" class="text-xs font-bold mr-2">Русский</ion-note>
+                    <ion-icon slot="end" name="chevron-forward-outline" class="menu-arrow"></ion-icon>
+                </ion-item>
+            </div>
 
-            <ion-item button detail="false" class="menu-item-native">
-                <div slot="start" class="menu-icon-wrapper bg-gray-100 dark:bg-white/10 text-gray-500">
-                    <ion-icon name="language-outline"></ion-icon>
-                </div>
-                <ion-label class="menu-label">Язык приложения</ion-label>
-                <ion-note slot="end" class="text-xs font-bold">Русский</ion-note>
-                <ion-icon slot="end" name="chevron-forward-outline" class="menu-arrow"></ion-icon>
-            </ion-item>
+            <!-- Group 3: Support -->
+            <div class="menu-group">
+                <ion-item button detail="false" class="menu-item-native" lines="none">
+                    <div slot="start" class="menu-icon-wrapper bg-orange-50 dark:bg-orange-500/10 text-[#ff6b35]">
+                        <ion-icon name="help-circle-outline"></ion-icon>
+                    </div>
+                    <ion-label class="menu-label font-bold">Служба поддержки</ion-label>
+                    <ion-icon slot="end" name="chevron-forward-outline" class="menu-arrow"></ion-icon>
+                </ion-item>
+            </div>
 
-            <ion-item button detail="false" class="menu-item-native">
-                <div slot="start" class="menu-icon-wrapper bg-gray-100 dark:bg-white/10 text-gray-500">
-                    <ion-icon name="help-circle-outline"></ion-icon>
-                </div>
-                <ion-label class="menu-label">Служба поддержки</ion-label>
-                <ion-icon slot="end" name="chevron-forward-outline" class="menu-arrow"></ion-icon>
-            </ion-item>
+            <!-- Group 4: Logout -->
+            <div class="menu-group logout-group">
+                <ion-item (click)="logout()" button detail="false" class="menu-item-native" lines="none">
+                    <div slot="start" class="menu-icon-wrapper bg-red-50 dark:bg-red-500/10 text-red-500">
+                        <ion-icon name="log-out-outline"></ion-icon>
+                    </div>
+                    <ion-label class="menu-label font-black text-red-500">Выйти из аккаунта</ion-label>
+                </ion-item>
+            </div>
 
-            <ion-item (click)="logout()" button detail="false" class="menu-item-native mt-4" style="--color: #ef4444;">
-                <div slot="start" class="menu-icon-wrapper bg-red-100 dark:bg-red-500/10 text-red-500">
-                    <ion-icon name="log-out-outline"></ion-icon>
-                </div>
-                <ion-label class="menu-label font-black">Выйти из аккаунта</ion-label>
-            </ion-item>
-
-        </ion-list>
+        </div>
 
     </div>
 </ion-content>

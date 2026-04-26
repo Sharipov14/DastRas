@@ -34,6 +34,14 @@ export const routes: Routes = [
         ]
     },
     {
+        path: 'profile/edit',
+        loadComponent: () => import('./pages/profile-edit/profile-edit-page.component').then(m => m.ProfileEditPageComponent)
+    },
+    {
+        path: 'notifications',
+        loadComponent: () => import('./pages/notifications/notifications-page.component').then(m => m.NotificationsPageComponent)
+    },
+    {
         path: 'cart',
         loadComponent: () => import('./pages/cart/cart-page.component').then(m => m.CartPageComponent)
     },

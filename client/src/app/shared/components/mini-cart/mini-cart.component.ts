@@ -1,14 +1,14 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { IonIcon, ModalController } from '@ionic/angular/standalone';
+import { IonIcon, ModalController, IonButton } from '@ionic/angular/standalone';
 import { CartService } from '../../../core/services/cart.service';
 import { DeliveryModalComponent } from '../delivery-modal/delivery-modal.component';
 
 @Component({
   selector: 'app-mini-cart',
   standalone: true,
-  imports: [CommonModule, RouterModule, IonIcon],
+  imports: [IonButton, CommonModule, RouterModule, IonIcon],
   templateUrl: './mini-cart.component.html',
   styleUrls: ['./mini-cart.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

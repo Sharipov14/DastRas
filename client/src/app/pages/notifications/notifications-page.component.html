@@ -1,0 +1,62 @@
+<ion-header class="ion-no-border pt-safe bg-white dark:bg-black">
+    <ion-toolbar class="px-2">
+        <ion-buttons slot="start">
+            <ion-button (click)="goBack()" color="dark">
+                <ion-icon name="arrow-back" class="text-2xl"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title class="text-xl font-black">Уведомления</ion-title>
+        <ion-buttons slot="end" *ngIf="notifications().length > 0">
+            <ion-button (click)="clearAll()" color="primary" class="font-bold text-xs uppercase tracking-widest">
+                Очистить
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="bg-white dark:bg-black">
+    <div class="px-5 py-4">
+        
+        @if (notifications().length > 0) {
+            <ion-list class="bg-transparent ion-no-padding space-y-4">
+                @for (item of notifications(); track item.id) {
+                    <div class="notification-item" [class.unread]="!item.isRead" (click)="markAsRead(item)">
+                        <div class="flex gap-4 items-start">
+                            <div class="icon-container" [ngClass]="getIconColorClass(item.type)">
+                                <ion-icon [name]="getIconName(item.type)"></ion-icon>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-sm font-black text-gray-900 dark:text-white leading-tight pr-4">
+                                        {{ item.title }}
+                                    </h3>
+                                    <span class="text-[10px] font-bold text-gray-400 whitespace-nowrap">
+                                        {{ item.time }}
+                                    </span>
+                                </div>
+                                <p class="text-xs font-medium text-gray-500 dark:text-gray-400 leading-normal">
+                                    {{ item.message }}
+                                </p>
+                            </div>
+                        </div>
+                        @if (!item.isRead) {
+                            <div class="unread-dot"></div>
+                        }
+                    </div>
+                }
+            </ion-list>
+        } @else {
+            <div class="flex flex-col items-center justify-center h-[60vh] text-center px-10">
+                <div class="w-24 h-24 bg-gray-50 dark:bg-white/5 rounded-full flex items-center justify-center mb-6">
+                    <ion-icon name="notifications-off-outline" class="text-4xl text-gray-300"></ion-icon>
+                </div>
+                <h3 class="text-lg font-black text-gray-900 dark:text-white mb-2">Уведомлений пока нет</h3>
+                <p class="text-sm font-bold text-gray-400 mb-6">Мы сообщим вам, когда произойдет что-то важное.</p>
+                <ion-button (click)="notificationService.createTestNotification()" fill="outline" size="small" class="font-bold">
+                    Проверить работу (тест)
+                </ion-button>
+            </div>
+        }
+
+    </div>
+</ion-content>

@@ -32,8 +32,8 @@
                   </p>
 
                   @if (addressService.selectedAddress()?.id === addr.id && !isEditMode()) {
+                    <div class="w-1.5 h-1.5 rounded-full bg-green-500"></div>
                     <p class="text-[10px] text-green-500 font-black uppercase tracking-wider mt-1.5 flex items-center gap-1">
-                      <div class="w-1.5 h-1.5 rounded-full bg-green-500"></div>
                       Текущий адрес
                     </p>
                   }
