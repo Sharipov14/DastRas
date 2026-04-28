@@ -26,12 +26,14 @@ public static class DependencyInjection
         // Repositories
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IStaffMemberRepository, StaffMemberRepository>();
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<IOrderRepository, OrderRepository>();
 
         // Services
         services.AddScoped<IJwtService, JwtService>();
         services.AddScoped<ISmsService, MockSmsService>();
+        services.AddScoped<IPasswordHasher, BCryptPasswordHasher>();
 
         // JWT Authentication
         var jwtKey = configuration["Jwt:Key"]

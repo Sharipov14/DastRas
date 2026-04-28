@@ -3,6 +3,7 @@ using System;
 using DastRas.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DastRas.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260427060732_AddUsernameToStaffMember")]
+    partial class AddUsernameToStaffMember
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -125,12 +128,7 @@ namespace DastRas.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<int?>("ParentId")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ParentId");
 
                     b.ToTable("Categories", "catalog");
 
@@ -326,10 +324,6 @@ namespace DastRas.Infrastructure.Migrations
                     b.Property<double>("Rating")
                         .HasColumnType("double precision");
 
-                    b.Property<decimal>("StockQuantity")
-                        .HasPrecision(10, 2)
-                        .HasColumnType("numeric(10,2)");
-
                     b.Property<string>("Unit")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -353,7 +347,6 @@ namespace DastRas.Infrastructure.Migrations
                             NameTj = "Помидор",
                             Price = 15m,
                             Rating = 4.7999999999999998,
-                            StockQuantity = 100m,
                             Unit = "кг"
                         },
                         new
@@ -367,7 +360,6 @@ namespace DastRas.Infrastructure.Migrations
                             NameTj = "Бодиринг",
                             Price = 12m,
                             Rating = 4.5,
-                            StockQuantity = 80m,
                             Unit = "кг"
                         },
                         new
@@ -381,7 +373,6 @@ namespace DastRas.Infrastructure.Migrations
                             NameTj = "Себ",
                             Price = 10m,
                             Rating = 4.9000000000000004,
-                            StockQuantity = 150m,
                             Unit = "кг"
                         },
                         new
@@ -395,7 +386,6 @@ namespace DastRas.Infrastructure.Migrations
                             NameTj = "Банан",
                             Price = 18m,
                             Rating = 4.7000000000000002,
-                            StockQuantity = 60m,
                             Unit = "кг"
                         },
                         new
@@ -409,7 +399,6 @@ namespace DastRas.Infrastructure.Migrations
                             NameTj = "Шир",
                             Price = 8m,
                             Rating = 4.5999999999999996,
-                            StockQuantity = 40m,
                             Unit = "л"
                         },
                         new
@@ -423,7 +412,6 @@ namespace DastRas.Infrastructure.Migrations
                             NameTj = "Паннир",
                             Price = 45m,
                             Rating = 4.7999999999999998,
-                            StockQuantity = 25m,
                             Unit = "кг"
                         },
                         new
@@ -437,7 +425,6 @@ namespace DastRas.Infrastructure.Migrations
                             NameTj = "Гушти гов",
                             Price = 85m,
                             Rating = 5.0,
-                            StockQuantity = 15m,
                             Unit = "кг"
                         },
                         new
@@ -451,7 +438,6 @@ namespace DastRas.Infrastructure.Migrations
                             NameTj = "Нон",
                             Price = 4m,
                             Rating = 4.9000000000000004,
-                            StockQuantity = 50m,
                             Unit = "шт"
                         });
                 });
@@ -507,9 +493,6 @@ namespace DastRas.Infrastructure.Migrations
                         .HasColumnType("character varying(100)");
 
                     b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
                     b.Property<string>("Name")
@@ -617,16 +600,6 @@ namespace DastRas.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("DastRas.Domain.Entities.Category", b =>
-                {
-                    b.HasOne("DastRas.Domain.Entities.Category", "Parent")
-                        .WithMany("SubCategories")
-                        .HasForeignKey("ParentId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("Parent");
-                });
-
             modelBuilder.Entity("DastRas.Domain.Entities.Notification", b =>
                 {
                     b.HasOne("DastRas.Domain.Entities.User", "User")
@@ -689,8 +662,6 @@ namespace DastRas.Infrastructure.Migrations
             modelBuilder.Entity("DastRas.Domain.Entities.Category", b =>
                 {
                     b.Navigation("Products");
-
-                    b.Navigation("SubCategories");
                 });
 
             modelBuilder.Entity("DastRas.Domain.Entities.Order", b =>

@@ -6,6 +6,10 @@ public class Category
     public string Name { get; set; } = string.Empty;
     public string Emoji { get; set; } = string.Empty;
 
+    public int? ParentId { get; set; }
+    public Category? Parent { get; set; }
+    public ICollection<Category> SubCategories { get; set; } = new List<Category>();
+
     // Navigation properties
     public ICollection<Product> Products { get; set; } = new List<Product>();
 }

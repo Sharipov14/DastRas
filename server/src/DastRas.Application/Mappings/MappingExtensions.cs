@@ -14,15 +14,19 @@ public static class MappingExtensions
     public static UserDto ToDto(this User user) =>
         new(user.Id, user.Phone, user.Name, user.AvatarUrl);
 
+    // StaffMember
+    public static StaffMemberDto ToDto(this StaffMember staff) =>
+        new(staff.Id, staff.Username, staff.Phone, staff.Name, staff.AvatarUrl, staff.Role, staff.IsActive, staff.IsDeleted);
+
     // Product
     public static ProductDto ToDto(this Product product) =>
         new(product.Id, product.NameRu, product.NameTj, product.NameEn,
-            product.Price, product.Unit, product.ImageUrl, product.Rating,
+            product.Price, product.StockQuantity, product.Unit, product.ImageUrl, product.Rating,
             product.Description, product.CategoryId);
 
     // Category
     public static CategoryDto ToDto(this Category category) =>
-        new(category.Id, category.Name, category.Emoji);
+        new(category.Id, category.Name, category.Emoji, category.ParentId);
 
     // CartItem
     public static CartItemDto ToDto(this CartItem item) =>

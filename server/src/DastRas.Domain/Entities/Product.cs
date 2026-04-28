@@ -7,6 +7,7 @@ public class Product
     public string NameTj { get; set; } = string.Empty;
     public string NameEn { get; set; } = string.Empty;
     public decimal Price { get; set; }
+    public decimal StockQuantity { get; set; }
     public string Unit { get; set; } = string.Empty;
     public string ImageUrl { get; set; } = string.Empty;
     public double Rating { get; set; }

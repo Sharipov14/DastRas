@@ -4,6 +4,9 @@ public class User
 {
     public int Id { get; set; }
     public string Phone { get; set; } = string.Empty;
+    public string? Username { get; set; }
+    public string? PasswordHash { get; set; }
+    public Enums.UserRole Role { get; set; } = Enums.UserRole.Customer;
     public string? Name { get; set; }
     public string? AvatarUrl { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
