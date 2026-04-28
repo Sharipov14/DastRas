@@ -59,4 +59,27 @@ public class StaffAuthController : ControllerBase
         if (user == null) return NotFound();
         return Ok(user);
     }
+
+    [Authorize]
+    [HttpPut("me")]
+    public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfileRequest request)
+    {
+        var userIdStr = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (string.IsNullOrEmpty(userIdStr)) return Unauthorized();
+
+        try
+        {
+            var userId = int.Parse(userIdStr);
+            var result = await _authService.UpdateProfileAsync(userId, request);
+            return Ok(result);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(new { Message = ex.Message });
+        }
+        catch (KeyNotFoundException)
+        {
+            return NotFound();
+        }
+    }
 }

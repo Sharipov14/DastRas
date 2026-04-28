@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using DastRas.Application.DTOs.Orders;
 using DastRas.Application.Interfaces;
+using DastRas.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -48,4 +49,17 @@ public class OrdersController : ControllerBase
             return BadRequest(new { Message = ex.Message });
         }
     }
+
+    [HttpPatch("{id}/status")]
+    public async Task<IActionResult> UpdateStatus(int id, [FromBody] UpdateStatusRequest request)
+    {
+        var staffIdStr = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        int? staffId = string.IsNullOrEmpty(staffIdStr) ? null : int.Parse(staffIdStr);
+
+        var success = await _orderService.UpdateOrderStatusAsync(id, request.Status, staffId);
+        if (!success) return NotFound();
+        return NoContent();
+    }
 }
+
+public record UpdateStatusRequest(OrderStatus Status);

@@ -8,4 +8,5 @@ public interface IStaffAuthService
     Task<string> SendCodeAsync(string phone);
     Task<StaffAuthResponse?> VerifyCodeAsync(string phone, string code);
     Task<StaffMemberDto?> GetCurrentStaffAsync(int staffId);
+    Task<StaffMemberDto> UpdateProfileAsync(int staffId, UpdateProfileRequest request);
 }

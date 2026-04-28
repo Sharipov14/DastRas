@@ -18,6 +18,7 @@ public class AppDbContext : DbContext
     public DbSet<Notification> Notifications => Set<Notification>();
     public DbSet<SmsCode> SmsCodes => Set<SmsCode>();
     public DbSet<StaffMember> StaffMembers => Set<StaffMember>();
+    public DbSet<OrderStatusHistory> OrderStatusHistories => Set<OrderStatusHistory>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -149,6 +150,26 @@ public class AppDbContext : DbContext
             e.HasOne(oi => oi.Product)
                 .WithMany()
                 .HasForeignKey(oi => oi.ProductId);
+        });
+
+        modelBuilder.Entity<OrderStatusHistory>(e =>
+        {
+            e.ToTable("OrderStatusHistory", "ordering");
+            e.HasIndex(h => h.OrderId);
+            e.HasIndex(h => h.StaffId);
+
+            e.Property(h => h.Status)
+                .HasConversion<string>()
+                .HasMaxLength(20);
+
+            e.HasOne(h => h.Order)
+                .WithMany()
+                .HasForeignKey(h => h.OrderId);
+
+            e.HasOne(h => h.StaffMember)
+                .WithMany()
+                .HasForeignKey(h => h.StaffId)
+                .OnDelete(DeleteBehavior.Restrict);
         });
 
         modelBuilder.Entity<CartItem>(e =>

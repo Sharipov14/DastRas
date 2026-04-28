@@ -34,6 +34,7 @@ public static class DependencyInjection
         services.AddScoped<IJwtService, JwtService>();
         services.AddScoped<ISmsService, MockSmsService>();
         services.AddScoped<IPasswordHasher, BCryptPasswordHasher>();
+        services.AddScoped<IAnalyticsService, AnalyticsService>();
 
         // JWT Authentication
         var jwtKey = configuration["Jwt:Key"]

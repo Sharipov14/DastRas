@@ -88,4 +88,31 @@ public class StaffAuthService : IStaffAuthService
         var staff = await _staffRepo.GetByIdAsync(staffId);
         return staff?.ToDto();
     }
+
+    public async Task<StaffMemberDto> UpdateProfileAsync(int staffId, UpdateProfileRequest request)
+    {
+        var staff = await _staffRepo.GetByIdAsync(staffId)
+            ?? throw new KeyNotFoundException("Сотрудник не найден");
+
+        // Проверка уникальности телефона, если он изменился
+        if (staff.Phone != request.Phone)
+        {
+            var existing = await _staffRepo.GetByPhoneOrEmailAsync(request.Phone);
+            if (existing != null && existing.Id != staffId)
+                throw new InvalidOperationException("Этот номер телефона уже зарегистрирован");
+            
+            staff.Phone = request.Phone;
+        }
+
+        staff.Name = request.Name;
+        staff.AvatarUrl = request.AvatarUrl;
+
+        if (!string.IsNullOrEmpty(request.Password))
+        {
+            staff.PasswordHash = _passwordHasher.HashPassword(request.Password);
+        }
+
+        await _staffRepo.UpdateAsync(staff);
+        return staff.ToDto();
+    }
 }

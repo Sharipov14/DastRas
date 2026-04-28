@@ -16,3 +16,10 @@ public record StaffMemberDto(
 
 public record LoginRequest(string Username, string Password);
 
+public record UpdateProfileRequest(
+    string Name,
+    string Phone,
+    string? AvatarUrl,
+    string? Password
+);
+
