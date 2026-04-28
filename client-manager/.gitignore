@@ -24,6 +24,8 @@ package-lock.json
 /www
 /platforms
 /plugins
+/ios
+/android
 
 # Compiled output
 /dist
