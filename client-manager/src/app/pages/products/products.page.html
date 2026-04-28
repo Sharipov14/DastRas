@@ -1,0 +1,127 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Каталог</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment [value]="viewMode()" (ionChange)="viewMode.set($any($event).detail.value)">
+      <ion-segment-button value="products">
+        <ion-icon name="list-outline"></ion-icon>
+        <ion-label>Товары</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="categories">
+        <ion-icon name="grid-outline"></ion-icon>
+        <ion-label>Категории</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="px-4 py-2 bg-white dark:bg-black">
+    <ion-searchbar 
+      [placeholder]="viewMode() === 'products' ? 'Поиск товаров...' : 'Поиск категорий...'" 
+      (ionInput)="onSearch($event)"
+      class="mb-2"
+    ></ion-searchbar>
+
+    <!-- PRODUCTS VIEW -->
+    <div *ngIf="viewMode() === 'products'">
+      <div class="flex items-center gap-2 mb-4">
+        <ion-icon name="filter-outline" class="text-gray-500"></ion-icon>
+        <ion-select 
+          placeholder="Все категории" 
+          [interface]="'popover'"
+          [(ngModel)]="selectedCategoryId"
+          class="flex-1"
+        >
+          <ion-select-option [value]="null">Все категории</ion-select-option>
+          @for (cat of categories(); track cat.id) {
+            <ion-select-option [value]="cat.id">{{ cat.emoji }} {{ cat.name }}</ion-select-option>
+          }
+        </ion-select>
+      </div>
+
+      <ion-list lines="full" class="rounded-xl overflow-hidden shadow-sm">
+        @for (product of filteredProducts(); track product.id) {
+          <ion-item-sliding>
+            <ion-item class="hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors">
+              <ion-thumbnail slot="start" class="rounded-lg overflow-hidden">
+                <img [src]="product.imageUrl || 'assets/icon/favicon.png'" [alt]="product.nameRu" />
+              </ion-thumbnail>
+              <ion-label>
+                <h2 class="font-bold text-lg">{{ product.nameRu }}</h2>
+                <div class="flex flex-col gap-0.5">
+                  <p class="text-gray-900 font-bold">{{ product.price }} смн / {{ product.unit }}</p>
+                  <p class="text-gray-500 text-sm">Остаток: <span [class.text-red-500]="product.stockQuantity <= 0">{{ product.stockQuantity }} {{ product.unit }}</span></p>
+                </div>
+                <div class="mt-1">
+                  <ion-badge color="primary" mode="ios">
+                    {{ getCategoryName(product.categoryId) }}
+                  </ion-badge>
+                </div>
+              </ion-label>
+              <ion-buttons slot="end">
+                <ion-button (click)="editProduct(product)" color="medium">
+                  <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-item>
+            <ion-item-options side="end">
+              <ion-item-option color="danger" (click)="deleteProduct(product.id)">
+                <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+        } @empty {
+          <div class="p-8 text-center text-gray-500">
+            Товары не найдены
+          </div>
+        }
+      </ion-list>
+    </div>
+
+    <!-- CATEGORIES VIEW -->
+    <div *ngIf="viewMode() === 'categories'">
+      <ion-list lines="full" class="rounded-xl overflow-hidden shadow-sm">
+        @for (cat of filteredCategories(); track cat.id) {
+          <ion-item-sliding>
+            <ion-item class="hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors">
+              <div slot="start" class="text-2xl w-10 h-10 flex items-center justify-center bg-gray-100 dark:bg-white/10 rounded-xl">
+                {{ cat.emoji }}
+              </div>
+              <ion-label>
+                <h2 class="font-bold text-lg">{{ cat.name }}</h2>
+                <p *ngIf="getParentCategoryName(cat.parentId)" class="text-xs text-gray-400">
+                  Родитель: {{ getParentCategoryName(cat.parentId) }}
+                </p>
+              </ion-label>
+              <ion-buttons slot="end">
+                <ion-button (click)="editCategory(cat)" color="medium">
+                  <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-item>
+            <ion-item-options side="end">
+              <ion-item-option color="danger" (click)="deleteCategory(cat.id)">
+                <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+        } @empty {
+          <div class="p-8 text-center text-gray-500">
+            Категории не найдены
+          </div>
+        }
+      </ion-list>
+    </div>
+  </div>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="viewMode() === 'products' ? addProduct() : addCategory()">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

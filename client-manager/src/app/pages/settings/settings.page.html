@@ -1,0 +1,58 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Настройки</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="px-5 py-6">
+    <!-- User Profile Summary -->
+    <ion-card class="m-0 mb-6 shadow-md border border-gray-100 dark:border-white/5 rounded-3xl overflow-hidden">
+      <ion-card-content class="flex items-center gap-4 py-6">
+        <ion-avatar class="w-16 h-16">
+          <img [src]="currentUser()?.avatarUrl || 'https://ionicframework.com/docs/img/demos/avatar.svg'" />
+        </ion-avatar>
+        <div class="flex-1">
+          <h2 class="text-xl font-bold text-gray-900 dark:text-white">{{ currentUser()?.name || currentUser()?.username }}</h2>
+          <p class="text-gray-500 dark:text-gray-400 font-medium">{{ currentUser()?.role }}</p>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <h3 class="text-xs uppercase font-bold text-gray-500 tracking-wider mb-3 px-1">Приложение</h3>
+    <ion-list class="bg-transparent mb-8" lines="none">
+      <ion-item class="mb-2 bg-white dark:bg-white/5 rounded-2xl border border-gray-100 dark:border-white/5">
+        <ion-icon slot="start" name="moon-outline" class="text-indigo-500"></ion-icon>
+        <ion-label>Темная тема</ion-label>
+        <ion-toggle slot="end" [checked]="isDarkMode()" (ionChange)="toggleTheme()"></ion-toggle>
+      </ion-item>
+
+      <ion-item class="mb-2 bg-white dark:bg-white/5 rounded-2xl border border-gray-100 dark:border-white/5">
+        <ion-icon slot="start" name="language-outline" class="text-blue-500"></ion-icon>
+        <ion-label>Язык приложения</ion-label>
+        <ion-badge slot="end" color="light">RU</ion-badge>
+      </ion-item>
+    </ion-list>
+
+    <h3 class="text-xs uppercase font-bold text-gray-500 tracking-wider mb-3 px-1">Аккаунт</h3>
+    <ion-list class="bg-transparent" lines="none">
+      <ion-item routerLink="/settings/profile" button class="mb-2 bg-white dark:bg-white/5 rounded-2xl border border-gray-100 dark:border-white/5">
+        <ion-icon slot="start" name="person-outline" class="text-orange-500"></ion-icon>
+        <ion-label>Редактировать профиль</ion-label>
+      </ion-item>
+
+      <ion-item class="mb-2 bg-white dark:bg-white/5 rounded-2xl border border-gray-100 dark:border-white/5">
+        <ion-icon slot="start" name="shield-checkmark-outline" class="text-green-500"></ion-icon>
+        <ion-label>Безопасность</ion-label>
+      </ion-item>
+
+      <ion-item (click)="logout()" button class="mb-2 bg-red-50 dark:bg-red-500/10 rounded-2xl border border-red-100 dark:border-red-500/20 mt-6">
+        <ion-icon slot="start" name="log-out-outline" color="danger"></ion-icon>
+        <ion-label color="danger" class="font-bold">Выйти из системы</ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>

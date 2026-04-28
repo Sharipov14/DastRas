@@ -1,0 +1,51 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Вход в панель управления</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="flex flex-col items-center justify-center h-full max-w-md mx-auto">
+    <div class="w-full text-center mb-8">
+      <h1 class="text-2xl font-bold">DastRas</h1>
+      <p class="text-gray-500">Система управления</p>
+    </div>
+
+    <div class="w-full space-y-4">
+      <ion-item>
+        <ion-icon name="person-outline" slot="start"></ion-icon>
+        <ion-label position="stacked">Логин</ion-label>
+        <ion-input
+          type="text"
+          placeholder="Введите логин"
+          [ngModel]="username()"
+          (ngModelChange)="username.set($event)"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+        <ion-label position="stacked">Пароль</ion-label>
+        <ion-input
+          type="password"
+          placeholder="Введите пароль"
+          [ngModel]="password()"
+          (ngModelChange)="password.set($event)"
+          (keyup.enter)="onLogin()"
+        ></ion-input>
+      </ion-item>
+
+      <div *ngIf="errorMessage()" class="text-red-500 text-sm px-4">
+        {{ errorMessage() }}
+      </div>
+
+      <div class="px-4 mt-6">
+        <ion-button expand="block" (click)="onLogin()" [disabled]="isLoading()">
+          Войти
+        </ion-button>
+      </div>
+    </div>
+  </div>
+
+  <ion-loading [isOpen]="isLoading()" message="Выполняется вход..."></ion-loading>
+</ion-content>

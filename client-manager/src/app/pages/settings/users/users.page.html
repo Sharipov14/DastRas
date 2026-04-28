@@ -1,0 +1,115 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button fill="clear" (click)="loadUsers()">
+        <ion-icon slot="icon-only" name="refresh-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Управление персоналом</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment [value]="segment()" (ionChange)="segment.set($any($event).detail.value)">
+      <ion-segment-button value="active">
+        <ion-label>Активные</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="deleted">
+        <ion-label>Удаленные</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <div *ngIf="filteredUsers().length === 0" class="ion-padding text-center text-gray-500">
+      Пользователей не найдено
+    </div>
+
+    <ion-item-sliding *ngFor="let user of filteredUsers()">
+      <ion-item button (click)="openEditModal(user)">
+        <ion-label>
+          <div class="flex items-center gap-2">
+            <h2 class="font-bold">{{ user.name || user.username }}</h2>
+            <ion-badge *ngIf="user.isActive === false" color="warning" mode="ios">Отключен</ion-badge>
+          </div>
+          <p>{{ getRoleLabel(user.role) }} • {{ user.phone }}</p>
+          <p class="text-xs text-gray-500">Логин: {{ user.username }}</p>
+        </ion-label>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option *ngIf="!user.isDeleted" color="primary" (click)="openEditModal(user)">
+          <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+        </ion-item-option>
+        <ion-item-option *ngIf="!user.isDeleted" color="danger" (click)="onDeleteUser(user.id)">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-item-option>
+        <ion-item-option *ngIf="user.isDeleted" color="success" (click)="onRestoreUser(user.id)">
+          <ion-icon slot="icon-only" name="checkmark-circle-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="segment() === 'active'">
+    <ion-fab-button (click)="openAddModal()">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-modal [isOpen]="isModalOpen()">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>{{ isEditMode() ? 'Редактировать' : 'Добавить' }} сотрудника</ion-title>
+          <ion-buttons slot="end">
+            <ion-button fill="clear" (click)="isModalOpen.set(false)">Закрыть</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <div class="space-y-4">
+          <ion-item [disabled]="isEditMode()">
+            <ion-label position="stacked">Логин *</ion-label>
+            <ion-input [(ngModel)]="formData.username" placeholder="Пример: ivan_manager"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Пароль {{ isEditMode() ? '(оставьте пустым, чтобы не менять)' : '*' }}</ion-label>
+            <ion-input type="password" [(ngModel)]="formData.password" placeholder="Мин. 6 символов"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">ФИО</ion-label>
+            <ion-input [(ngModel)]="formData.name" placeholder="Иван Иванов"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Телефон</ion-label>
+            <ion-input [(ngModel)]="formData.phone" placeholder="+79991234567"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Роль</ion-label>
+            <ion-select [(ngModel)]="formData.role">
+              <ion-select-option *ngFor="let role of roles" [value]="role.value">
+                {{ role.label }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item lines="none" *ngIf="isEditMode()">
+            <ion-label>Доступ активен</ion-label>
+            <ion-toggle slot="end" [(ngModel)]="formData.isActive"></ion-toggle>
+          </ion-item>
+
+          <div class="mt-8">
+            <ion-button expand="block" (click)="onSave()" [disabled]="isLoading()">
+              {{ isEditMode() ? 'Сохранить изменения' : 'Создать аккаунт' }}
+            </ion-button>
+          </div>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>

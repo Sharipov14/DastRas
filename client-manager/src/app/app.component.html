@@ -1,0 +1,44 @@
+<ion-app>
+  <ion-split-pane contentId="main-content">
+    <ion-menu contentId="main-content" type="overlay" *ngIf="isAuthenticated()">
+      <ion-content>
+        <div class="px-4 py-8 bg-primary/5 flex flex-col items-center border-b border-gray-100 dark:border-gray-800">
+          <ion-icon name="person-circle-outline" class="text-6xl text-primary mb-2"></ion-icon>
+          <div class="text-center">
+            <h2 class="font-bold text-lg mb-0">{{ currentUser()?.name }}</h2>
+            <p class="text-sm text-gray-500">{{ currentUser()?.phone }}</p>
+            <ion-badge color="secondary" mode="ios" class="mt-1">
+              {{ currentUser()?.role }}
+            </ion-badge>
+          </div>
+        </div>
+
+        <ion-list id="inbox-list" class="mt-4">
+          @for (p of appPages(); track p; let i = $index) {
+            <ion-menu-toggle auto-hide="false">
+              <ion-item 
+                routerDirection="root" 
+                [routerLink]="[p.url]" 
+                [routerLinkActiveOptions]="{ exact: p.url === '/settings' || p.url === '/settings/users' }"
+                lines="none" 
+                detail="false" 
+                routerLinkActive="selected" 
+                class="rounded-xl mx-2">
+                <ion-icon aria-hidden="true" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+                <ion-label class="font-medium">{{ p.title }}</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          }
+        </ion-list>
+
+        <div class="absolute bottom-4 left-0 right-0 px-4">
+          <ion-button expand="block" fill="clear" color="danger" (click)="logout()">
+            <ion-icon slot="start" name="log-out-outline"></ion-icon>
+            Выйти из системы
+          </ion-button>
+        </div>
+      </ion-content>
+    </ion-menu>
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+  </ion-split-pane>
+</ion-app>

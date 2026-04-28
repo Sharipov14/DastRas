@@ -1,0 +1,69 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ product ? 'Редактировать товар' : 'Новый товар' }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">Отмена</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="productForm" (ngSubmit)="save()">
+    <ion-list>
+      <ion-item>
+        <ion-label position="stacked">Название (RU) *</ion-label>
+        <ion-input formControlName="nameRu" placeholder="Помидоры"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Название (TJ)</ion-label>
+        <ion-input formControlName="nameTj" placeholder="Помидор"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Название (EN)</ion-label>
+        <ion-input formControlName="nameEn" placeholder="Tomatoes"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Цена (смн)</ion-label>
+        <ion-input type="number" formControlName="price"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">В наличии ({{ productForm.get('unit')?.value || 'ед' }})</ion-label>
+        <ion-input type="number" formControlName="stockQuantity" placeholder="Количество товара"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Единица измерения</ion-label>
+        <ion-input formControlName="unit" placeholder="кг, шт, литр..."></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Категория</ion-label>
+        <ion-select formControlName="categoryId" placeholder="Выберите категорию">
+          @for (cat of categories(); track cat.id) {
+            <ion-select-option [value]="cat.id">{{ cat.emoji }} {{ cat.name }}</ion-select-option>
+          }
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">URL Изображения</ion-label>
+        <ion-input formControlName="imageUrl" placeholder="https://..."></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Описание</ion-label>
+        <ion-textarea formControlName="description" rows="4"></ion-textarea>
+      </ion-item>
+    </ion-list>
+
+    <div class="mt-6 px-4">
+      <ion-button expand="block" type="submit" [disabled]="productForm.invalid">
+        {{ product ? 'Обновить' : 'Создать' }}
+      </ion-button>
+    </div>
+  </form>
+</ion-content>

@@ -1,0 +1,75 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Доставка</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+
+  <div class="px-4 py-4 space-y-4">
+    @for (order of deliveringOrders(); track order.id) {
+      <ion-card class="m-0 shadow-md border-l-4 border-blue-500">
+        <ion-card-header class="pb-2">
+          <div class="flex justify-between items-start">
+            <ion-card-title class="text-lg font-bold">
+              Заказ #{{ order.orderNumber }}
+            </ion-card-title>
+            <ion-badge color="primary" mode="ios">В пути</ion-badge>
+          </div>
+          <p class="text-sm text-gray-500">{{ order.createdAt | date:'short' }}</p>
+        </ion-card-header>
+
+        <ion-card-content>
+          <div class="mb-4 space-y-2">
+            <div class="flex items-start gap-2">
+              <ion-icon name="map-outline" class="text-gray-500 mt-1"></ion-icon>
+              <div>
+                <p class="text-xs text-gray-500">Адрес доставки</p>
+                <p class="font-medium">ул. Рудаки 12, кв. 45</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-2">
+              <ion-icon name="call-outline" class="text-gray-500 mt-1"></ion-icon>
+              <div>
+                <p class="text-xs text-gray-500">Телефон клиента</p>
+                <p class="font-medium">+992 900 00 00 00</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2 mb-4">
+            <ion-button fill="outline" size="small" (click)="openMap('Душанбе, Рудаки 12')">
+              <ion-icon slot="start" name="map-outline"></ion-icon>
+              Карта
+            </ion-button>
+            <ion-button fill="outline" size="small" (click)="callCustomer('900000000')">
+              <ion-icon slot="start" name="call-outline"></ion-icon>
+              Позвонить
+            </ion-button>
+          </div>
+
+          <ion-button 
+            expand="block" 
+            (click)="finishDelivery(order.id)"
+            color="success"
+          >
+            <ion-icon slot="start" name="checkmark-done-outline"></ion-icon>
+            Доставлено
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+    } @empty {
+      <div class="flex flex-col items-center justify-center py-20 text-gray-400">
+        <ion-icon name="bicycle-outline" class="text-6xl mb-4"></ion-icon>
+        <p>Нет заказов на доставку</p>
+      </div>
+    }
+  </div>
+</ion-content>
