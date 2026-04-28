@@ -15,10 +15,13 @@ import {
   IonRadioGroup,
   IonRadio,
   AlertController,
-  IonList
+  IonList,
+  IonLoading
 } from "@ionic/angular/standalone";
 import { CartService } from '../../core/services/cart.service';
 import { Router } from '@angular/router';
+import { OrderService } from '../../core/services/order.service';
+import { AddressService } from '../../core/services/address.service';
 
 @Component({
   selector: 'app-checkout-page',
@@ -38,7 +41,8 @@ import { Router } from '@angular/router';
     IonFooter,
     IonRadioGroup,
     IonRadio,
-    IonList
+    IonList,
+    IonLoading
   ],
   templateUrl: './checkout-page.component.html',
   styleUrl: './checkout-page.component.scss',
@@ -49,36 +53,55 @@ export class CheckoutPageComponent {
   protected cartService = inject(CartService);
   #router = inject(Router);
   #alertController = inject(AlertController);
+  #orderService = inject(OrderService);
+  #addressService = inject(AddressService);
 
   protected paymentMethod = signal<'cash' | 'card' | 'wallet'>('cash');
-  protected selectedAddress = signal('ул. Рудаки, 45, кв. 12'); // Mock address
+  protected selectedAddress = this.#addressService.selectedAddress;
+  protected isSubmitting = signal(false);
 
   protected setPaymentMethod(method: any) {
     this.paymentMethod.set(method.detail.value);
   }
 
   protected async confirmOrder() {
-    // Show success alert
-    const alert = await this.#alertController.create({
-      header: 'Заказ принят!',
-      message: 'Ваш заказ успешно оформлен и уже готовится к отправке.',
-      buttons: [
-        {
-          text: 'Отлично',
-          handler: () => {
-            this.cartService.clearCart();
-            this.#router.navigate(['/tabs/home'], { replaceUrl: true });
-          }
-        }
-      ],
-      cssClass: 'custom-alert'
-    });
+    if (this.cartService.items().length === 0) return;
 
-    await alert.present();
+    this.isSubmitting.set(true);
+
+    const request = {
+      addressId: this.selectedAddress()?.id
+    };
+
+    const order = await this.#orderService.createOrder(request);
+    this.isSubmitting.set(false);
+
+    if (order) {
+      const alert = await this.#alertController.create({
+        header: 'Заказ принят!',
+        message: `Ваш заказ #${order.orderNumber} успешно оформлен и уже готовится к отправке.`,
+        buttons: [
+          {
+            text: 'Отлично',
+            handler: () => {
+              this.#router.navigate(['/tabs/orders'], { replaceUrl: true });
+            }
+          }
+        ],
+        cssClass: 'custom-alert'
+      });
+      await alert.present();
+    } else {
+      const alert = await this.#alertController.create({
+        header: 'Ошибка',
+        message: 'Не удалось оформить заказ. Пожалуйста, попробуйте позже.',
+        buttons: ['OK']
+      });
+      await alert.present();
+    }
   }
 
   protected changeAddress() {
-    // Future: open addresses management
-    console.log('Change address');
+    this.#router.navigate(['/addresses']);
   }
 }

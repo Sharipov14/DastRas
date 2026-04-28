@@ -23,10 +23,13 @@
                         <div class="w-10 h-10 rounded-2xl bg-orange-100 dark:bg-orange-500/20 flex items-center justify-center">
                             <ion-icon name="location-outline" class="text-xl text-[#ff6b35]"></ion-icon>
                         </div>
-                        <div>
+                        <div class="flex-1 min-w-0">
                             <p class="text-[10px] text-gray-400 font-bold uppercase tracking-wider mb-0.5">Адрес доставки</p>
-                            <p class="text-sm font-bold text-gray-900 dark:text-white truncate max-w-[200px]">
-                                {{ selectedAddress() }}
+                            <p class="text-sm font-bold text-gray-900 dark:text-white truncate">
+                                {{ selectedAddress()?.title || 'Выберите адрес' }}
+                            </p>
+                            <p *ngIf="selectedAddress()" class="text-[10px] text-gray-400 font-medium truncate">
+                                {{ selectedAddress()?.details }}
                             </p>
                         </div>
                     </div>
@@ -123,15 +126,17 @@
         <div class="mt-6 flex items-center gap-3 px-2">
             <ion-icon name="checkmark-circle-outline" class="text-xl text-green-500"></ion-icon>
             <p class="text-[11px] text-gray-400 font-medium leading-tight">
-                Нажимая кнопку «Оформить», вы соглашаетесь с условиями оферты и политикой конфиденциальности.
+                Нажимая кнопку «Подтвердить», вы соглашаетесь с условиями оферты и политикой конфиденциальности.
             </p>
         </div>
 
     </div>
+
+    <ion-loading [isOpen]="isSubmitting()" message="Оформление заказа..."></ion-loading>
 </ion-content>
 
 <ion-footer class="ion-no-border bg-white dark:bg-black p-5 pb-safe">
-    <ion-button (click)="confirmOrder()" expand="block" class="h-16 text-lg font-black --border-radius-2xl shadow-xl shadow-orange-500/30">
+    <ion-button (click)="confirmOrder()" [disabled]="isSubmitting() || cartService.items().length === 0" expand="block" class="h-16 text-lg font-black --border-radius-2xl shadow-xl shadow-orange-500/30">
         Подтвердить заказ
     </ion-button>
 </ion-footer>
