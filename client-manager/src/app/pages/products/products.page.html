@@ -34,7 +34,8 @@
         <ion-select 
           placeholder="Все категории" 
           [interface]="'popover'"
-          [(ngModel)]="selectedCategoryId"
+          [value]="selectedCategoryId()"
+          (ionChange)="selectedCategoryId.set($any($event).detail.value)"
           class="flex-1"
         >
           <ion-select-option [value]="null">Все категории</ion-select-option>

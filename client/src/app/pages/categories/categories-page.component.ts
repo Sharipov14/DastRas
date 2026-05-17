@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { IonHeader, IonContent, IonTitle, IonToolbar, IonIcon } from "@ionic/angular/standalone";
+import { IonHeader, IonContent, IonTitle, IonToolbar, IonIcon, IonItem, IonCard, IonCardContent } from "@ionic/angular/standalone";
 import { ProductService } from '../../core/services/product.service';
 import { Router } from '@angular/router';
 
@@ -12,7 +12,10 @@ import { Router } from '@angular/router';
     IonToolbar,
     IonTitle,
     IonContent,
-    IonHeader
+    IonHeader,
+    IonItem,
+    IonCard,
+    IonCardContent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })

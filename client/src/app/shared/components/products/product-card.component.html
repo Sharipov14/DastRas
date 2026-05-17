@@ -37,19 +37,27 @@
             } @else {
                 <div class="flex items-center bg-[#ff6b35] rounded-full h-9 px-1 shadow-lg shadow-orange-500/30"
                     (click)="$event.stopPropagation()">
-                    <button class="w-8 h-full flex items-center justify-center text-white active:opacity-70"
-                        (click)="updateQuantity($event, -1)">
-                        <ion-icon [name]="quantity === 1 ? 'trash-outline' : 'remove'"
+                    <ion-button
+                        (click)="updateQuantity($event, -1)"
+                        mode="ios"
+                        fill="clear"
+                        class="ion-no-margin w-8 h-full text-white active:opacity-70"
+                        style="--padding-start: 0; --padding-end: 0; --color: white; --background: transparent; --background-activated: transparent; --background-focused: transparent; --background-hover: transparent; --ripple-color: transparent;">
+                        <ion-icon slot="icon-only" [name]="quantity === 1 ? 'trash-outline' : 'remove'"
                             class="text-lg">
                         </ion-icon>
-                    </button>
+                    </ion-button>
                     <span class="text-sm font-black mx-0.5 min-w-[14px] text-center text-white">
                         {{ quantity }}
                     </span>
-                    <button class="w-8 h-full flex items-center justify-center text-white active:opacity-70"
-                        (click)="updateQuantity($event, 1)">
-                        <ion-icon name="add" class="text-lg"></ion-icon>
-                    </button>
+                    <ion-button
+                        (click)="updateQuantity($event, 1)"
+                        mode="ios"
+                        fill="clear"
+                        class="ion-no-margin w-8 h-full text-white active:opacity-70"
+                        style="--padding-start: 0; --padding-end: 0; --color: white; --background: transparent; --background-activated: transparent; --background-focused: transparent; --background-hover: transparent; --ripple-color: transparent;">
+                        <ion-icon slot="icon-only" name="add" class="text-lg"></ion-icon>
+                    </ion-button>
                 </div>
             }
         </div>

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject, signal, computed, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IonHeader, IonContent, IonToolbar, IonTitle, IonButtons, IonBackButton, IonFooter } from "@ionic/angular/standalone";
+import { IonHeader, IonContent, IonToolbar, IonTitle, IonButtons, IonBackButton, IonFooter, IonButton } from "@ionic/angular/standalone";
 import { ProductService } from '../../core/services/product.service';
 import { Product, SubCategory } from '../../core/models/product.model';
 import { CommonModule } from '@angular/common';
@@ -14,7 +14,7 @@ import { MiniCartComponent } from '../../shared/components/mini-cart/mini-cart.c
   styleUrl: './category-products-page.component.scss',
   imports: [ 
     CommonModule,
-    IonFooter, IonBackButton, IonButtons, IonToolbar, IonTitle, IonHeader, IonContent,
+    IonFooter, IonBackButton, IonButtons, IonToolbar, IonTitle, IonHeader, IonContent, IonButton,
     ProductCardComponent,
     MiniCartComponent
   ],
@@ -50,7 +50,7 @@ export class CategoryProductsPageComponent implements OnInit {
       }
     });
 
-    const uncategorized = products.filter(p => p.subCategoryId === 0);
+    const uncategorized = products.filter(p => p.subCategoryId === 0 || p.subCategoryId == null);
     if (uncategorized.length > 0) {
       groups.push({ subCategory: undefined, products: uncategorized });
     }

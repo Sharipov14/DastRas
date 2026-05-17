@@ -18,23 +18,31 @@
             
             <div class="flex flex-col gap-3">
                 <!-- Address Card -->
-                <button (click)="changeAddress()" class="w-full bg-gray-50 dark:bg-white/5 rounded-3xl p-4 flex items-center justify-between border border-gray-100 dark:border-white/5 text-left active:scale-[0.98] transition-transform">
-                    <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 rounded-2xl bg-orange-100 dark:bg-orange-500/20 flex items-center justify-center">
-                            <ion-icon name="location-outline" class="text-xl text-[#ff6b35]"></ion-icon>
+                <ion-item
+                    button="true"
+                    detail="false"
+                    lines="none"
+                    (click)="changeAddress()"
+                    class="w-full bg-gray-50 dark:bg-white/5 rounded-3xl border border-gray-100 dark:border-white/5 text-left active:scale-[0.98] transition-transform"
+                    style="--background: transparent; --background-activated: transparent; --background-focused: transparent; --background-hover: transparent; --inner-padding-end: 0; --padding-start: 0; --min-height: auto; --ripple-color: transparent;">
+                    <div class="w-full p-4 flex items-center justify-between">
+                        <div class="flex items-center gap-4 flex-1 min-w-0">
+                            <div class="w-10 h-10 rounded-2xl bg-orange-100 dark:bg-orange-500/20 flex items-center justify-center shrink-0">
+                                <ion-icon name="location-outline" class="text-xl text-[#ff6b35]"></ion-icon>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p class="text-[10px] text-gray-400 font-bold uppercase tracking-wider mb-0.5">Адрес доставки</p>
+                                <p class="text-sm font-bold text-gray-900 dark:text-white truncate">
+                                    {{ selectedAddress()?.title || 'Выберите адрес' }}
+                                </p>
+                                <p *ngIf="selectedAddress()" class="text-[10px] text-gray-400 font-medium truncate">
+                                    {{ selectedAddress()?.details }}
+                                </p>
+                            </div>
                         </div>
-                        <div class="flex-1 min-w-0">
-                            <p class="text-[10px] text-gray-400 font-bold uppercase tracking-wider mb-0.5">Адрес доставки</p>
-                            <p class="text-sm font-bold text-gray-900 dark:text-white truncate">
-                                {{ selectedAddress()?.title || 'Выберите адрес' }}
-                            </p>
-                            <p *ngIf="selectedAddress()" class="text-[10px] text-gray-400 font-medium truncate">
-                                {{ selectedAddress()?.details }}
-                            </p>
-                        </div>
+                        <ion-icon name="chevron-forward-outline" class="text-gray-300 shrink-0"></ion-icon>
                     </div>
-                    <ion-icon name="chevron-forward-outline" class="text-gray-300"></ion-icon>
-                </button>
+                </ion-item>
 
                 <!-- Time Card -->
                 <div class="w-full bg-gray-50 dark:bg-white/5 rounded-3xl p-4 flex items-center gap-4 border border-gray-100 dark:border-white/5">

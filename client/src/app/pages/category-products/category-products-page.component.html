@@ -14,15 +14,18 @@
   <!-- Sticky Subcategories List -->
   <div #subCategoryBar class="bg-white/80 dark:bg-black/80 backdrop-blur-md border-b border-gray-100 dark:border-white/5 overflow-x-auto whitespace-nowrap px-5 py-3 no-scrollbar flex gap-2.5">
     @for (sub of subCategories(); track sub.id) {
-      <button 
+      <ion-button
         [id]="'btn-sub-' + sub.id"
         (click)="scrollToSubCategory(sub.id)"
-        class="px-5 py-2.5 rounded-2xl text-sm font-black transition-all duration-300 active:scale-95"
+        mode="ios"
+        fill="clear"
+        class="ion-no-margin rounded-2xl text-sm font-black transition-all duration-300 active:scale-95"
+        style="--padding-start: 1.25rem; --padding-end: 1.25rem; --padding-top: 0.625rem; --padding-bottom: 0.625rem; --border-radius: 1rem; --background: transparent; --background-activated: transparent; --background-focused: transparent; --background-hover: transparent; --color: currentColor; --ripple-color: transparent;"
         [ngClass]="activeSubCategoryId() === sub.id 
           ? 'bg-[#ff6b35] text-white shadow-lg shadow-orange-500/20' 
           : 'bg-gray-100 text-gray-600 dark:bg-white/10 dark:text-gray-400'">
         {{ sub.name }}
-      </button>
+      </ion-button>
     }
   </div>
 </ion-header>

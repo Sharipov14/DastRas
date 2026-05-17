@@ -7,14 +7,22 @@
             </ion-back-button>
         </ion-buttons>
         <ion-buttons slot="end">
-            <button class="bg-white dark:bg-black/50 backdrop-blur-md rounded-full w-10 h-10 mr-2 flex items-center justify-center shadow-lg active:scale-90 transition-transform text-gray-900 dark:text-white"
-                (click)="toggleFavorite()">
-                <ion-icon [name]="isFavorite() ? 'heart' : 'heart-outline'" 
+            <ion-button
+                (click)="toggleFavorite()"
+                mode="ios"
+                fill="clear"
+                class="ion-no-margin bg-white dark:bg-black/50 backdrop-blur-md rounded-full w-10 h-10 mr-2 flex items-center justify-center shadow-lg active:scale-90 transition-transform text-gray-900 dark:text-white"
+                style="--padding-start: 0; --padding-end: 0; --color: currentColor; --background: transparent; --background-activated: transparent; --background-focused: transparent; --background-hover: transparent; --ripple-color: transparent; --border-radius: 50%;">
+                <ion-icon slot="icon-only" [name]="isFavorite() ? 'heart' : 'heart-outline'" 
                     [class.text-red-500]="isFavorite()" class="text-xl"></ion-icon>
-            </button>
-            <button class="bg-white dark:bg-black/50 backdrop-blur-md rounded-full w-10 h-10 mr-4 flex items-center justify-center shadow-lg active:scale-90 transition-transform text-gray-900 dark:text-white">
-                <ion-icon name="share-social-outline" class="text-xl"></ion-icon>
-            </button>
+            </ion-button>
+            <ion-button
+                mode="ios"
+                fill="clear"
+                class="ion-no-margin bg-white dark:bg-black/50 backdrop-blur-md rounded-full w-10 h-10 mr-4 flex items-center justify-center shadow-lg active:scale-90 transition-transform text-gray-900 dark:text-white"
+                style="--padding-start: 0; --padding-end: 0; --color: currentColor; --background: transparent; --background-activated: transparent; --background-focused: transparent; --background-hover: transparent; --ripple-color: transparent; --border-radius: 50%;">
+                <ion-icon slot="icon-only" name="share-social-outline" class="text-xl"></ion-icon>
+            </ion-button>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
@@ -118,23 +126,34 @@
             <!-- Quantity Control -->
             @if (quantity() > 0) {
                 <div class="flex items-center bg-gray-100 dark:bg-white/10 rounded-2xl h-14 px-1 shrink-0 animate-in fade-in slide-in-from-left-4 duration-300">
-                    <button class="w-12 h-full flex items-center justify-center text-gray-900 dark:text-white active:opacity-70"
-                        (click)="changeQuantity(-1)">
-                        <ion-icon [name]="quantity() === 1 ? 'trash-outline' : 'remove'" class="text-xl"></ion-icon>
-                    </button>
+                    <ion-button
+                        (click)="changeQuantity(-1)"
+                        mode="ios"
+                        fill="clear"
+                        class="ion-no-margin w-12 h-full text-gray-900 dark:text-white active:opacity-70"
+                        style="--padding-start: 0; --padding-end: 0; --color: currentColor; --background: transparent; --background-activated: transparent; --background-focused: transparent; --background-hover: transparent; --ripple-color: transparent;">
+                        <ion-icon slot="icon-only" [name]="quantity() === 1 ? 'trash-outline' : 'remove'" class="text-xl"></ion-icon>
+                    </ion-button>
                     <span class="text-lg font-black mx-2 min-w-[24px] text-center dark:text-white">
                         {{ quantity() }}
                     </span>
-                    <button class="w-12 h-full flex items-center justify-center text-gray-900 dark:text-white active:opacity-70"
-                        (click)="changeQuantity(1)">
-                        <ion-icon name="add" class="text-xl"></ion-icon>
-                    </button>
+                    <ion-button
+                        (click)="changeQuantity(1)"
+                        mode="ios"
+                        fill="clear"
+                        class="ion-no-margin w-12 h-full text-gray-900 dark:text-white active:opacity-70"
+                        style="--padding-start: 0; --padding-end: 0; --color: currentColor; --background: transparent; --background-activated: transparent; --background-focused: transparent; --background-hover: transparent; --ripple-color: transparent;">
+                        <ion-icon slot="icon-only" name="add" class="text-xl"></ion-icon>
+                    </ion-button>
                 </div>
             }
 
             <!-- Main Action Button -->
-            <button class="flex-1 h-14 bg-[#ff6b35] text-white rounded-2xl font-black text-lg shadow-xl shadow-orange-500/30 active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-3"
-                (click)="quantity() === 0 ? changeQuantity(1) : goToCart()">
+            <ion-button
+                (click)="quantity() === 0 ? changeQuantity(1) : goToCart()"
+                mode="ios"
+                class="ion-no-margin flex-1 h-14 text-white rounded-2xl font-black text-lg shadow-xl shadow-orange-500/30 active:scale-[0.98] transition-all duration-300"
+                style="--background: #ff6b35; --background-activated: #ff6b35; --background-focused: #ff6b35; --background-hover: #ff6b35; --color: white; --border-radius: 1rem; --box-shadow: none;">
                 @if (quantity() === 0) {
                     <span class="animate-in fade-in zoom-in-95">В корзину</span>
                 } @else {
@@ -143,7 +162,7 @@
                         <span class="text-sm opacity-90 font-bold bg-white/20 px-2 py-0.5 rounded-lg">{{ p.price * quantity() }} с.</span>
                     </div>
                 }
-            </button>
+            </ion-button>
         </div>
     }
 </ion-footer>

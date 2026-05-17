@@ -12,8 +12,7 @@ import {
   IonButtons,
   IonItem,
   IonLabel,
-  IonInput,
-  IonNote
+  IonInput
 } from "@ionic/angular/standalone";
 import { Location } from '@angular/common';
 
@@ -32,8 +31,7 @@ import { Location } from '@angular/common';
     IonButtons,
     IonItem,
     IonLabel,
-    IonInput,
-    IonNote
+    IonInput
   ],
   templateUrl: './profile-edit-page.component.html',
   styleUrl: './profile-edit-page.component.scss',

@@ -14,9 +14,12 @@
         <ion-avatar class="w-24 h-24 border-4 border-primary/20 shadow-lg">
           <img [src]="formData.avatarUrl || 'https://ionicframework.com/docs/img/demos/avatar.svg'" />
         </ion-avatar>
-        <div class="absolute bottom-0 right-0 bg-primary text-white p-1.5 rounded-full shadow-md border-2 border-white dark:border-black">
-          <ion-icon name="camera-outline"></ion-icon>
-        </div>
+        <ion-button
+          mode="ios"
+          class="ion-no-margin absolute bottom-0 right-0 w-8 h-8 bg-primary text-white rounded-full shadow-md border-2 border-white dark:border-black"
+          style="--padding-start: 0; --padding-end: 0; --background: transparent; --background-activated: transparent; --background-focused: transparent; --background-hover: transparent; --color: white; --border-radius: 50%; --box-shadow: none; --ripple-color: transparent;">
+          <ion-icon slot="icon-only" name="camera-outline"></ion-icon>
+        </ion-button>
       </div>
     </div>
 

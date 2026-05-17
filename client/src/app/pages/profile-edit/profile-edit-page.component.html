@@ -18,9 +18,12 @@
                 <div class="w-24 h-24 rounded-[2rem] overflow-hidden border-4 border-orange-100 dark:border-orange-500/20 shadow-lg">
                     <img [src]="user().avatar" class="w-full h-full object-cover">
                 </div>
-                <button class="absolute -bottom-2 -right-2 w-10 h-10 bg-[#ff6b35] rounded-full text-white flex items-center justify-center shadow-lg border-2 border-white dark:border-black transition-transform active:scale-95">
-                    <ion-icon name="pencil" class="text-lg"></ion-icon>
-                </button>
+                <ion-button
+                    mode="ios"
+                    class="ion-no-margin absolute -bottom-2 -right-2 w-10 h-10 bg-[#ff6b35] rounded-full text-white flex items-center justify-center shadow-lg border-2 border-white dark:border-black transition-transform active:scale-95"
+                    style="--padding-start: 0; --padding-end: 0; --background: transparent; --background-activated: transparent; --background-focused: transparent; --background-hover: transparent; --color: white; --border-radius: 50%; --box-shadow: none; --ripple-color: transparent;">
+                    <ion-icon slot="icon-only" name="pencil" class="text-lg"></ion-icon>
+                </ion-button>
             </div>
         </div>
 

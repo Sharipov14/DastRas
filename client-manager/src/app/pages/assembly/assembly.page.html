@@ -37,14 +37,14 @@
                     (ionChange)="toggleItemAssembly(item)"
                     color="success"
                   ></ion-checkbox>
-                  <div class="flex-1">
-                    <div class="font-medium" [ngClass]="{'line-through text-gray-400': item.isAssembled}">
+                  <ion-label class="flex-1">
+                    <h3 class="font-medium" [ngClass]="{'line-through text-gray-400': item.isAssembled}">
                       {{ item.productNameRu }}
-                    </div>
-                    <div class="text-sm text-gray-500">
+                    </h3>
+                    <p class="text-sm text-gray-500">
                       Количество: <span class="font-bold text-black dark:text-white">{{ item.quantity }}</span>
-                    </div>
-                  </div>
+                    </p>
+                  </ion-label>
                 </div>
               </ion-item>
             }

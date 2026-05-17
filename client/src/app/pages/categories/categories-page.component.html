@@ -14,12 +14,18 @@
     </ion-header>
 
     <!-- Search Placeholder: Opens the Page -->
-    <div class="mt-4 mb-6 active:scale-[0.98] transition-transform" (click)="goToSearch()">
-      <div class="bg-gray-100 dark:bg-white/10 p-4 rounded-2xl flex items-center gap-3 text-gray-400">
+    <ion-item
+      button="true"
+      detail="false"
+      lines="none"
+      class="mt-4 mb-6 bg-gray-100 dark:bg-white/10 rounded-2xl text-gray-400 active:scale-[0.98] transition-transform"
+      style="--background: transparent; --background-activated: transparent; --background-focused: transparent; --background-hover: transparent; --padding-start: 0; --inner-padding-end: 0; --min-height: auto; --ripple-color: transparent;"
+      (click)="goToSearch()">
+      <div class="w-full p-4 flex items-center gap-3">
         <ion-icon name="search" class="text-xl"></ion-icon>
         <span class="text-base font-medium">Поиск продуктов...</span>
       </div>
-    </div>
+    </ion-item>
 
     <!-- Info text -->
     <div class="mb-4">
@@ -30,26 +36,34 @@
     <!-- Categories Grid -->
     <div class="grid grid-cols-2 gap-4 mb-6">
         @for (cat of categories(); track cat.id) {
-          <div 
+          <ion-card
+            button="true"
             (click)="selectCategory(cat.id)"
-            class="h-40 flex flex-col items-center justify-center transition-all duration-300 active:scale-95 rounded-3xl bg-gray-100 dark:bg-white/5 border-none">
-            <span class="text-5xl leading-none mb-4 drop-shadow-sm">{{ cat.emoji }}</span>
-            <span class="text-gray-900 dark:text-white font-black text-base text-center px-2">
-                {{ cat.name }}
-            </span>
-          </div>
+            class="ion-no-margin h-40 flex flex-col items-center justify-center transition-all duration-300 active:scale-95 rounded-3xl bg-gray-100 dark:bg-white/5 border-none shadow-none"
+            style="--background: transparent; --color: currentColor;">
+            <ion-card-content class="h-full w-full flex flex-col items-center justify-center ion-no-padding">
+              <span class="text-5xl leading-none mb-4 drop-shadow-sm">{{ cat.emoji }}</span>
+              <span class="text-gray-900 dark:text-white font-black text-base text-center px-2">
+                  {{ cat.name }}
+              </span>
+            </ion-card-content>
+          </ion-card>
         }
     </div>
 
     <!-- All Products card -->
-    <div 
+    <ion-card
+      button="true"
       (click)="selectCategory(0)"
-      class="mt-2 p-6 rounded-3xl bg-gradient-to-r from-[#ff6b35] to-[#ff9e7d] text-white shadow-xl shadow-orange-500/20 active:scale-[0.98] transition-all flex items-center justify-between mb-24">
-      <div>
-        <h3 class="text-xl font-black">Все продукты</h3>
-        <p class="text-white/80 font-bold text-sm">Весь ассортимент магазина</p>
-      </div>
-      <span class="text-5xl">🛒</span>
-    </div>
+      class="ion-no-margin mt-2 rounded-3xl bg-gradient-to-r from-[#ff6b35] to-[#ff9e7d] text-white shadow-xl shadow-orange-500/20 active:scale-[0.98] transition-all mb-24"
+      style="--background: transparent; --color: white;">
+      <ion-card-content class="p-6 flex items-center justify-between">
+        <div>
+          <h3 class="text-xl font-black">Все продукты</h3>
+          <p class="text-white/80 font-bold text-sm">Весь ассортимент магазина</p>
+        </div>
+        <span class="text-5xl">🛒</span>
+      </ion-card-content>
+    </ion-card>
   </div>
 </ion-content>

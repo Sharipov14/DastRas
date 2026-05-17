@@ -20,8 +20,13 @@
       <ion-radio-group [value]="tempSelectedId()" (ionChange)="tempSelectedId.set($event.detail.value)">
         <ion-list class="bg-transparent ion-no-padding">
           @for (addr of addressService.addresses(); track addr.id) {
-            <ion-item lines="none" class="address-item-native mb-4">
-              <div class="w-full flex items-center justify-between py-2" (click)="select(addr)">
+            <ion-item
+              lines="none"
+              [button]="!isEditMode()"
+              detail="false"
+              class="address-item-native mb-4"
+              (click)="select(addr)">
+              <div class="w-full flex items-center justify-between py-2">
                 <!-- Left Info -->
                 <div class="flex-1 pr-4">
                   <h3 class="text-base font-bold text-gray-900 dark:text-white mb-0.5">

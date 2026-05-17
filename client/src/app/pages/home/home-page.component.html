@@ -43,21 +43,27 @@
     <!-- Categories (Horizontal Scroll) -->
     <div class="sticky top-0 z-40 bg-white/80 dark:bg-black/80 backdrop-blur-md py-3 -mx-5 px-5 mb-4 overflow-x-auto whitespace-nowrap no-scrollbar flex gap-2.5">
       <!-- "All" Category -->
-      <button 
-        class="category-pill flex items-center gap-2 px-5 py-2.5 rounded-2xl text-sm font-black transition-all"
+      <ion-button
+        mode="ios"
+        fill="clear"
+        class="category-pill ion-no-margin flex items-center gap-2 rounded-2xl text-sm font-black transition-all"
+        style="--padding-start: 1.25rem; --padding-end: 1.25rem; --padding-top: 0.625rem; --padding-bottom: 0.625rem; --border-radius: 1rem; --background: transparent; --background-activated: transparent; --background-focused: transparent; --background-hover: transparent; --color: currentColor; --ripple-color: transparent;"
         [ngClass]="selectedCategoryId() === null ? 'bg-[#ff6b35] text-white shadow-lg shadow-orange-500/30' : 'bg-gray-100 text-gray-600 dark:bg-white/10 dark:text-gray-300'"
         (click)="selectCategory(null)">
         Все
-      </button>
+      </ion-button>
 
       @for (cat of categories(); track cat.id) {
-        <button 
-          class="category-pill flex items-center gap-2 px-5 py-2.5 rounded-2xl text-sm font-black transition-all"
+        <ion-button
+          mode="ios"
+          fill="clear"
+          class="category-pill ion-no-margin flex items-center gap-2 rounded-2xl text-sm font-black transition-all"
+          style="--padding-start: 1.25rem; --padding-end: 1.25rem; --padding-top: 0.625rem; --padding-bottom: 0.625rem; --border-radius: 1rem; --background: transparent; --background-activated: transparent; --background-focused: transparent; --background-hover: transparent; --color: currentColor; --ripple-color: transparent;"
           [ngClass]="selectedCategoryId() === cat.id ? 'bg-[#ff6b35] text-white shadow-lg shadow-orange-500/30' : 'bg-gray-100 text-gray-600 dark:bg-white/10 dark:text-gray-300'"
           (click)="selectCategory(cat.id)">
           <span class="text-lg leading-none">{{ cat.emoji }}</span> 
           {{ cat.name }}
-        </button>
+        </ion-button>
       }
     </div>
 

@@ -12,7 +12,7 @@ import {
 } from '@ionic/angular/standalone';
 import { ProductService } from '../../core/services/product.service';
 import { CartService } from '../../core/services/cart.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Product } from '../../core/models/product.model';
 
 @Component({
@@ -28,6 +28,7 @@ import { Product } from '../../core/models/product.model';
     IonIcon, 
     IonButton,
     IonFooter,
+    RouterLink,
   ],
   templateUrl: './product-details-page.component.html',
   styleUrl: './product-details-page.component.scss',
@@ -75,7 +76,6 @@ export class ProductDetailsPageComponent {
   }
 
   protected goToCart() {
-    // Navigate to cart page (to be implemented)
-    this.router.navigate(['/tabs/orders']); // Temporary redirect to Orders until Cart page is created
+    this.router.navigate(['/cart']);
   }
 }
